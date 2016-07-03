@@ -1,4 +1,4 @@
-echo "# eval_primaire" >> README.md
+﻿echo "# eval_primaire" >> README.md
 git init
 git add README.md
 git commit -m "first commit"
@@ -12,6 +12,10 @@ git ls-remote origin master
 git checkout -b C:\wamp\www\eval_primaire origin/eval_primaire
 
 
+commande
+git add .
+git commit -a -m "$1"
+git push
 
 
 <!--script>
