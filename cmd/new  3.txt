@@ -1,0 +1,124 @@
+echo "# eval_primaire" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/evaluationen/eval_primaire.git
+git push -u origin master
+
+touch README.md
+git add . 
+git commit -m "add README"
+git ls-remote origin master
+git checkout -b C:\wamp\www\eval_primaire origin/eval_primaire
+
+
+
+
+<!--script>
+
+
+$("#textarea").select(function() {
+   alert($("#textarea" ).selection());
+	$(document).append($('<div></div>').addClass('my class'));
+  //$('#textarea').selection('replace', {text: "ddd"})
+  /*.selection('insert', {text: '<strong>', mode: 'before'})
+  .selection('insert', {text: '</strong>', mode: 'after'});*/
+});
+</script-->
+<!--script>
+if (!window.x) {
+    x = {};
+}
+
+x.Selector = {};
+x.Selector.getSelected = function() {
+    var t = '';
+    if (window.getSelection) {
+        t = window.getSelection();
+    } else if (document.getSelection) {
+        t = document.getSelection();
+    } else if (document.selection) {
+        t = document.selection.createRange().text;
+    }
+    return t;
+}
+
+$(document).ready(function() {
+    $(document).bind("mouseup", function() {
+        var mytext = x.Selector.getSelected();
+		
+		insertHtmlBeforeSelection('<b>'+mytext+'</b>');
+		//insertHtmlAfterSelection('<b>[INSERTED AFTER]</b>');
+        alert(mytext);
+		x.Selector.getSelected('replace', {text : 'dd'});
+    });
+});
+
+
+var insertHtmlBeforeSelection, insertHtmlAfterSelection;
+
+(function() {
+    function createInserter(isBefore) {
+        return function(html) {
+            var sel, range, node;
+            if (window.getSelection) {
+                // IE9 and non-IE
+                sel = window.getSelection();
+                if (sel.getRangeAt && sel.rangeCount) {
+                    range = window.getSelection().getRangeAt(0);
+                    
+                    range.collapse(isBefore);
+        
+                    // Range.createContextualFragment() would be useful here but is
+                    // non-standard and not supported in all browsers (IE9, for one)
+                    var el = document.createElement("div");
+                    el.innerHTML = html;
+                    var frag = document.createDocumentFragment(), node, lastNode;
+                    while ( (node = el.firstChild) ) {
+                        lastNode = frag.appendChild(node);
+                    }
+                    range.insertNode(frag);
+                }
+            } else if (document.selection && document.selection.createRange) {
+                // IE < 9
+                range = document.selection.createRange();
+                range.collapse(isBefore);
+                range.pasteHTML(html);
+            }
+        }
+    }
+    
+    insertHtmlBeforeSelection = createInserter(true);
+    insertHtmlAfterSelection = createInserter(false);
+})();
+
+</script-->
+<!--input type="button" value="Insert before" onmousedown="insertHtmlBeforeSelection('<b>[INSERTED BEFORE]</b>')">
+<input type="button" value="Insert after" onmousedown="insertHtmlAfterSelection('<b>[INSERTED AFTER]</b>')">
+<div contenteditable="true">
+    I'm looking for function which allows me to build some element before or after selected text. Something similar like this one javascript replace selection all browsers but for adding some content before or after selection instead of replacing it, like after() and before() jQuery methods. Should I use some DOM selection method, if yes which one? Or does exist something easier to carry it out?
+</div-->
+
+  //parcours texte selectionnée pour une deselection
+  
+  function strip_tags(html)
+{
+//PROCESS STRING
+if(arguments.length < 3) {
+ html=html.replace(/<\/?(?!\!)[^>]*>/gi, '');
+} else {
+ var allowed = arguments[1];
+ var specified = eval("["+arguments[2]+"]" );
+ if(allowed){
+  var regex='</?(?!(' + specified.join('|') + '))\b[^>]*>';
+  html=html.replace(new RegExp(regex, 'gi'), '');
+ } else{
+  var regex='</?(' + specified.join('|') + ')\b[^>]*>';
+  html=html.replace(new RegExp(regex, 'gi'), '');
+ }
+}
+//CHANGE NAME TO CLEAN JUST BECAUSE  
+var clean_string = html;
+//RETURN THE CLEAN STRING
+return clean_string;
+}
