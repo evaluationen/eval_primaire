@@ -11,6 +11,10 @@
   .tt{
   color:red
   }
+  span{
+	border : 1px solid red;
+	margin :2px;
+  }
   </style>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   <script src="jquery.selection.js"></script>
@@ -26,9 +30,35 @@ Separated they live in Bookmarksgrove right at the coast of the Semantics, a lar
 
 </div>
 
+<div class="drag_drop_src">
+<span class="src" id="src_1">test</span><span class="src" id="src_2">test2</span>
+</div>
+<div>
+<br>
+===================================================
+<br>
+</div>
+<div class="drag_drop_ans wrapper">
+</div>
+
 <script>
   $(document).ready(function(){
     
+	$('.src').each(function(){
+		$(this).bind('click', function(){
+		
+			src_val = $(this).html();
+			$(this).clone().appendTo(".drag_drop_ans");
+					
+			var $clone = $(this).clone();
+	
+			//$clone.find(data).attr("id", "ans_"+arr[0]);
+			//$clone.attr('id', 'ans_'+arr[0]);
+			
+			$(this).remove();
+		});
+	});
+	
     $('#test').bind('mouseup', function(e){
       e.preventDefault();
 	 
