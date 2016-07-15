@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>select test</title>
+  <style>
+  p {
+    color: blue;
+  }
+  
+  .tt{
+    color:red;
+    background : #ffff00;    
+  }
+  b{
+	border : 1px solid red;
+	margin :2px;
+  }
+  
+  
+  /*#draw {
+    width: 300px;
+    height: 300px;
+    }*/
+    
+ .droptarget {
+    float: left;
+    width: 100px;
+    height: 35px;
+    margin: 15px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}   
+
+.droptarget:hover{
+    cursor: pointer;
+}
+    
+  </style>
+ 
+  <script src="ressources/js/jquery-ui-1.11.4/external/jquery/jquery.js"></script>
+  <script src="ressources/js/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+  <script src="ressources/js/jquery-ui-touch-punch/jquery.ui.touch-punch.js"></script>
+  <!--script src="jquery.selection.js"></script-->
+   
+</head>
+<body>
+ 
+    <br><br><br>
+  
+ <div id="test">
+  Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.
+Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.
+
+
+</div>
+======================================================
+<h1>Reorder the words</h1>
+<div class="drag_drop_src">
+<b class="src" id="src_1">test</b><b class="src" id="src_2">test2</b>
+</div>
+<div>
+<br>
+<---------------------------------------------------------->
+Answered
+<br>
+</div>
+<div class="drag_drop_ans wrapper">
+</div>
+    
+    
+======================================================
+<h1>Rélier</h1>
+
+<div id="draw">
+    <div style="float:left">
+    <ul>
+        <li class="pt"></li>
+    </ul>
+    </div>
+    <div>
+        <ul>
+            <li class="pt"></li>
+        </ul>
+    </div>
+    
+</div>
+
+<h1>DRAG AND DROP COMPLETION</h1>
+======================================================
+
+
+<p>Drag the p element back and forth between the two rectangles:</p>
+
+<div class="droptarget">
+  <p draggable="true" id="dragtarget">tEST3!</p>
+</div>
+<div class="droptarget">
+  <p draggable="true" id="dragtarget">TETS1!</p>
+</div>
+<div class="droptarget">
+  <p draggable="true" id="dragtarget">Test</p>
+</div>
+
+
+<div  style="clear: both"></div>
+<div class="droptarget">
+    <p draggable="false" id="dragtarget1"></p>
+    
+</div>
+<div class="droptarget">
+    <p draggable="false" id="dragtarget2"></p>
+    
+</div>
+<div class="droptarget">
+    <p draggable="false" id="dragtarget3"></p>
+    
+</div>
+
+
+<p id="demo"></p>
+
+<div id="div1" style="background-color: red; height: 30px; width: 100px; clear: both">
+    <h4> text drag me </h4>
+   
+</div>
+ <br>
+ 
+
+=======================================================================
+
+<script>
+  $(document).ready(function(){
+      
+      
+      //dragable
+      /*$("input").droppable({
+        drop: function(event, ui) {
+            
+          alert(ui.draggable.text());
+        }
+      });
+
+      $("span").draggable();*/
+      
+      //======================================================================
+    
+	$('.src').each(function(){
+		$(this).bind('click', function(){
+		
+			src_val = $(this).html();
+			$(this).clone().appendTo(".drag_drop_ans");
+					
+			var $clone = $(this).clone();
+	
+			//$clone.find(data).attr("id", "ans_"+arr[0]);
+			//$clone.attr('id', 'ans_'+arr[0]);
+			
+			$(this).remove();
+		});
+	});
+	
+        //----------------------------------------------------
+    $('#test').on('click', function(e){//$('#test').bind('mouseup', function(e){
+      e.preventDefault();
+	 
+	if (window.getSelection) {
+		// not IE case
+		var selObj = window.getSelection();
+		var selRange = selObj.getRangeAt(0);
+
+		var newElement = document.createElement("span");
+		var documentFragment = selRange.extractContents();
+		newElement.appendChild(documentFragment);
+		selRange.insertNode(newElement);
+		$('span').addClass('tt');
+		selObj.removeAllRanges();
+	} else if (document.selection && document.selection.createRange && document.selection.type != "None") {
+		// IE case
+		var range = document.selection.createRange();
+		var selectedText = range.htmlText;
+		var newText = '<span>' + selectedText + '</span>';
+		$('b').addClass('tt');
+		document.selection.createRange().pasteHTML(newText);
+	}
+	
+		$('.tt').each(function(){
+			$(this).bind('mouseup', function(){
+			 
+				var txt = $(this).html();
+							 
+				
+			});
+			
+		});
+    });
+    
+    
+    //-----drag and drop tactile
+  /*$('#drag1').draggable();
+    $( "#div1" ).droppable({
+        drop: function( event, ui ) {
+          $( this )
+            .addClass( "isDropped" )
+            .html( "Dropped!" );
+        }
+      });*/
+      
+      
+     var el = document.getElementById('div1'); 
+
+  el.addEventListener("touchstart", handleStart, false);
+  el.addEventListener("touchend", handleEnd, false);
+  el.addEventListener("touchcancel", handleCancel, false);
+  el.addEventListener("touchleave", handleEnd, false);
+  el.addEventListener("touchmove", handleMove, false);
+
+  function handleStart(event) {
+      alert(el);
+      // Handle the start of the touch
+      alert(event);
+  }  
+   
+
+    
+    //-------------------------------------------------------------------------------
+	
+  });
+  
+    //------------------------------------------------------------------------
+  
+document.addEventListener("dragstart", function(event) {
+    // The dataTransfer.setData() method sets the data type and the value of the dragged data
+    event.dataTransfer.setData("Text", event.target.id);
+    
+    // Output some text when starting to drag the p element
+    document.getElementById("demo").innerHTML = "Started to drag the p element.";
+    
+    // Change the opacity of the draggable element
+    event.target.style.opacity = "0.4";
+});
+
+// While dragging the p element, change the color of the output text
+document.addEventListener("drag", function(event) {
+    document.getElementById("demo").style.color = "red";
+});
+
+// Output some text when finished dragging the p element and reset the opacity
+document.addEventListener("dragend", function(event) {
+    document.getElementById("demo").innerHTML = "Finished dragging the p element.";
+    event.target.style.opacity = "1";
+    /*nodeN = event.target.nodeName;
+    $(nodeN).addClass('test');
+    $(nodeN).attr('draggable', false);*/
+});
+
+
+/* Events fired on the drop target */
+
+// When the draggable p element enters the droptarget, change the DIVS's border style
+document.addEventListener("dragenter", function(event) {
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "3px dotted red";
+        
+    }
+});
+
+// By default, data/elements cannot be dropped in other elements. To allow a drop, we must prevent the default handling of the element
+document.addEventListener("dragover", function(event) {
+    event.preventDefault();
+});
+
+// When the draggable p element leaves the droptarget, reset the DIVS's border style
+document.addEventListener("dragleave", function(event) {
+    if ( event.target.className == "droptarget" ) {
+        event.target.style.border = "";
+    }
+});
+
+/* On drop - Prevent the browser default handling of the data (default is open as link on drop)
+   Reset the color of the output text and DIV's border color
+   Get the dragged data with the dataTransfer.getData() method
+   The dragged data is the id of the dragged element ("drag1")
+   Append the dragged element into the drop element
+*/
+document.addEventListener("drop", function(event) {
+    event.preventDefault();
+    if ( event.target.className == "droptarget" ) {
+        document.getElementById("demo").style.color = "";
+        event.target.style.border = "";
+        var data = event.dataTransfer.getData("Text");
+        event.target.appendChild(document.getElementById(data));
+    }
+});
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,6 +1,0 @@
-http://forum.hardware.fr/hfr/Programmation/HTML-CSS-Javascript/supprimer-balises-javascript-sujet_118985_1.htm
-http://stackoverflow.com/questions/3169786/clear-text-selection-with-javascript
-http://www.devkb.org/javascript/20-Enlever-les-balises-HTML-dans-une-chaine-en-JavaScript
-http://madapaja.github.io/jquery.selection/ja_jp.html
-http://stackoverflow.com/questions/3169786/clear-text-selection-with-javascript
-http://stackoverflow.com/questions/6190143/javascript-set-window-selection
