@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>tinymce upload</title>
+<link type="text/css" rel="stylesheet" href="http://localhost/tinymce/tinymce-upload-master/tinymce/skins/lightgray/content.min.css" />
+<!--link type="text/css" rel="stylesheet" href="upload/plugin.css" /-->
+<script src="http://localhost/tinymce/tinymce-upload-master/tinymce/tinymce.min.js"></script>
+<!--script src="../tinymce/tinymce.min.js"></script-->
+<!--script src="upload/plugin.js"></script-->
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",theme: "modern",width: 680,height: 300,
+    plugins: [
+         "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+         "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
+         "table contextmenu directionality emoticons paste textcolor responsivefilemanager code"
+   ],
+   audio_template_callback: function(data) {
+         return '<audio controls>' + '\n<source src="' + data.source1 + '"' + (data.source1mime ? ' type="' + data.source1mime + '"' : '') + ' />\n' + '</audio>';
+       },
+   toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
+   toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
+   image_advtab: true ,
+   
+   external_filemanager_path:"http://localhost/tinymce/tinymce-upload-master/tinymce/plugins/responsivefilemanager/filemanager/",
+   filemanager_title:"Responsive Filemanager" ,
+   external_plugins: { "filemanager" : "plugins/responsivefilemanager/filemanager/plugin.min.js"}
+ });
+</script>
+</head>
+<body>
+<div style="width: 600px; margin: 20px auto;">
+
+	<form method="post" action="post.php">
+		<textarea name="content">Click the upload button <input type="button" style="width: 19px; height: 16px; border: none; background: url(upload/upload_icon.png);" /> to upload a file</textarea>
+	</form>
+</div>
+</body>
+</html>
