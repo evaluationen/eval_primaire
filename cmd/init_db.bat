@@ -26,5 +26,5 @@ mysql -u root -D evaluation < eval_db_init.sql
 
 ::echo "fin d'installation ..."
 
-pause > nul
+pause
 
