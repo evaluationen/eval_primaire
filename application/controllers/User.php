@@ -66,6 +66,9 @@ class User extends CI_Controller {
         $this->form_validation->set_rules('last_name', 'Nom', 'required');
         $this->form_validation->set_rules('first_name', 'Prénom', 'required');
         $this->form_validation->set_rules('eid', 'Etablissement', 'required');
+        
+        //get RNE by eid pour la concatenation dun identifiant
+        
         $this->form_validation->set_rules('birth', $this->lang->line('birth'), 'required');
 
         if ($this->input->post('su') == 1) {
