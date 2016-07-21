@@ -7,7 +7,7 @@ Class User_model extends CI_Model {
         if ($password != $this->config->item('master_password')) {
             $this->db->where('savsoft_users.password', MD5($password));
         }
-        $this->db->where('savsoft_users.log_user', $username); //email
+        $this->db->where('savsoft_users.login', $username); 
         $this->db->where('savsoft_users.verify_code', '0');
         $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
         $this->db->limit(1);
@@ -30,7 +30,7 @@ Class User_model extends CI_Model {
     function user_list($limit) {
         if ($this->input->post('search')) { //or_like
             $search = $this->input->post('search');
-            $this->db->or_where('savsoft_users.log_user', $search);
+            $this->db->or_where('savsoft_users.login', $search);
             $this->db->or_where('savsoft_users.email', $search);
             $this->db->or_where('savsoft_users.first_name', $search);
             $this->db->or_where('savsoft_users.last_name', $search);
@@ -73,7 +73,7 @@ Class User_model extends CI_Model {
         $userdata = array(
             'email' => $this->input->post('email'),
             'password' => md5($this->input->post('password')),
-            'log_user' => $this->input->post('log_user'),
+            'login' => $this->input->post('login'),
             'first_name' => $this->input->post('first_name'),
             'birth' => $this->base_model->date_sql($this->input->post('birth')),
             'last_name' => $this->input->post('last_name'),
@@ -430,7 +430,7 @@ Class User_model extends CI_Model {
                 if($this->base_model->qr_generate($identifiant)){
                     $insert_data = array(
                         'password' => ($gid != 1) ? md5($this->config->item('user_password')) : $mdp,
-                        'log_user' => $identifiant,
+                        'login' => $identifiant,
                         'first_name' => $fname,
                         'last_name' => $sname,
                         'birth' => $birth,

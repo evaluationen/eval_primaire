@@ -61,10 +61,11 @@ class User extends CI_Controller {
         }
         $this->load->library('form_validation');
 
-        //$this->form_validation->set_rules('log_user', 'Identifiant', 'required|is_unique[savsoft_users.email]|alpha_dash');
+        //$this->form_validation->set_rules('login', 'Identifiant', 'required|is_unique[savsoft_users.email]|alpha_dash');
         $this->form_validation->set_rules('password', 'Password', 'required'); //|alpha_numeric_spaces
         $this->form_validation->set_rules('last_name', 'Nom', 'required');
         $this->form_validation->set_rules('first_name', 'Prénom', 'required');
+        $this->form_validation->set_rules('eid', 'Etablissement', 'required');
         $this->form_validation->set_rules('birth', $this->lang->line('birth'), 'required');
 
         if ($this->input->post('su') == 1) {
@@ -77,13 +78,13 @@ class User extends CI_Controller {
             redirect('user/new_user/');
         } else {
 
-            $_POST['log_user'] = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'));
-            $log_user = $_POST['log_user'];
+            $_POST['login'] = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'));
+            $login = $_POST['login'];
             if ($this->input->post('su') == 1) {
                 $_POST['qrcode'] = NULL;
             } else {
-                if ($log_user)
-                    $_POST['qrcode'] = $this->base_model->qr_generate($log_user);
+                if ($login)
+                    $_POST['qrcode'] = $this->base_model->qr_generate($login);
             }
 
             if ($this->user_model->insert_user()) {
@@ -152,7 +153,7 @@ class User extends CI_Controller {
             $this->form_validation->set_rules('email', 'Email', 'required');
         }
 
-        $this->form_validation->set_rules('log_user', 'Identifiant', 'required');
+        $this->form_validation->set_rules('login', 'Identifiant', 'required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");

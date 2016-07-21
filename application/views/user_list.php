@@ -52,7 +52,7 @@
 <table class="table table-bordered">
 <tr>
 <th></th>   
-<th><?php echo $this->lang->line('log_user');?></th>
+<th><?php echo $this->lang->line('login');?></th>
 <th><?php echo $this->lang->line('last_name');?></th>
 <th><?php echo $this->lang->line('first_name');?></th>
 <th><?php echo $this->lang->line('birth');?></th>
@@ -77,7 +77,7 @@ foreach($result as $key => $val){
 ?>
 <tr>
 <td><?php if ($val['uid'] != 1) : ?> <input type="checkbox" name="check_user[]" class="select_user" value="<?php echo $val['uid'];?>"/><?php endif; ?></td>   
-<td><?php echo $val['log_user'];?></td>
+<td><?php echo $val['login'];?></td>
 <td><?php echo $val['last_name'];?></td>
 <td><?php echo $val['first_name'];?></td>
 <td><?php echo $this->base_model->date_fr($val['birth'])?></td>

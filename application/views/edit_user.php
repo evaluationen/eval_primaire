@@ -25,8 +25,8 @@
                             <?php echo $this->lang->line('group_name'); ?>: <?php echo $result['group_name']; ?> 
                         </div>
                         <div class="form-group">	 
-                            <label for="inputEmail" class="sr-only"><?php echo $this->lang->line('log_user'); ?></label> 
-                            <input type="text"  name="log_user"  class="form-control"  value="<?php echo $result['log_user']; ?>"  readonly="">
+                            <label for="inputEmail" class="sr-only"><?php echo $this->lang->line('login'); ?></label> 
+                            <input type="text"  name="login"  class="form-control"  value="<?php echo $result['login']; ?>"  readonly="">
                         </div>
                         <div class="form-group">	 
                             <label for="inputEmail" class="sr-only"><?php echo $this->lang->line('first_name'); ?></label> 

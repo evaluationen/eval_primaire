@@ -21,7 +21,7 @@ class Login extends CI_Controller {
             $this->session->unset_userdata('log_qrc');
             $this->session->unset_userdata('logged_in');
             
-            $login_in = array('isqrc'=> TRUE, 'log_user' => $this->uri->segment('4'), 'password' => $this->config->item('user_password'));
+            $login_in = array('isqrc'=> TRUE, 'login' => $this->uri->segment('4'), 'password' => $this->config->item('user_password'));
             $this->session->set_userdata('log_qrc', $login_in);
             //création 
             $this->verifylogin();
@@ -55,13 +55,13 @@ class Login extends CI_Controller {
     
     public function verifylogin() {
 
-        $username = $this->input->post('log_user');
+        $username = $this->input->post('login');
         $password = $this->input->post('password');
         
         $log_qrc = $this->session->userdata('log_qrc');
         
         if(isset($log_qrc['isqrc']) && $log_qrc['isqrc']){
-            $username = $log_qrc['log_user'];
+            $username = $log_qrc['login'];
             $password = $log_qrc['password'];
             $this->session->unset_userdata('log_qrc');
         }

@@ -13,7 +13,7 @@
 
 	<div class="login-panel panel panel-default">
 		<div class="panel-body"> 
-		<img src="<?php echo base_url('images/login_log.png');?>">
+		<img src="<?php echo base_url('ressources/images/logo.png');?>">
 		
 
 			<form class="form-signin" method="post" action="<?php echo site_url('login/verifylogin');?>">
@@ -28,8 +28,8 @@
 		}
 		?>				  
 			<div class="form-group">	 
-					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('log_user');?></label> 
-					<input type="text" id="inputEmail" name="log_user" class="form-control" placeholder="<?php //echo $this->lang->line('email_address');?>" required autofocus>
+					<label for="inputEmail" class="sr-only"><?php echo $this->lang->line('login');?></label> 
+					<input type="text" id="inputEmail" name="login" class="form-control" placeholder="<?php //echo $this->lang->line('email_address');?>" required autofocus>
 			</div>
 			<div class="form-group">	  
 					<label for="inputPassword" class="sr-only"><?php echo $this->lang->line('password');?></label>

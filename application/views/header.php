@@ -8,11 +8,11 @@
 
         <title> </title>
         <!-- bootstrap css -->
-        <link href="<?php echo base_url('bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
+        <link href="<?php echo base_url('ressources/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
 
         <!-- custom css -->
-        <link href="<?php echo base_url('css/style.css'); ?>" rel="stylesheet">
-        <link href="<?php echo base_url('css/datepicker.css'); ?>" rel="stylesheet">
+        <link href="<?php echo base_url('ressources/css/style.css'); ?>" rel="stylesheet">
+        <link href="<?php echo base_url('ressources/css/datepicker.css'); ?>" rel="stylesheet">
 
         <script>
 
@@ -23,20 +23,20 @@
         </script>
 
         <!-- jquery -->
-        <script src="<?php echo base_url('js/jquery.js'); ?>"></script>
+        <script src="<?php echo base_url('ressources/js/jquery.js'); ?>"></script>
 
         <!-- custom javascript -->
-        <script src="<?php echo base_url('js/basic.js'); ?>"></script>
+        <script src="<?php echo base_url('ressources/js/basic.js'); ?>"></script>
 
         <!-- bootstrap js -->
-        <script src="<?php echo base_url('bootstrap/js/bootstrap.min.js'); ?>"></script>
+        <script src="<?php echo base_url('ressources/bootstrap/js/bootstrap.min.js'); ?>"></script>
 
         <!-- datepicker js & css -->
-        <script src="<?php echo base_url('bootstrap/js/bootstrap-datepicker.js'); ?>"></script>
-        <link href="<?php echo base_url('css/datepicker.css'); ?>" rel="stylesheet">
+        <script src="<?php echo base_url('ressources/bootstrap/js/bootstrap-datepicker.js'); ?>"></script>
+        <link href="<?php echo base_url('ressources/css/datepicker.css'); ?>" rel="stylesheet">
 
         <!-- confirm jquery -->
-        <script src="<?php echo base_url('js/jquery.confirm.js'); ?>"></script>
+        <script src="<?php echo base_url('ressources/js/jquery.confirm.js'); ?>"></script>
 
         <script>
             $(document).ready(function () {

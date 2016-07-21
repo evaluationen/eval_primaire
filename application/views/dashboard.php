@@ -88,7 +88,7 @@
 <h4><?php echo $this->lang->line('recently_registered');?></h4>
 <table class="table table-bordered" >
 <tr>
- <th><?php echo $this->lang->line('log_user');?></th>
+ <th><?php echo $this->lang->line('login');?></th>
 <th><?php echo $this->lang->line('first_name');?> <?php echo $this->lang->line('last_name');?></th>
 <th><?php echo $this->lang->line('birth');?></th>
 <th><?php echo $this->lang->line('group_name');?> </th>
@@ -107,7 +107,7 @@ if(count($result)==0){
 foreach($result as $key => $val){
 ?>
 <tr>
- <td><?php echo $val['log_user'];?></td>
+ <td><?php echo $val['login'];?></td>
 <td><?php echo $val['first_name'];?> <?php echo $val['last_name'];?></td>
 <td  class="tr_border" style="width: 20%"><?php echo  $this->base_model->date_fr($val['birth']) ?></td>
  <td><?php echo $val['group_name'];?></td>

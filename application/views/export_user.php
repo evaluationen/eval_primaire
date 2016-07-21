@@ -21,7 +21,7 @@
                 <td class="tr_border_pull" style=""><?php echo $this->lang->line('last_name');?></td>
                 <td class="tr_border_pull"><?php echo $this->lang->line('first_name');?></td>
                 <td class="tr_border_pull"><?php echo $this->lang->line('birth');?></td>
-                <td class="tr_border_pull"><?php echo $this->lang->line('log_user');?></td>
+                <td class="tr_border_pull"><?php echo $this->lang->line('login');?></td>
                 <td class="tr_border_pull"><?php echo $this->lang->line('qrcode');?></td>
             </tr>
             <?php if(count($users) > 0) : ?>
@@ -30,7 +30,7 @@
                 <td class="tr_border" style="width: 25%"><?php echo $user['last_name']?></td>
                 <td  class="tr_border" style="width: 20%"><?php echo $user['first_name'] ?></td>
                 <td  class="tr_border" style="width: 20%"><?php echo  $this->base_model->date_fr($user['birth']) ?></td>
-                <td  class="tr_border" style="width: 20%"><b><?php echo $user['log_user'] ?></b></td>
+                <td  class="tr_border" style="width: 20%"><b><?php echo $user['login'] ?></b></td>
                 <td  class="tr_border" style="width: 35%">
                     <?php if(file_exists(FCPATH.'images/qrcode/'.$user['qrcode']) && is_file(FCPATH.'images/qrcode/'.$user['qrcode'])) : ?>
                     <img width="200px" height="150px" src="<?php echo base_url('images/qrcode/'.$user['qrcode']);?>">

@@ -7,8 +7,8 @@ if ($this->config->item('tinymce')) {
                 if ($this->uri->segment(2) != 'css') {
                     ?>
                     <!--script type="text/javascript" src="<?php echo base_url(); ?>editor/tiny_mce.js"></script-->
-					<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>editor/skins/lightgray/content.min.css" />
-                    <script type="text/javascript" src="<?php echo base_url(); ?>editor/tinymce.min.js"></script>
+					<link type="text/css" rel="stylesheet" href="<?php echo base_url(); ?>ressources/editor/skins/lightgray/content.min.css" />
+                    <script type="text/javascript" src="<?php echo base_url(); ?>ressources/editor/tinymce.min.js"></script>
                     <script type="text/javascript">
                      
                     <?php

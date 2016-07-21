@@ -60,17 +60,20 @@ Class Base_model extends CI_Model {
         return isset($qrcode) ? $qrcode : FALSE;
     }
 
-    function concat_name($sname, $fname) {
+    function concat_name($sname, $fname, $rne) {
 
-        if ($sname && $fname) {
+        if ($sname && $fname && $rne) {
 
             $sname = str_replace($this->search, $this->replace, strtolower($sname));
             $fname = str_replace($this->search, $this->replace, strtolower($fname));
+            $rne_short = substr($rne, -4);
 
             $identifiant = substr($fname, 0, 1);
             $identifiant .= $sname;
+            
+            $new_id = $identifiant.'-'.$rne_short;
 
-            $query = $this->db->select('log_user')->like('log_user', $identifiant, 'after')->get('savsoft_users');
+            $query = $this->db->select('login')->like('login', $new_id, 'after')->get('savsoft_users');
             $array_index = array();
             if ($query->num_rows() > 0) {
                 $ids = $query->result();
@@ -78,7 +81,9 @@ Class Base_model extends CI_Model {
 
                 foreach ($ids as $id) {
                     $len = strlen($identifiant);
-                    $index = substr($id->log_user, $len);
+                    //decoupage
+                    $login = explode('-',$id->login);
+                    $index = substr($login[0], $len);
 
                     if ($index)
                         $array_index[] = $index;
@@ -92,7 +97,9 @@ Class Base_model extends CI_Model {
             }
         }
 
-        return isset($identifiant) ? $identifiant : FALSE;
+        return isset($identifiant) ? $identifiant.'-'.$rne_short : FALSE;
+        
+        
     }
 
     // --------------------------------------------------------------
