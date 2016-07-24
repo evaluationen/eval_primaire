@@ -1,6 +1,6 @@
 <?php
 
-$sq_base_url = 'http://localhost.eval.primaire/';
+$sq_base_url = 'http://localhost/eval_primaire/'; //http://localhost.eval.primaire/
 $sq_hostname = 'localhost';
 $sq_dbname = 'evaluation';
 $sq_dbusername = 'eval';

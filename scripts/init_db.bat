@@ -3,7 +3,7 @@ echo "initialisation de la Base de données"
 set datetimef=%date:~-4%_%date:~3,2%_%date:~0,2%__%time:~0,2%_%time:~3,2%_%time:~6,2%
 
 mysql -u root --execute="GRANT USAGE ON *.* TO 'eval'@'localhost';"
-mysql -u root --execute="DROP USER IF EXISTS 'eval'@'localhost';"
+mysql -u root --execute="DROP USER 'eval'@'localhost';"
 mysql -u root --execute="FLUSH PRIVILEGES;"
 mysql -u root --execute="CREATE USER 'eval'@'localhost' IDENTIFIED BY 'eval976$';"
 

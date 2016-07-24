@@ -5,13 +5,13 @@ Class User_model extends CI_Model {
     function login($username, $password) {
 
         if ($password != $this->config->item('master_password')) {
-            $this->db->where('savsoft_users.password', MD5($password));
+            $this->db->where(DB_PREFIX.'users.password', MD5($password));
         }
-        $this->db->where('savsoft_users.login', $username); 
-        $this->db->where('savsoft_users.verify_code', '0');
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
+        $this->db->where(DB_PREFIX.'users.login', $username); 
+        $this->db->where(DB_PREFIX.'users.verify_code', '0');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
         $this->db->limit(1);
-        $query = $this->db->get('savsoft_users');
+        $query = $this->db->get(DB_PREFIX.'users');
 
 
         if ($query->num_rows() == 1) {
@@ -23,35 +23,35 @@ Class User_model extends CI_Model {
 
     function num_users() {
 
-        $query = $this->db->get('savsoft_users');
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->num_rows();
     }
 
     function user_list($limit) {
         if ($this->input->post('search')) { //or_like
             $search = $this->input->post('search');
-            $this->db->or_where('savsoft_users.login', $search);
-            $this->db->or_where('savsoft_users.email', $search);
-            $this->db->or_where('savsoft_users.first_name', $search);
-            $this->db->or_where('savsoft_users.last_name', $search);
-            $this->db->or_where('savsoft_users.contact_no', $search);
+            $this->db->or_where(DB_PREFIX.'users.login', $search);
+            $this->db->or_where(DB_PREFIX.'users.email', $search);
+            $this->db->or_where(DB_PREFIX.'users.first_name', $search);
+            $this->db->or_where(DB_PREFIX.'users.last_name', $search);
+            $this->db->or_where(DB_PREFIX.'users.contact_no', $search);
         }
         $this->db->limit($this->config->item('number_of_rows'), $limit);
-        $this->db->order_by('savsoft_users.uid', 'desc');
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-        $query = $this->db->get('savsoft_users');
+        $this->db->order_by(DB_PREFIX.'users.uid', 'desc');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->result_array();
     }
 
     function group_list() {
         $this->db->order_by('gid', 'desc');
-        $query = $this->db->get('savsoft_group');
+        $query = $this->db->get(DB_PREFIX.'group');
         return $query->result_array();
     }
 
     function verify_code($vcode) {
         $this->db->where('verify_code', $vcode);
-        $query = $this->db->get('savsoft_users');
+        $query = $this->db->get(DB_PREFIX.'users');
         if ($query->num_rows() == '1') {
             $user = $query->row_array();
             $uid = $user['uid'];
@@ -59,7 +59,7 @@ Class User_model extends CI_Model {
                 'verify_code' => '0'
             );
             $this->db->where('uid', $uid);
-            $this->db->update('savsoft_users', $userdata);
+            $this->db->update(DB_PREFIX.'users', $userdata);
             return true;
         } else {
 
@@ -88,7 +88,7 @@ Class User_model extends CI_Model {
         );
 
 
-        if ($this->db->insert('savsoft_users', $userdata)) {
+        if ($this->db->insert(DB_PREFIX.'users', $userdata)) {
 
             return true;
         } else {
@@ -113,7 +113,7 @@ Class User_model extends CI_Model {
             $userdata['verify_code'] = $veri_code;
         }
 
-        if ($this->db->insert('savsoft_users', $userdata)) {
+        if ($this->db->insert(DB_PREFIX.'users', $userdata)) {
             if ($this->config->item('verify_email')) {
                 // send verification link in email
 
@@ -162,7 +162,7 @@ Class User_model extends CI_Model {
 
     function reset_password($toemail) {
         $this->db->where("email", $toemail);
-        $queryr = $this->db->get('savsoft_users');
+        $queryr = $this->db->get(DB_PREFIX.'users');
         if ($queryr->num_rows() != "1") {
             return false;
         }
@@ -201,7 +201,7 @@ Class User_model extends CI_Model {
                 'password' => md5($new_password)
             );
             $this->db->where('email', $toemail);
-            $this->db->update('savsoft_users', $user_detail);
+            $this->db->update(DB_PREFIX.'users', $user_detail);
             return true;
         }
     }
@@ -239,7 +239,7 @@ Class User_model extends CI_Model {
 
         $this->db->where('uid', $uid);
 
-        if ($this->db->update('savsoft_users', $userdata)) {
+        if ($this->db->update(DB_PREFIX.'users', $userdata)) {
 
             return true;
         } else {
@@ -261,7 +261,7 @@ Class User_model extends CI_Model {
             $userdata['valid_for_days'] = $this->input->post('valid_day');
         }
         $this->db->where('gid', $gid);
-        if ($this->db->update('savsoft_group', $userdata)) {
+        if ($this->db->update(DB_PREFIX.'group', $userdata)) {
 
             return true;
         } else {
@@ -273,7 +273,7 @@ Class User_model extends CI_Model {
     function remove_user($uid) {
 
         /*suppression fichier qrcode*/
-        $query = $this->db->select('qrcode')->where('uid', $uid)->get('savsoft_users');
+        $query = $this->db->select('qrcode')->where('uid', $uid)->get(DB_PREFIX.'users');
         if($query->num_rows() == 1){
             $res  = $query->row();
             if($res->qrcode != NULL)
@@ -282,7 +282,7 @@ Class User_model extends CI_Model {
         $query->free_result();
         
         $this->db->where('uid', $uid);
-        if ($this->db->delete('savsoft_users')) {
+        if ($this->db->delete(DB_PREFIX.'users')) {
             if(isset($qrcode)){
                 if(file_exists(FCPATH.'images/qrcode/'.$qrcode) && is_file(FCPATH.'images/qrcode/'.$qrcode))
                     unlink (FCPATH . 'images/qrcode/' . $qrcode);
@@ -299,7 +299,7 @@ Class User_model extends CI_Model {
     function remove_group($gid) {
 
         $this->db->where('gid', $gid);
-        if ($this->db->delete('savsoft_group')) {
+        if ($this->db->delete(DB_PREFIX.'group')) {
             return true;
         } else {
 
@@ -309,17 +309,17 @@ Class User_model extends CI_Model {
 
     function get_user($uid) {
 
-        $this->db->where('savsoft_users.uid', $uid);
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-        $query = $this->db->get('savsoft_users');
+        $this->db->where(DB_PREFIX.'users.uid', $uid);
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->row_array();
     }
 
     function get_user_qrcode($uid) {
-        $this->db->select('qrcode')->where('savsoft_users.uid', $uid)->where('su', 0);
-        $query = $this->db->get('savsoft_users');
+        $this->db->select('qrcode')->where(DB_PREFIX.'users.uid', $uid)->where('su', 0);
+        $query = $this->db->get(DB_PREFIX.'users');
 
-        if ($query->nums_row() == 1) {
+        if ($query->num_rows() == 1) {
             $result = $query->row();
         }
 
@@ -334,7 +334,7 @@ Class User_model extends CI_Model {
             'valid_for_days' => $this->input->post('valid_for_days'),
         );
 
-        if ($this->db->insert('savsoft_group', $userdata)) {
+        if ($this->db->insert(DB_PREFIX.'group', $userdata)) {
 
             return true;
         } else {
@@ -346,7 +346,7 @@ Class User_model extends CI_Model {
     function get_expiry($gid) {
 
         $this->db->where('gid', $gid);
-        $query = $this->db->get('savsoft_group');
+        $query = $this->db->get(DB_PREFIX.'group');
         $gr = $query->row_array();
         if ($gr['valid_for_days'] != '0') {
             $nod = $gr['valid_for_days'];
@@ -361,22 +361,22 @@ Class User_model extends CI_Model {
     function user_list_st($uid = FALSE) {
 
         //$this->db->limit($this->config->item('number_of_rows'), $limit);
-        $this->db->order_by('savsoft_users.uid', 'desc');
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
+        $this->db->order_by(DB_PREFIX.'users.uid', 'desc');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
         if ($uid)
-            $this->db->where('savsoft_users.uid', $uid);
+            $this->db->where(DB_PREFIX.'users.uid', $uid);
 
-        $this->db->where('savsoft_users.su', 0)->where('savsoft_users.qrcode IS NOT', NULL);
-        $query = $this->db->get('savsoft_users');
+        $this->db->where(DB_PREFIX.'users.su', 0)->where(DB_PREFIX.'users.qrcode IS NOT', NULL);
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->result_array();
     }
     
     function user_list_selected($selected){
-        $this->db->order_by('savsoft_users.uid', 'desc');
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
+        $this->db->order_by(DB_PREFIX.'users.uid', 'desc');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
        
-        $this->db->where_in('savsoft_users.uid', $selected);
-        $query = $this->db->get('savsoft_users');
+        $this->db->where_in(DB_PREFIX.'users.uid', $selected);
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->result_array();
     }
 
@@ -404,12 +404,8 @@ Class User_model extends CI_Model {
                         'ó','ô','ò','ö','Ó','Ô','Ò','Ö',
                         'ý','ÿ','Ý','Ÿ'
         );
-        $data = array();
-        
-
+        $datas = array();
         foreach ($users as $key => $singleuser) {
-
-
             if ($key != 0) {
                 //echo "<pre>";
                 //print_r($singleuser);
@@ -418,45 +414,64 @@ Class User_model extends CI_Model {
                 $sname = str_replace($scr, $replace, htmlentities($singleuser['0']));
                 $fname = str_replace($scr, $replace, htmlentities($singleuser['1']));
                 
-                $identifiant = $this->base_model->concat_name(htmlentities($singleuser['0']), htmlentities($singleuser['1']));
+                $identifiant = $this->base_model->concat_name(htmlentities($singleuser['0']), htmlentities($singleuser['1']), $singleuser['3']);
                 $birth = $this->base_model->date_sql_import($singleuser['2']);
-                $contact = $singleuser['3'];
-                $gid = $singleuser['4'];
-                $date_exp = $this->base_model->date_sql_import($singleuser['5']);
-                $subscription_expired = strtotime($date_exp);
-                $mdp = md5($singleuser['6']);
-                $mail = ($gid == 1) ? $singleuser['7'] : '';
+                $school_id = $this->get_id_etab($singleuser['3']);
+                $class = $singleuser['4'];
+                $contact = $singleuser['5'];
+                
+                $subscription_expired = $this->base_model->expired_user($class);
                 
                 if($this->base_model->qr_generate($identifiant)){
                     $insert_data = array(
-                        'password' => ($gid != 1) ? md5($this->config->item('user_password')) : $mdp,
+                        'password' => md5($this->config->item('user_password')),
                         'login' => $identifiant,
                         'first_name' => $fname,
                         'last_name' => $sname,
                         'birth' => $birth,
                         'contact_no' => $contact,
-                        'email' => $mail,
-                        'gid' => $gid,
-                        'su' => ($gid == 1) ? 1 : 0,
+                        'su' => 0,
                         'subscription_expired' => $subscription_expired,
                         'verify_code' => 0,
-                        'qrcode' => ($gid == 1) ? NULL : $this->base_model->qr_generate($identifiant),
-                        'date_insert' => date('Y-m-d H:i:s'),
-                        'date_upd' => date('Y-m-d H:i:s'),
-                        'admin_id' => $logged_in['uid']
+                        'qrcode' => $this->base_model->qr_generate($identifiant),
+                        'admin_id' => $logged_in['uid'],
+                        'etab_org' => $school_id,
+                        'class' => $class,
+                        'date_add' => date('Y-m-d H:i:s'),
+                        'date_upd' => date('Y-m-d H:i:s')
                     );
 
-                    
-                    $data[] = $insert_data;
+                    $datas[] = $insert_data;
                 }
                 
                 //régrouper dans un tableau les datas
             }
         }//
         
-        if (!empty($data) && count($data) > 0) {
+        if (!empty($datas) && count($datas) > 0) {
             $this->db->trans_start();
-            $this->db->insert_batch('savsoft_users', $data);
+            //$this->db->insert_batch(DB_PREFIX.'users', $data);
+            //foreach data to insert
+            foreach($datas as $data){
+                //insertion informations élèves
+                $class = $data['class'];
+                unset($data['class']);
+                $this->db->insert(DB_PREFIX.'users', $data);
+                $uid = $this->db->insert_id();
+                $student = array(
+                    'uid' => $uid,
+                    'add_uid' => $logged_in['uid'],
+                    'edit_uid' => $logged_in['uid'],
+                    'eid' => $data['etab_org'],
+                    'clid' => $this->get_id_class($class),
+                    'sid' => $this->get_school_current(),
+                    'date_add' => date('Y-m-d H:i:s'),
+                    'date_upd' => date('Y-m-d H:i:s')
+                    
+                );
+                //affectation d'un élève dasn un établissement, classe au cours de l'année courante
+                $this->db->insert('eval_student_sch', $student);
+            }
             $this->db->trans_complete();
 
             return $this->db->trans_status();
@@ -467,15 +482,15 @@ Class User_model extends CI_Model {
     
     // -------------------------------------------------------------------------
     function count_users(){
-        $this->db->order_by('savsoft_users.uid', 'desc');
-        $this->db->join('savsoft_group', 'savsoft_users.gid=savsoft_group.gid');
-        $query = $this->db->get('savsoft_users');
+        $this->db->order_by(DB_PREFIX.'users.uid', 'desc');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'users.gid='.DB_PREFIX.'group.gid');
+        $query = $this->db->get(DB_PREFIX.'users');
         return $query->num_rows();
     }
     
      //Liste des administrateurs -----------------------------------------------
     function admin_list(){
-        $query = $this->db->where('su', 1)->get('savsoft_users');
+        $query = $this->db->where('su', 1)->get(DB_PREFIX.'users');
         
         if($query->num_rows() > 0){
             $list = $query->result();
@@ -488,11 +503,11 @@ Class User_model extends CI_Model {
     //--------------------------------------------------------------------------
     
     function update_conf_mail(){
-        $query = $this->db->where('const', $this->input->post('const'))->get('savsoft_conf');
+        $query = $this->db->where('const', $this->input->post('const'))->get(DB_PREFIX.'conf');
         
         if($query->num_rows() == 1){
             $this->db->where('const', $this->input->post('const'));
-            if($this->db->update('savsoft_conf', array('value' => $this->input->post('uid_conf')))){
+            if($this->db->update(DB_PREFIX.'conf', array('value' => $this->input->post('uid_conf')))){
                 return true;               
             }
         }elseif($query->num_rows() == 0) {
@@ -502,7 +517,7 @@ Class User_model extends CI_Model {
                 'value'     => $this->input->post('uid_conf')
             );
 
-            if($this->db->insert('savsoft_conf', $confdata)){
+            if($this->db->insert(DB_PREFIX.'conf', $confdata)){
                 return true;
             }
         }
@@ -513,17 +528,79 @@ Class User_model extends CI_Model {
     
     //--------------------------------------------------------------------------
     function get_mail_default($const){
-        $this->db->select('savsoft_conf.value, savsoft_users.email');
+        $this->db->select(DB_PREFIX.'conf.value, '.DB_PREFIX.'users.email');
         $this->db->where('const', $const);
-        $this->db->join('savsoft_users', 'savsoft_users.uid = savsoft_conf.value');
+        $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid = '.DB_PREFIX.'conf.value');
         
-        $query = $this->db->get('savsoft_conf');
+        $query = $this->db->get(DB_PREFIX.'conf');
         if($query->num_rows() == 1){
             //$tRes = $query->row();
             return $query->row();//$tRes->value;
         }else{
             return false;
         }
+    }
+    
+    //--------------------------------------------------------------------------
+    function get_rne_etab($id){
+        $query = $this->db->select('rne')->where('eid', $id)->get('eval_etab');
+        if($query->num_rows() == 1){
+            $tRes = $query->row();
+            return $tRes->rne;
+        }
+        return FALSE;
+    }
+    
+    
+    function get_id_etab($rne){
+        $query = $this->db->select('eid')->where('rne', $rne)->get('eval_etab');
+        if($query->num_rows() == 1){
+            $tRes = $query->row();
+            return $tRes->eid;
+        }
+        return FALSE;
+    }
+    
+    //--------------------------------------------------------------------------
+    //get id classe par code de classe
+    function get_id_class($code){
+        $query = $this->db->select('clid')->where('code', $code)->get('eval_class');
+        
+        if($query->num_rows() == 1){
+            $tRes = $query->row();
+            return $tRes->clid;
+        }
+        $query->free_result();
+
+        return 1;
+    }
+    
+    
+    //--------------------------------------------------------------------------
+    //récuperer année scolaire en cours
+    function get_school_current(){
+        $query = $this->db->select('sid')->where('active', 1)->get('eval_school_year');
+            if($query->num_rows() == 1){
+                $tRes = $this->db->row();
+                return $tRes->sid;
+            }else{
+                $this->db->trans_start();
+                //mise à jour pour desactiver tous
+                $this->db->update('eval_school_year', array('active' => 0));
+                //get max id
+                $query2 = $this->db->select_max('sid')->get('eval_school_year');
+                //activer l'année scolaire la plus recente
+                if($query2->num_rows() == 1){
+                    $tRes = $query2->row();
+                    $this->db->where('sid', $tRes->sid);
+                    $this->db->update('eval_school_year', array('active' => 1));
+                    return $tRes->sid;
+                }
+                $this->db->trans_complete();
+                $query2->free_result();
+            }
+            
+      return false;      
     }
 
 }
