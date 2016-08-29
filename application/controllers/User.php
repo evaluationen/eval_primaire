@@ -81,7 +81,8 @@ class User extends CI_Controller {
             redirect('user/new_user/');
         } else {
 
-            $_POST['login'] = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'));
+            $rne = $this->user_model->get_rne_etab($this->input->post('eid'));
+            $_POST['login'] = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'), $rne);
             $login = $_POST['login'];
             if ($this->input->post('su') == 1) {
                 $_POST['qrcode'] = NULL;

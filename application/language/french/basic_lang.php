@@ -27,7 +27,7 @@ $lang['question_type'] = "Type de question";
 $lang['nop'] = "Nombre d'options";
 $lang['select_question_type'] = "Sélectionnez le type de question";
 $lang['select_payment_gateway'] = "Sélectionnez le gateway de paiement";
-$lang['quiz'] = "Quiz";
+$lang['quiz'] = "Evaluations";
 $lang['result'] = "Résultat";
 $lang['no_registered_user'] = "Nombre d'utilisateur enregistré";
 $lang['no_questions_qbank'] = "Questions dans une banque de questions";
@@ -250,4 +250,6 @@ $lang['down_here_certificat'] =  'Técharger le certificat';
 $lang['select_mail_admin'] = "Sélectionnez un mail";
 $lang['default_txt'] = "Texte par défaut";
 $lang['coef'] = 'Coef';
+$lang['by_level'] = "par niveau";
+$lang['by_sequence'] = "par séquence";
 

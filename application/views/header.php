@@ -105,19 +105,6 @@
                                         </ul>
                                     </li>
 
-
-
-                                    <?php
-                                } else {
-                                    ?>
-                        <!--                                    <li><a href="<?php echo site_url('user/edit_user/' . $logged_in['uid']); ?>"><?php echo $this->lang->line('myaccount'); ?></a></li>-->
-                                    <?php
-                                }
-                                ?>
-
-                                <?php
-                                if ($logged_in['su'] == 1) {
-                                    ?>    
                                     <li class="dropdown" <?php
                                     if ($this->uri->segment(1) == 'qbank') {
                                         echo "class='active'";
@@ -125,24 +112,17 @@
                                     ?> >
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('quiz'); ?> <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
-                                            <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new'); ?></a></li>
-                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('quiz'); ?> <?php echo $this->lang->line('list'); ?></a></li>
-
+                                            
+                                            <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new') . ' ' . $this->lang->line('by_level') . ' / Cycle'; ?></a></li>
+                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('quiz'); ?> <?php echo $this->lang->line('list'). ' ' . $this->lang->line('by_level'); ?></a></li>
+                                            <li><a>-----------------------------------</a></li>
+                                            <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new'). ' ' . $this->lang->line('by_sequence'); ?></a></li>
+                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('list'). ' ' . $this->lang->line('by_sequence'); ?></a></li>
                                         </ul>
                                     </li>
 
 
                                     <li><a href="<?php echo site_url('result'); ?>"><?php echo $this->lang->line('result'); ?></a></li>
-                                    <?php
-                                }
-                                ?>				 
-
-
-                                <?php
-                                if ($logged_in['su'] == 1) {
-                                    ?>
-                                                            <!--li><a href="<?php //echo site_url('payment_gateway');   ?>"><?php echo $this->lang->line('payment_history'); ?></a></li-->
-
                                     <li class="dropdown" <?php
                                     if ($this->uri->segment(1) == 'user_group') {
                                         echo "class='active'";
@@ -162,23 +142,9 @@
                                         </ul>
                                     </li>
                                     <li><a href="<?php echo site_url('user/logout'); ?>"><?php echo $this->lang->line('logout'); ?></a></li>
-
                                     <?php
-                                }
+                                } 
                                 ?>
-
-                                <!--
-                                            <li class="dropdown">
-                                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                   
-                                  </ul>
-                                </li>
-                                -->
-
                             </ul>
 
                         </div><!--/.nav-collapse -->

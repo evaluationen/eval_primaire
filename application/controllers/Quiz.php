@@ -40,6 +40,7 @@ class Quiz extends CI_Controller {
         }
     }
 
+    /*évaluation by sequence*/
     public function add_new() {
 
         $logged_in = $this->session->userdata('logged_in');
@@ -63,9 +64,6 @@ class Quiz extends CI_Controller {
         if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
         }
-
-
-
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('quiz');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
@@ -410,5 +408,24 @@ class Quiz extends CI_Controller {
         $this->load->view('finish_quiz');
         $this->load->view('footer');
     }
+    
+    
+    
+    //==========================================================================
+    //==========================================================================
+    
+    /***
+        new assessment by level for each cycle (5 level for each cycle)
+     **/
 
+     function add_new_evaluation(){
+         
+     }   
+     
+     
+     //-------------------------------------------------------------------------
+     
+     function list_evaluation(){
+         
+     }
 }

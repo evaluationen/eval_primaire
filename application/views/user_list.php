@@ -89,8 +89,8 @@ foreach($result as $key => $val){
     <?php endif; ?>
 </td>
 <td>
-<a href="<?php echo site_url('user/edit_user/'.$val['uid']);?>"><img class="no-marg" src="<?php echo base_url('images/edit.png');?>"></a>
-<?php if ($val['uid'] != 1) : ?> <a href="javascript:remove_entry('user/remove_user/<?php echo $val['uid'];?>');"><img class="no-marg" src="<?php echo base_url('images/cross.png');?>"></a><?php endif; ?>
+<a href="<?php echo site_url('user/edit_user/'.$val['uid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/edit.png');?>"></a>
+<?php if ($val['uid'] != 1) : ?> <a href="javascript:remove_entry('user/remove_user/<?php echo $val['uid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
 <?php if(file_exists(FCPATH.'images/qrcode/'.$val['qrcode']) && is_file(FCPATH.'images/qrcode/'.$val['qrcode'])) : ?><a title="<?php echo $this->lang->line('print_user_qr')?>" href="<?php echo site_url('user/export_user/'.$val['uid']);?>"><img class="no-marg" src="<?php echo base_url('images/pdf.png');?>"></a><?php endif; ?>
 </td>
 </tr>

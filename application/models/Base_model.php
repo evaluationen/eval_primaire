@@ -71,14 +71,12 @@ Class Base_model extends CI_Model {
             $identifiant = substr($fname, 0, 1);
             $identifiant .= $sname;
             
-            $new_id = $identifiant.'-'.$rne_short;
+            $new_id = strtolower($identifiant.'-'.$rne_short);
 
-            $query = $this->db->select('login')->like('login', $new_id, 'after')->get('savsoft_users');
+            $query = $this->db->select('login')->like('login', $new_id, 'after')->get(DB_PREFIX.'users');
             $array_index = array();
             if ($query->num_rows() > 0) {
                 $ids = $query->result();
-
-
                 foreach ($ids as $id) {
                     $len = strlen($identifiant);
                     //decoupage
@@ -97,7 +95,7 @@ Class Base_model extends CI_Model {
             }
         }
 
-        return isset($identifiant) ? $identifiant.'-'.$rne_short : FALSE;
+        return isset($identifiant) ? strtolower($identifiant.'-'.$rne_short) : FALSE;
         
         
     }
@@ -160,5 +158,23 @@ Class Base_model extends CI_Model {
             return true;
         }
     }
+    
+    
+    function expired_user($class){
+        switch($class){
+            case 'CP'  : $date_exp = date('d/m/Y', strtotime('+5 years'));break;
+            case 'CE1' : $date_exp = date('d/m/Y', strtotime('+4 years'));break;
+            case 'CE2' : $date_exp = date('d/m/Y', strtotime('+3 years'));break;
+            case 'CM1' : $date_exp = date('d/m/Y', strtotime('+2 years'));break;
+            case 'CM2' : $date_exp = date('d/m/Y', strtotime('+1 years'));break;
+            default :    $date_exp = date('d/m/Y', strtotime('+6 years'));break;
+        }
+        
+        $date = strtotime($date_exp);
+        
+        return $date;
+    }
+    
+    
 
 }

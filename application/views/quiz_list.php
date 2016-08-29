@@ -69,8 +69,8 @@ foreach($result as $key => $val){
 if($logged_in['su']=='1'){
 	?>
 			
-<a href="<?php echo site_url('quiz/edit_quiz/'.$val['quid']);?>"><img src="<?php echo base_url('images/edit.png');?>"></a>
-<a href="javascript:remove_entry('quiz/remove_quiz/<?php echo $val['quid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
+<a href="<?php echo site_url('quiz/edit_quiz/'.$val['quid']);?>"><img src="<?php echo base_url('ressources/images/edit.png');?>"></a>
+<a href="javascript:remove_entry('quiz/remove_quiz/<?php echo $val['quid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a>
 <?php 
 }
 ?>

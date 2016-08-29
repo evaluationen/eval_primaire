@@ -25,6 +25,7 @@ class Result extends CI_Controller {
 		// fetching result list
 		$data['result']=$this->result_model->result_list($limit,$status);
 		// fetching quiz list
+                
 		$data['quiz_list']=$this->result_model->quiz_list();
 		// group list
 		 $this->load->model("user_model");

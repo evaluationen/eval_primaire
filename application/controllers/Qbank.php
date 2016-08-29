@@ -37,7 +37,7 @@ class Qbank extends CI_Controller {
         $data['result'] = $this->qbank_model->question_list($limit, $cid, $lid);
         $data['tot'] = $this->qbank_model->count_quest($cid, $lid);
         $this->load->view('header', $data);
-        $this->load->view('question_list', $data);
+        $this->load->view('question/question_list', $data);
         $this->load->view('footer', $data);
     }
 
@@ -117,7 +117,7 @@ class Qbank extends CI_Controller {
 
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('question');
         $this->load->view('header', $data);
-        $this->load->view('pre_new_question', $data);
+        $this->load->view('question/pre_new_question', $data);
         $this->load->view('footer', $data);
     }
 
@@ -143,7 +143,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('new_question_1', $data);
+        $this->load->view('question/new_question_1', $data);
         $this->load->view('footer', $data);
     }
 
@@ -169,7 +169,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('new_question_2', $data);
+        $this->load->view('question/new_question_2', $data);
         $this->load->view('footer', $data);
     }
 
@@ -195,7 +195,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('new_question_3', $data);
+        $this->load->view('question/new_question_3', $data);
         $this->load->view('footer', $data);
     }
 
@@ -221,7 +221,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('new_question_4', $data);
+        $this->load->view('question/new_question_4', $data);
         $this->load->view('footer', $data);
     }
 
@@ -253,7 +253,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('new_question_5', $data);
+        $this->load->view('question/new_question_5', $data);
         $this->load->view('footer', $data);
     }
 
@@ -282,7 +282,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('edit_question_1', $data);
+        $this->load->view('question/edit_question_1', $data);
         $this->load->view('footer', $data);
     }
 
@@ -311,7 +311,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('edit_question_2', $data);
+        $this->load->view('question/edit_question_2', $data);
         $this->load->view('footer', $data);
     }
 
@@ -340,7 +340,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('edit_question_3', $data);
+        $this->load->view('question/edit_question_3', $data);
         $this->load->view('footer', $data);
     }
 
@@ -369,7 +369,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('edit_question_4', $data);
+        $this->load->view('question/edit_question_4', $data);
         $this->load->view('footer', $data);
     }
 
@@ -398,7 +398,7 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('edit_question_5', $data);
+        $this->load->view('question/edit_question_5', $data);
         $this->load->view('footer', $data);
     }
 
@@ -519,16 +519,6 @@ class Qbank extends CI_Controller {
 
     // level functions end
 
-
-
-
-
-
-
-
-
-
-
     function import() {
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] != "1") {
@@ -538,8 +528,6 @@ class Qbank extends CI_Controller {
 
         $this->load->helper('xlsimport/php-excel-reader/excel_reader2');
         $this->load->helper('xlsimport/spreadsheetreader.php');
-
-
 
         if (isset($_FILES['xlsfile'])) {
             $targets = 'xls/';

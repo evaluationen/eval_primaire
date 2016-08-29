@@ -147,6 +147,21 @@ CREATE TABLE `eval_etab` (
 
 insert  into `eval_etab`(`eid`,`rne`,`label`,`ciid`) values (1,'9760022V','ECOLE ELEMENTAIRE DE LABATTOIR 1 LA FERME',8),(2,'9760056G','ECOLE ELEMENTAIRE DE LABATTOIR 2 POTELEA',8),(3,'9760093X','ECOLE ELEMENTAIRE DE LABATTOIR 3 BADAMIERS',8),(4,'9760024X','ECOLE ELEMENTAIRE DE LABATTOIR 4 MORIOMBENI',8),(5,'9760139X','ECOLE ELEMENTAIRE DE LABATTOIR 5 MOYA',8),(6,'9760186Y','ECOLE ELEMENTAIRE DE LABATTOIR 6 FOUR A CHAUX',8),(7,'9760260D','ECOLE ELEMENTAIRE DE LABATTOIR 7 TOUTOUROUCHA',8);
 
+/*Table structure for table `eval_group` */
+
+DROP TABLE IF EXISTS `eval_group`;
+
+CREATE TABLE `eval_group` (
+  `gid` int(11) NOT NULL AUTO_INCREMENT,
+  `group_name` varchar(250) NOT NULL,
+  `validate_for_days` int(11) NOT NULL,
+  PRIMARY KEY (`gid`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `eval_group` */
+
+insert  into `eval_group`(`gid`,`group_name`,`validate_for_days`) values (1,'Gestionnaire',0),(2,'Elèves',0);
+
 /*Table structure for table `eval_level` */
 
 DROP TABLE IF EXISTS `eval_level`;
@@ -233,6 +248,7 @@ CREATE TABLE `eval_quiz` (
   `description` text NOT NULL,
   `start_date` int(11) NOT NULL,
   `end_date` int(11) NOT NULL,
+  `gids` text,
   `qids` text NOT NULL,
   `noq` int(11) NOT NULL,
   `correct_score` float NOT NULL,
@@ -247,9 +263,11 @@ CREATE TABLE `eval_quiz` (
   `gen_certificate` int(11) NOT NULL DEFAULT '0',
   `certificate_text` text,
   PRIMARY KEY (`quid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_quiz` */
+
+insert  into `eval_quiz`(`quid`,`quiz_name`,`description`,`start_date`,`end_date`,`gids`,`qids`,`noq`,`correct_score`,`incorrect_score`,`ip_address`,`duration`,`maximum_attempts`,`pass_percentage`,`view_answer`,`camera_req`,`question_selection`,`gen_certificate`,`certificate_text`) values (1,'sequence N°01 FRANCAIS','TEXTE DESCRIPTION',1463718457,1525937257,NULL,'1,2',2,1,0,'',10,1,50,1,1,1,0,NULL),(2,'test','',1472459044,1503995044,'2','',0,1,0,'',10,10,50,1,0,0,0,NULL);
 
 /*Table structure for table `eval_result` */
 
@@ -343,21 +361,23 @@ CREATE TABLE `eval_users` (
   `last_name` varchar(100) NOT NULL,
   `birth` date NOT NULL,
   `contact_no` varchar(1000) NOT NULL,
-  `gid` int(11) NOT NULL DEFAULT '1',
+  `gid` int(11) DEFAULT NULL,
   `su` int(11) NOT NULL DEFAULT '0',
   `subscription_expired` int(11) NOT NULL DEFAULT '0',
   `verify_code` int(11) NOT NULL DEFAULT '0',
   `qrcode` varchar(255) DEFAULT NULL,
-  `date_insert` datetime NOT NULL,
-  `date_upd` datetime NOT NULL,
   `admin_id` int(11) NOT NULL,
   `etab_org` int(11) NOT NULL,
+  `date_add` datetime NOT NULL,
+  `date_upd` datetime NOT NULL,
   PRIMARY KEY (`uid`),
   KEY `FK_eval_users_etab_origine` (`etab_org`),
   CONSTRAINT `FK_eval_users_etab_origine` FOREIGN KEY (`etab_org`) REFERENCES `eval_etab` (`eid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_users` */
+
+insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`birth`,`contact_no`,`gid`,`su`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`,`date_add`,`date_upd`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','Nathalie','HARITINIAINA','1992-08-08','0269618838',1,1,1111,0,NULL,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
