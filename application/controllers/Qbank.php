@@ -97,13 +97,10 @@ class Qbank extends CI_Controller {
 
     //number question and number of option
     public function new_question($no, $nop = '4') {
-
-
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
         }
-
         $insert = FALSE;
         //switch by number of the question
         if ($this->input->post('question')) {
