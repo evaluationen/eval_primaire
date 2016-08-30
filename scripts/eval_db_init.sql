@@ -42,7 +42,8 @@ DROP TABLE IF EXISTS `eval_category`;
 CREATE TABLE `eval_category` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(1000) NOT NULL,
-  PRIMARY KEY (`cid`)
+  PRIMARY KEY (`cid`),
+  CONSTRAINT `FK_eval_category_sub` FOREIGN KEY (`cid`) REFERENCES `eval_sub_category` (`scid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_category` */
@@ -263,13 +264,11 @@ CREATE TABLE `eval_quiz` (
   `gen_certificate` int(11) NOT NULL DEFAULT '0',
   `certificate_text` text,
   PRIMARY KEY (`quid`)
-
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_quiz` */
 
-insert  into `eval_quiz`(`quid`,`quiz_name`,`description`,`start_date`,`end_date`,`qids`,`noq`,`correct_score`,`incorrect_score`,`ip_address`,`duration`,`maximum_attempts`,`pass_percentage`,`view_answer`,`camera_req`,`question_selection`,`gen_certificate`,`certificate_text`) values (1,'sequence N°01 FRANCAIS','TEXTE DESCRIPTION',1463718457,1525937257,'1,2',2,1,0,'',10,1,50,1,1,1,0,NULL);
-
+insert  into `eval_quiz`(`quid`,`quiz_name`,`description`,`start_date`,`end_date`,`gids`,`qids`,`noq`,`correct_score`,`incorrect_score`,`ip_address`,`duration`,`maximum_attempts`,`pass_percentage`,`view_answer`,`camera_req`,`question_selection`,`gen_certificate`,`certificate_text`) values (1,'sequence N°01 FRANCAIS','TEXTE DESCRIPTION',1463718457,1525937257,NULL,'1,2',2,1,0,'',10,1,50,1,1,1,0,NULL),(2,'test','',1472459044,1503995044,'2','',0,1,0,'',10,10,50,1,0,0,0,NULL),(3,'test','',1472557634,1504093634,'2','',0,1,0,'',10,10,50,1,0,0,0,NULL);
 
 /*Table structure for table `eval_result` */
 
@@ -350,6 +349,19 @@ CREATE TABLE `eval_student_sch` (
 
 /*Data for the table `eval_student_sch` */
 
+/*Table structure for table `eval_sub_category` */
+
+DROP TABLE IF EXISTS `eval_sub_category`;
+
+CREATE TABLE `eval_sub_category` (
+  `scid` int(11) NOT NULL AUTO_INCREMENT,
+  `label` varchar(255) DEFAULT NULL,
+  `cid` int(11) DEFAULT NULL,
+  PRIMARY KEY (`scid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `eval_sub_category` */
+
 /*Table structure for table `eval_users` */
 
 DROP TABLE IF EXISTS `eval_users`;
@@ -379,9 +391,7 @@ CREATE TABLE `eval_users` (
 
 /*Data for the table `eval_users` */
 
-
 insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`birth`,`contact_no`,`gid`,`su`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`,`date_add`,`date_upd`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','Nathalie','HARITINIAINA','1992-08-08','0269618838',1,1,1111,0,NULL,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
-
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
