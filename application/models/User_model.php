@@ -470,11 +470,9 @@ Class User_model extends CI_Model {
                     
                 );
                 //affectation d'un élève dasn un établissement, classe au cours de l'année courante
-<<<<<<< HEAD
+
                 $this->db->insert(DB_PREFIX.'student_sch', $student);
-=======
-                $this->db->insert('eval_student_sch', $student);
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
             }
             $this->db->trans_complete();
 
@@ -547,11 +545,9 @@ Class User_model extends CI_Model {
     
     //--------------------------------------------------------------------------
     function get_rne_etab($id){
-<<<<<<< HEAD
+
         $query = $this->db->select('rne')->where('eid', $id)->get(DB_PREFIX.'etab');
-=======
-        $query = $this->db->select('rne')->where('eid', $id)->get('eval_etab');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
         if($query->num_rows() == 1){
             $tRes = $query->row();
             return $tRes->rne;
@@ -561,11 +557,8 @@ Class User_model extends CI_Model {
     
     
     function get_id_etab($rne){
-<<<<<<< HEAD
         $query = $this->db->select('eid')->where('rne', $rne)->get(DB_PREFIX.'etab');
-=======
-        $query = $this->db->select('eid')->where('rne', $rne)->get('eval_etab');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
         if($query->num_rows() == 1){
             $tRes = $query->row();
             return $tRes->eid;
@@ -576,12 +569,8 @@ Class User_model extends CI_Model {
     //--------------------------------------------------------------------------
     //get id classe par code de classe
     function get_id_class($code){
-<<<<<<< HEAD
         $query = $this->db->select('clid')->where('code', $code)->get(DB_PREFIX.'class');
-=======
-        $query = $this->db->select('clid')->where('code', $code)->get('eval_class');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
-        
+      
         if($query->num_rows() == 1){
             $tRes = $query->row();
             return $tRes->clid;
@@ -595,35 +584,26 @@ Class User_model extends CI_Model {
     //--------------------------------------------------------------------------
     //récuperer année scolaire en cours
     function get_school_current(){
-<<<<<<< HEAD
         $query = $this->db->select('sid')->where('active', 1)->get(DB_PREFIX.'school_year');
-=======
-        $query = $this->db->select('sid')->where('active', 1)->get('eval_school_year');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
             if($query->num_rows() == 1){
                 $tRes = $this->db->row();
                 return $tRes->sid;
             }else{
                 $this->db->trans_start();
                 //mise à jour pour desactiver tous
-<<<<<<< HEAD
+
                 $this->db->update(DB_PREFIX.'school_year', array('active' => 0));
                 //get max id
                 $query2 = $this->db->select_max('sid')->get(DB_PREFIX.'school_year');
-=======
-                $this->db->update('eval_school_year', array('active' => 0));
-                //get max id
-                $query2 = $this->db->select_max('sid')->get('eval_school_year');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
                 //activer l'année scolaire la plus recente
                 if($query2->num_rows() == 1){
                     $tRes = $query2->row();
                     $this->db->where('sid', $tRes->sid);
-<<<<<<< HEAD
+
                     $this->db->update(DB_PREFIX.'school_year', array('active' => 1));
-=======
-                    $this->db->update('eval_school_year', array('active' => 1));
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
                     return $tRes->sid;
                 }
                 $this->db->trans_complete();

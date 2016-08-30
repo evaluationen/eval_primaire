@@ -6,7 +6,7 @@ class Qbank extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        
+
         $this->load->database();
         $this->load->model("qbank_model");
         $this->lang->load('basic', $this->config->item('language'));
@@ -17,7 +17,7 @@ class Qbank extends CI_Controller {
     }
 
     public function index($limit = '0', $cid = '0', $lid = '0') {
-        
+
         $this->load->helper('form');
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] != '1') {
@@ -62,6 +62,8 @@ class Qbank extends CI_Controller {
         redirect('qbank/index/' . $limit . '/' . $cid . '/' . $lid);
     }
 
+    //==========================================================================
+    //==========================================================================
     public function pre_new_question() {
 
         $logged_in = $this->session->userdata('logged_in');
@@ -69,50 +71,22 @@ class Qbank extends CI_Controller {
             exit($this->lang->line('permission_denied'));
         }
 
-        
+        /* replace by switch case */
         if ($this->input->post('question_type')) {
-            if ($this->input->post('question_type') == '1') {
-                $nop = $this->input->post('nop');
-                if (!is_numeric($this->input->post('nop'))) {
-                    $nop = 4;
-                }
-                redirect('qbank/new_question_1/' . $nop);
-            }
-            if ($this->input->post('question_type') == '2') {
-                $nop = $this->input->post('nop');
-                if (!is_numeric($this->input->post('nop'))) {
-                    $nop = 4;
-                }
-                redirect('qbank/new_question_2/' . $nop);
-            }
-            if ($this->input->post('question_type') == '3') {
-                $nop = $this->input->post('nop');
-                if (!is_numeric($this->input->post('nop'))) {
-                    $nop = 4;
-                }
-                redirect('qbank/new_question_3/' . $nop);
-            }
-            if ($this->input->post('question_type') == '4') {
-                $nop = $this->input->post('nop');
-                if (!is_numeric($this->input->post('nop'))) {
-                    $nop = 4;
-                }
-                redirect('qbank/new_question_4/' . $nop);
-            }
-            if ($this->input->post('question_type') == '5') {
-                $nop = $this->input->post('nop');
-                $extra_nop = array(
-                    'is_default_txt' => $this->input->post('is_default_txt'),
-                    'default_txt' => $this->input->post('default_txt')
+            switch ($this->input->post('question_type')) {
+                case '5' :
+                    $extra_nop = array(
+                        'is_default_txt' => $this->input->post('is_default_txt'),
+                        'default_txt' => $this->input->post('default_txt')
                     );
-                
-                $this->session->set_userdata('extra_nop', $extra_nop);
-                
-                if (!is_numeric($this->input->post('nop'))) {
-                    $nop = 4;
-                }
-                redirect('qbank/new_question_5/' . $nop);
+                    $this->session->set_userdata('extra_nop', $extra_nop);
+                    break;
+                default : break;
             }
+
+            $nop = (!is_numeric($this->input->post('nop'))) ? 4 : $this->input->post('nop');
+            $link = 'qbank/new_question/' . $this->input->post('question_type') . '/' . $nop;
+            redirect($link);
         }
 
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('question');
@@ -121,15 +95,42 @@ class Qbank extends CI_Controller {
         $this->load->view('footer', $data);
     }
 
-    public function new_question_1($nop = '4') {
+    //number question and number of option
+    public function new_question($no, $nop = '4') {
+
 
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
         }
+
+        $insert = FALSE;
+        //switch by number of the question
         if ($this->input->post('question')) {
-            if ($this->qbank_model->insert_question_1()) {
+            switch ($no) {
+                case '1': $insert = $this->qbank_model->insert_question_1();
+                    break;
+                case '2': $insert = $this->qbank_model->insert_question_2();
+                    break;
+                case '3': $insert = $this->qbank_model->insert_question_3();
+                    break;
+                case '4': $insert = $this->qbank_model->insert_question_4();
+                    break;
+                case '5':
+                    $extra = FALSE;
+                    if($this->session->userdata('extra_nop')){
+                        $extra = $this->session->userdata('extra_nop');
+                    }
+                    $insert = $this->qbank_model->insert_question_5($extra);
+                    break;
+
+                default : break;
+            }
+            if ($insert) {
                 $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+                if ($no == 5) {
+                    $this->session->unset_userdata('extra_nop');
+                }
             } else {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
             }
@@ -143,120 +144,13 @@ class Qbank extends CI_Controller {
         // fetching level list
         $data['level_list'] = $this->qbank_model->level_list();
         $this->load->view('header', $data);
-        $this->load->view('question/new_question_1', $data);
+        $this->load->view('question/new_question_' . $no, $data);
         $this->load->view('footer', $data);
     }
 
-    public function new_question_2($nop = '4') {
-
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
-            exit($this->lang->line('permission_denied'));
-        }
-        if ($this->input->post('question')) {
-            if ($this->qbank_model->insert_question_2()) {
-                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
-            } else {
-                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
-            }
-            redirect('qbank/pre_new_question/');
-        }
-
-        $data['nop'] = $nop;
-        $data['title'] = $this->lang->line('add_new');
-        // fetching category list
-        $data['category_list'] = $this->qbank_model->category_list();
-        // fetching level list
-        $data['level_list'] = $this->qbank_model->level_list();
-        $this->load->view('header', $data);
-        $this->load->view('question/new_question_2', $data);
-        $this->load->view('footer', $data);
-    }
-
-    public function new_question_3($nop = '4') {
-
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
-            exit($this->lang->line('permission_denied'));
-        }
-        if ($this->input->post('question')) {
-            if ($this->qbank_model->insert_question_3()) {
-                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
-            } else {
-                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
-            }
-            redirect('qbank/pre_new_question/');
-        }
-
-        $data['nop'] = $nop;
-        $data['title'] = $this->lang->line('add_new');
-        // fetching category list
-        $data['category_list'] = $this->qbank_model->category_list();
-        // fetching level list
-        $data['level_list'] = $this->qbank_model->level_list();
-        $this->load->view('header', $data);
-        $this->load->view('question/new_question_3', $data);
-        $this->load->view('footer', $data);
-    }
-
-    public function new_question_4($nop = '4') {
-
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
-            exit($this->lang->line('permission_denied'));
-        }
-        if ($this->input->post('question')) {
-            if ($this->qbank_model->insert_question_4()) {
-                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
-            } else {
-                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
-            }
-            redirect('qbank/pre_new_question/');
-        }
-
-        $data['nop'] = $nop;
-        $data['title'] = $this->lang->line('add_new');
-        // fetching category list
-        $data['category_list'] = $this->qbank_model->category_list();
-        // fetching level list
-        $data['level_list'] = $this->qbank_model->level_list();
-        $this->load->view('header', $data);
-        $this->load->view('question/new_question_4', $data);
-        $this->load->view('footer', $data);
-    }
-
-    public function new_question_5($nop = '4') {
-
-        $logged_in = $this->session->userdata('logged_in');
-        if ($logged_in['su'] != '1') {
-            exit($this->lang->line('permission_denied'));
-        }
-        
-        if ($this->input->post('question')) {
-            $extra = FALSE;
-            if($this->session->userdata('extra_nop'))
-                $extra = $this->session->userdata('extra_nop');
-            
-            if ($this->qbank_model->insert_question_5($extra)) {
-                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
-                $this->session->unset_userdata('extra_nop');
-            } else {
-                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
-            }
-            redirect('qbank/pre_new_question/');
-        }
-
-        $data['nop'] = $nop;
-        $data['title'] = $this->lang->line('add_new');
-        // fetching category list
-        $data['category_list'] = $this->qbank_model->category_list();
-        // fetching level list
-        $data['level_list'] = $this->qbank_model->level_list();
-        $this->load->view('header', $data);
-        $this->load->view('question/new_question_5', $data);
-        $this->load->view('footer', $data);
-    }
-
+    //==========================================================================
+    //==========================================================================
+    //edit question
     public function edit_question_1($qid) {
 
         $logged_in = $this->session->userdata('logged_in');

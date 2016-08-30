@@ -252,4 +252,10 @@ $lang['default_txt'] = "Texte par défaut";
 $lang['coef'] = 'Coef';
 $lang['by_level'] = "par niveau";
 $lang['by_sequence'] = "par séquence";
+$lang['question_answer'] = "Questions/Réponses(Libre)";
+$lang['text_hole'] = "Texte à trou";
+$lang['split_word'] = "Découper les phrases";
+$lang['highlight'] = "Surligner les mots";
+$lang['reorganize'] = "Réorganiser les mots";
+$lang['link'] = "Relier";
 

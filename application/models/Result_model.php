@@ -24,37 +24,27 @@ Class Result_model extends CI_Model {
         
         // à revoir
         if ($logged_in['su'] == '0') {
-<<<<<<< HEAD
+
             //$this->db->where(DB_PREFIX.'result.uid', $uid);
             //$this->db->where(DB_PREFIX.'student_sch.uid', $uid);
-=======
-            $this->db->where(DB_PREFIX.'result.uid', $uid);
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
         }
 
         // à revoir aussi
         if ($status != '0') {
             $this->db->where(DB_PREFIX.'result.result_status', $status);
-<<<<<<< HEAD
-            
-=======
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
+
         }
 
 
 
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by('rid', 'desc');
-<<<<<<< HEAD
         //$this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
         $this->db->join(DB_PREFIX.'student_sch', DB_PREFIX.'result.ssid='.DB_PREFIX.'student_sch.ssid');//ajouté recemment
         $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'student_sch.uid');
         $this->db->join(DB_PREFIX.'quiz', DB_PREFIX.'quiz.quid='.DB_PREFIX.'result.quid');
         
-=======
-        $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
-        $this->db->join(DB_PREFIX.'quiz', DB_PREFIX.'quiz.quid='.DB_PREFIX.'result.quid');
->>>>>>> b2c11975d3b7bc11e70547a553d837f5adf2692c
         $query = $this->db->get(DB_PREFIX.'result');
         return $query->result_array();
     }
