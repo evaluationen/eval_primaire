@@ -124,14 +124,14 @@ function updatelevel(vall, lid) {
 }
 
 
-
 function hidenop(vall) {
-    if (vall == '1' || vall == '2' || vall == '3') {
+
+    var arr = ['1', '2', '3', '6'];
+    if ($.inArray(vall, arr) != -1) { // if type of the question in array
         $("#nop").css('display', 'block');
         $("#nop-long").css('display', 'none');
-
     } else {
-        if (vall == '5') {
+        if (vall == '5'){
             $("#nop-long").css('display', 'block');
         } else {
             $("#nop-long").css('display', 'none');
@@ -139,7 +139,6 @@ function hidenop(vall) {
         $("#nop").css('display', 'none');
     }
 }
-
 
 
 function addquestion(quid, qid) {
@@ -159,11 +158,6 @@ function addquestion(quid, qid) {
     });
 
 }
-
-
-
-
-
 
 var position_type = "Up";
 var global_quid = "0";
@@ -625,9 +619,9 @@ function is_check_user() {
 }
 
 $(document).ready(function () {
-    
+
     $('#confbtn').css('visibility', 'hidden');
-    
+
     if (document.getElementById("select-nop")) {
         var selected_nop = document.getElementById("select-nop").value;
         hidenop(selected_nop);
@@ -636,7 +630,7 @@ $(document).ready(function () {
 
     //affiche ou non les boutons export et suppression tant qu'un utilisateur est sélectionné
     is_check_user();
-    
+
     $('.select_user').click(function () {
         is_check_user();
     });

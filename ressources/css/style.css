@@ -1,141 +1,212 @@
 .container{
-	padding:5px;
+    padding:5px;
 }
 
 img{
-	
-	border:0px;
-	margin:10px;
-	/*min-width:100px;
-	min-height:100px;*/
-	
-	}
-	
-	
-	.question_container{
-		
-		padding:4px;
-		height:35%;
-		overflow-y:scroll;
-		padding:20px;
-		-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-border-radius: 5px;
- background: #FFFAFA;
- font-weight:bold;
-		 
-	}
-	.option_container{
-		
-		margin-top:30px;
-		padding:4px;
-		height:35%;
-		overflow-y:scroll;
-		 
-	}
-	.op{
-		
-		padding:4px;
-                /**/
-                float: left;
-                margin: 10px;
-				-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-border-radius: 8px;
-min-width:120px;
 
-	}
-	
-	.question_div{
-		
-		display:none;
-		border-top:1px solid #dddddd;
-	}
-	
-        .question_description{
-            background: #FFFAFA;
-            border: 1px solid #333;
-            width: 100%;
-            margin-bottom: 5%;
-			padding:20px;
-						-webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
-border-radius: 5px;
-font-weight:bold;
-        }
-	.footer_buttons{
-		
-		position:fixed;
-		bottom:0px;
-		background:#ffffff;
-		width:100%;
-		height:80px;
-		padding:4px;
-		
-		border-top:1px solid #dddddd;
-                //text-align: center;
-		
-		
-	}
-	
-	
-	.qbtn{
-		cursor:pointer;
-		width:40px;
-		height:30px;
-		border-radius:5px;
-		background-color:#212121;
-		color:#ffffff;
-		float:left;
-		font-size:15px;
-		padding:2px;
-		text-align:center;
-		margin:5px;
-	}
-	
-	
-	.save_answer_signal{
-		
-		float:right; 
-		width:6px;
-		height:6px;
-		border-radius:2px;
-		background-color:#666666;
-		 margin:2px;
-		
-	}
-	
-	
-	
-	
- #photograph{
-	 
-	 width:150px;
-	 height:150px;
- }
- 
- .span-tot{
-     color:#800000; 
-     font-weight: bold;
-     font-size: 80%;
-     font-variant: all-petite-caps;
-     font-family: serif;
-         
- }
- 
- .export{
+    border:0px;
+    margin:10px;
+    /*min-width:100px;
+    min-height:100px;*/
+
+}
+
+
+.question_container{
+
+    padding:4px;
+    height:35%;
+    overflow-y:scroll;
+    padding:20px;
+    -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    border-radius: 5px;
+    background: #FFFAFA;
+    font-weight:bold;
+
+}
+.option_container{
+
+    margin-top:30px;
+    padding:4px;
+    height:35%;
+    overflow-y:scroll;
+
+}
+.op{
+
+    padding:4px;
+    /**/
+    float: left;
+    margin: 10px;
+    -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    border-radius: 8px;
+    min-width:120px;
+
+}
+
+.question_div{
+
+    display:none;
+    border-top:1px solid #dddddd;
+}
+
+.question_description{
+    background: #FFFAFA;
+    border: 1px solid #333;
+    width: 100%;
+    margin-bottom: 5%;
+    padding:20px;
+    -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
+    border-radius: 5px;
+    font-weight:bold;
+}
+.footer_buttons{
+
+    position:fixed;
+    bottom:0px;
+    background:#ffffff;
+    width:100%;
+    height:80px;
+    padding:4px;
+
+    border-top:1px solid #dddddd;
+    //text-align: center;
+
+
+}
+
+
+.qbtn{
+    cursor:pointer;
+    width:40px;
+    height:30px;
+    border-radius:5px;
+    background-color:#212121;
+    color:#ffffff;
+    float:left;
+    font-size:15px;
+    padding:2px;
+    text-align:center;
+    margin:5px;
+}
+
+
+.save_answer_signal{
+
+    float:right; 
+    width:6px;
+    height:6px;
+    border-radius:2px;
+    background-color:#666666;
+    margin:2px;
+
+}
+
+
+
+
+#photograph{
+
+    width:150px;
+    height:150px;
+}
+
+.span-tot{
+    color:#800000; 
+    font-weight: bold;
+    font-size: 80%;
+    font-variant: all-petite-caps;
+    font-family: serif;
+
+}
+
+.export{
     margin-left: 10px;
     margin-right: 10px;
- }
+}
 
- .no-marg{
-     margin: 0;
- }
+.no-marg{
+    margin: 0;
+}
 
 
 audio {margin-top: 10px;}
 body {margin-bottom:150px;}
 td {padding-top:15px !important; padding-bottom:15px !important;}
+
+/** css table responsive**/
+.container .responstable {
+    margin: 1em 0;
+    width: 100%;
+    overflow: hidden;
+    background: #FFF;
+    color: #024457;
+    border-radius: 10px;
+    border: 1px solid #167F92;
+    border-collapse: unset;
+}
+.container .responstable tr {
+    border: 1px solid #D9E4E6;
+}
+.container .responstable tr:nth-child(odd) {
+    background-color: #EAF3F3;//d9edf7
+}
+.container .responstable th {
+    display: none;
+    border: 1px solid #FFF;
+    background-color: #167F92;//31708f
+    color: #FFF;
+    padding: 1em;
+}
+.container .responstable th:first-child {
+    display: table-cell;
+    //text-align: center;
+}
+.container .responstable th:nth-child(2) {
+    display: table-cell;
+}
+.container .responstable th:nth-child(2) span {
+    display: none;
+}
+.container .responstable th:nth-child(2):after {
+    content: attr(data-th);
+}
+@media (min-width: 480px) {
+    .container .responstable th:nth-child(2) span {
+        display: block;
+    }
+    .container .responstable th:nth-child(2):after {
+        display: none;
+    }
+}
+.container .responstable td {
+    display: block;
+    word-wrap: break-word;
+    max-width: 7em;
+}
+.container .responstable td:first-child {
+    display: table-cell;
+    //text-align: center;
+    border-right: 1px solid #D9E4E6;
+}
+@media (min-width: 480px) {
+    .container .responstable td {
+        border: 1px solid #D9E4E6;
+    }
+}
+.container .responstable th, .container .responstable td {
+    text-align: left;
+    margin: .5em 1em;
+}
+@media (min-width: 480px) {
+    .container .responstable th, .container .responstable td {
+        display: table-cell;
+        padding: 1em;
+    }
+}

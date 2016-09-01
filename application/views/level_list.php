@@ -38,7 +38,7 @@ foreach($level_list as $key => $val){
 <tr>
  <td><input type="text"   class="form-control"  value="<?php echo $val['level_name'];?>" onBlur="updatelevel(this.value,'<?php echo $val['lid'];?>');" ></td>
 <td>
-<a href="javascript:remove_entry('qbank/remove_level/<?php echo $val['lid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
+<a href="javascript:remove_entry('qbank/remove_level/<?php echo $val['lid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a>
 
 </td>
 </tr>

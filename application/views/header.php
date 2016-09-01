@@ -133,6 +133,7 @@
 
                                             <li><a href="<?php echo site_url('user/group_list'); ?>"><?php echo $this->lang->line('group_list'); ?></a></li>
                                             <li><a href="<?php echo site_url('qbank/category_list'); ?>"><?php echo $this->lang->line('category_list'); ?></a></li>
+                                            <li><a href="<?php echo site_url('category/sub_category_list');?>"><?php echo $this->lang->line('sub_category_list')?></a></li>
                                             <li><a href="<?php echo site_url('qbank/level_list'); ?>"><?php echo $this->lang->line('level_list'); ?></a></li>
  					    <li><a href="<?php echo site_url('user/config_mail'); ?>"><?php echo $this->lang->line('custom_mail_result'); ?></a></li>
                                             <li><a href="<?php echo site_url('dashboard/config'); ?>"><?php echo $this->lang->line('config'); ?></a></li>

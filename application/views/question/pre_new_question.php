@@ -21,7 +21,7 @@
                                 <option value="5"><?php echo $this->lang->line('long_answer'); ?></option>
                                 <!-- news type of questions-->
                                 <option value="6"><?php echo $this->lang->line('question_answer'); ?></option>
-                                <option value="7"><?php echo $this->lang->line('text_hole'); ?></option>
+                                <option value="7"><?php echo $this->lang->line('syllabes'); ?></option>
                                 <option value="8"><?php echo $this->lang->line('split_word');?></option>
                                 <option value="9"><?php echo $this->lang->line('highlight') ?></option>
                                 <option value="10"><?php  echo $this->lang->line('reorganize'); ?></option>

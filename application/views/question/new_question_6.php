@@ -26,26 +26,26 @@
                                 ?>
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label><?php echo $this->lang->line('select_sub_category'); ?></label>
                             <select class="form-control" name="scid">
                                 <!--- fill by jqeury -->
                             </select>
                         </div>    
-                        <div class="form-group">	 
-                            <label   ><?php echo $this->lang->line('select_level'); ?></label> 
+                        <!--div class="form-group">	 
+                            <label   ><?php //echo $this->lang->line('select_level');  ?></label> 
                             <select class="form-control" name="lid">
-                                <?php
-                                foreach ($level_list as $key => $val) {
-                                    ?>
+                        <?php
+                        /* foreach ($level_list as $key => $val) {
+                          ?>
 
-                                    <option value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
-                                    <?php
-                                }
-                                ?>
+                          <option value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
+                          <?php
+                          } */
+                        ?>
                             </select>
-                        </div>
+                        </div-->
                         <div class="form-group">	 
                             <label for="inputEmail"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ></textarea>
@@ -64,22 +64,11 @@
                             <?php
                         }
                         ?>
-
-
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
-
                     </div>
                 </div>
-
-
-
-
             </div>
         </form>
     </div>
-
-
-
-
 
 </div>
