@@ -33,16 +33,16 @@
                                 <!--- fill by jqeury -->
                             </select>
                         </div>    
-                        <!--div class="form-group">	 
-                            <label   ><?php //echo $this->lang->line('select_level');  ?></label> 
+                        <div class="form-group">	 
+                            <label   ><?php echo $this->lang->line('select_level');  ?></label> 
                             <select class="form-control" name="lid">
                         <?php
-                        /* foreach ($level_list as $key => $val) {
+                         foreach ($level_list as $key => $val) {
                           ?>
 
                           <option value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
                           <?php
-                          } */
+                          } 
                         ?>
                             </select>
                         </div-->

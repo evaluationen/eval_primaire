@@ -23,11 +23,13 @@ class Category_model extends CI_Model{
     function update($data){
         
         $sub_catg = array(
-          'label'   => $data->label,
-          'cid' => $data->cid 
+          'sub_catg_name'   => $data['sub_catg_name'],
+          'cid' => $data['cid']
         );
-        $this->db->where('scid', $data->scid);
+        $this->db->where('scid', $data['scid']);
         $this->db->update(DB_PREFIX.'sub_category', $sub_catg);
+        
+        return $this->db->trans_status();
     }
     
     //==========================================================================
@@ -62,6 +64,22 @@ class Category_model extends CI_Model{
         $query = $this->db->get(DB_PREFIX.'category');
         
         return $query->result();
+    }
+    
+    
+    
+    //sub_categ by id
+    function get_sub_category_by_id($scid){
+        if($scid){
+            $this->db->select(DB_PREFIX.'sub_category.*, '.DB_PREFIX.'category.category_name as categ');
+            $this->db->where('scid',  $scid);
+            $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid =' . DB_PREFIX.'sub_category.cid');
+            $query = $this->db->get(DB_PREFIX.'sub_category');
+            if($query->num_rows() == 1){
+                return $query->row();
+            }
+        }
+       return FALSE;
     }
     
     

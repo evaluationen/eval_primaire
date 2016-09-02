@@ -358,14 +358,16 @@ DROP TABLE IF EXISTS `eval_sub_category`;
 
 CREATE TABLE `eval_sub_category` (
   `scid` int(11) NOT NULL AUTO_INCREMENT,
-  `label` varchar(255) DEFAULT NULL,
+  `sub_catg_name` varchar(255) DEFAULT NULL,
   `cid` int(11) DEFAULT NULL,
   PRIMARY KEY (`scid`),
   KEY `FK_eval_sub_category_sub` (`cid`),
   CONSTRAINT `FK_eval_sub_category_sub` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `eval_sub_category` */
+
+insert  into `eval_sub_category`(`scid`,`sub_catg_name`,`cid`) values (1,'TEST 02',3),(2,'TEST update',2),(3,'re',3),(4,'test add',2);
 
 /*Table structure for table `eval_users` */
 

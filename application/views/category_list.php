@@ -36,7 +36,7 @@
                     foreach ($category_list as $key => $val) {
                         ?>
                         <tr>
-                            <td><input type="text"   class="form-control"  value="<?php echo $val['category_name']; ?>" onBlur="updatecategory(this.value, '<?php echo $val['cid']; ?>');" ></td>
+                            <td><input type="text"  class="form-control"  value="<?php echo $val['category_name']; ?>" onBlur="updatecategory(this.value, '<?php echo $val['cid']; ?>');" ></td>
                             <td>
                                 <a href="javascript:remove_entry('qbank/remove_category/<?php echo $val['cid']; ?>');"><img src="<?php echo base_url('ressources/images/cross.png'); ?>"></a>
 

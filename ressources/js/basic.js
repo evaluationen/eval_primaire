@@ -668,5 +668,37 @@ $(document).ready(function () {
         cancelButton: "Non"
     });
 
+
+
+    //update sub_category
+   /*$('.edit_sub').each(function(){
+       //var test = $(this).attr('data-id').val();
+       $(this).click(function(){
+           alert($(this).attr('data-id'));
+           var row = $(this).closest("tr");
+            tds = row.find("td:nth-child(2)");
+            alert(tds);
+       });
+       
+   });*/
+   
+   $('[data-toggle="modal"]').click(function(e) {
+	e.preventDefault();
+	var url = $(this).attr('href');
+	if (url.indexOf('#') == 0) {
+		$(url).modal('open');
+	} else {
+		$.get(url, function(data) {
+			$('<div class="modal hide fade">' + data + '</div>').modal();
+		}).success(function() { $('input:text:visible:first').focus(); });
+            }
+    });         
+    
+    
+   $('.edit-modal').on('click', function(e){
+        e.preventDefault();
+        $('#editModal').modal('show').find('.modal-body').load($(this).attr('href'));
+    }); 
+  
 });
 // end - quiz attempt functions 

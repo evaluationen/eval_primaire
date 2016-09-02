@@ -260,3 +260,4 @@ $lang['reorganize'] = "Réorganiser les mots";
 $lang['link'] = "Relier";
 $lang['select_sub_category'] = "Sélectionner une sous-domaine";
 $lang['sub_category_list'] = "Liste de sous-domaines";
+$lang['sub_category'] = "Sous domaine";

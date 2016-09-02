@@ -210,3 +210,22 @@ td {padding-top:15px !important; padding-bottom:15px !important;}
         padding: 1em;
     }
 }
+
+.responstable .disabled-subcat{
+    border: none;
+    background: none;
+    
+}
+
+.disabled-select{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+    border: none;
+    background: none;
+}
+
+.action{
+    margin: 0;
+}
