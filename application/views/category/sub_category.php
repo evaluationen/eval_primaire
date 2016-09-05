@@ -45,7 +45,7 @@
                                 <td>
                                     <!--a  href='<?php echo base_url('category/edit_sub_catg'); ?>' class='ls-modal'><img style="display: none" class="action save_sub" src="<?php //echo base_url('ressources/images/save.png') ?>" data-id="<?php echo $item->scid; ?>"/></a-->
                                     <a  href='<?php echo base_url('category/edit_sub_catg/' . $item->scid); ?>' class='edit-modal'><img class="action edit_sub" src="<?php echo base_url('ressources/images/edit.png') ?>" data-id="<?php echo $item->scid; ?>"/></a>
-                                    <img class="action deleted_sub" src="<?php echo base_url('ressources/images/cross.png') ?>" data-id="<?php echo $item->scid; ?>"/>
+                                    <a  href="<?php echo base_url('category/ajax_delete/' . $item->scid); ?>" class="action deleted_sub"> <img data-value="1-1" src="<?php echo base_url('ressources/images/cross.png') ?>" /></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -17,7 +17,7 @@
 		
 		 <form method="post" action="<?php echo site_url('qbank/insert_level/');?>">
 	
-<table class="table table-bordered">
+<table class="table table-bordered responstable">
 <tr>
  <th><?php echo $this->lang->line('level_name');?></th>
 <th><?php echo $this->lang->line('action');?> </th>

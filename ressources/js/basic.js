@@ -681,6 +681,45 @@ $(document).ready(function () {
        });
        
    });*/
+    //delete sub_category
+   
+    $(".deleted_sub").each(function(e){
+        $(this).click(function(){
+            if(confirm("Vous voulez vraiment les supprimer? Cette suppression est irreversible")){
+                window.location = $(this).attr('href');
+            }
+        //alert(JSON.stringify($(this).attr('href')));
+            
+            /*$(this).confirm({
+                title: "Suppression des utilisateurs sélectionnés",
+                text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
+                confirm: function (button) {
+                    button.fadeOut(2000).fadeIn(2000);
+                   alert(JSON.stringify($(this).attr('href')));
+                    $.ajax({
+                        type: "GET",
+                        url: $(this).attr('data-href'),
+                        //data: 'check_user=' + myCheckboxes,
+                        asynchronous: true,
+                        //cache: false,
+                        //beforeSend: function(){},
+                        success: function (data) {
+                            window.location = base_url + 'category/sub_category_list';
+
+                        }
+                    });
+                },
+                cancel: function (button) {
+                    button.fadeOut(2000).fadeIn(2000);
+                    //alert("You aborted the operation.");
+                },
+                confirmButton: "Oui",
+                cancelButton: "Non"
+            });*/
+        });
+        
+    });
+     
    
    $('[data-toggle="modal"]').click(function(e) {
 	e.preventDefault();

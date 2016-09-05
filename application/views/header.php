@@ -46,7 +46,7 @@
 
 
     </head>
-    <body>
+    <body >
 
         <?php
         if ($this->session->userdata('logged_in')) {

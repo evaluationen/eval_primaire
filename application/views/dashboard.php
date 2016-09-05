@@ -85,8 +85,8 @@
 <div class="row"></div>
 <div class="row"  > 
 <hr><br> 
-<h4><?php echo $this->lang->line('recently_registered');?></h4>
-<table class="table table-bordered" >
+<h4 style="margin-left: 5%"><?php echo $this->lang->line('recently_registered');?></h4>
+<table class="table table-bordered responstable" >
 <tr>
  <th><?php echo $this->lang->line('login');?></th>
 <th><?php echo $this->lang->line('first_name');?> <?php echo $this->lang->line('last_name');?></th>
@@ -121,8 +121,6 @@ foreach($result as $key => $val){
 
 
 </div>
-
-
-
-
 </div>
+</div>
+ 

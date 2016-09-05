@@ -1,5 +1,11 @@
 .container{
     padding:5px;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2) inset, 0 0 6px rgba(0, 0, 0, 0.4);
+    margin-left: auto;
+    margin-right: auto;
+    /*padding-left: 15px;
+    padding-right: 15px;*/
 }
 
 img{
@@ -74,13 +80,20 @@ img{
     width:100%;
     height:80px;
     padding:4px;
-
     border-top:1px solid #dddddd;
     //text-align: center;
-
-
 }
 
+.footer{
+    background-image: url('../../ressources/images/background.jpg');
+    background-repeat: no-repeat;
+    background-repeat: no-repeat;
+    font-family: Verdana,Geneva,sans-serif;
+    height: 149px;
+    line-height: 20px;
+    margin-top: 10px;
+    
+}
 
 .qbtn{
     cursor:pointer;
@@ -137,12 +150,12 @@ img{
 
 
 audio {margin-top: 10px;}
-body {margin-bottom:150px;}
+body {margin-bottom:150px;position: relative;}
 td {padding-top:15px !important; padding-bottom:15px !important;}
 
 /** css table responsive**/
 .container .responstable {
-    margin: 1em 0;
+    margin: 1em 1% 1em 0;
     width: 100%;
     overflow: hidden;
     background: #FFF;

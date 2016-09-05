@@ -201,7 +201,7 @@ if(($limit-($this->config->item('number_of_rows')))>=0){ $back=$limit-($this->co
 	<div style="clear:both;"></div>
 	<input type="submit" value="Import" style="margin-top:5px;" class="btn btn-default">
 	
-<a href="<?php echo base_url();?>sample/sample.xls" target="new">Click here</a> <?php echo $this->lang->line('upload_excel_info');?> 
+<a href="<?php echo base_url();?>ressources/sample/sample.xls" target="new">Click here</a> <?php echo $this->lang->line('upload_excel_info');?> 
 </form>
 
 </div>

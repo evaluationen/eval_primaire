@@ -35,7 +35,7 @@ class Category_model extends CI_Model{
     //==========================================================================
     function delete($sub_cat){
         if($sub_cat){
-            $del = $this->db->where('scid', $sub_cat)->delete(DB_PREFIX.'seb_category');
+            $del = $this->db->where('scid', $sub_cat)->delete(DB_PREFIX.'sub_category');
             if($del){
                 return TRUE;
             }

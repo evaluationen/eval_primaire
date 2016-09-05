@@ -1,3 +1,4 @@
+
 <?php
 if ($this->config->item('tinymce')) {
     if ($this->uri->segment(2) != 'attempt') {
@@ -118,6 +119,13 @@ if ($this->config->item('tinymce')) {
     }
 }
 ?>
-
+                    
 </body>
+<footer>
+        <div class=" col-lg-2"></div>
+        <div class=" col-lg-3 footer"></div>
+        <div class="col-lg-3 footer"></div>
+        <div class="col-lg-4 right footer"></div>
+</footer>
 </html>
+

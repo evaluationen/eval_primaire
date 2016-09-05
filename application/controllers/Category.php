@@ -74,6 +74,11 @@ class Category extends CI_Controller{
    }
    
    
+   function ajax_delete($scid){
+      
+       $this->category_model->delete($scid);
+       redirect('category/sub_category_list');
+   }
    //
    function edit_sub_catg($scid){
        $data = array();
@@ -83,11 +88,12 @@ class Category extends CI_Controller{
    }
    
    
+     
+   
    //
    function save_sub_catg(){
        
        $scid = $this->input->post('scid');
-       
        if($scid){
            //$this->form_validation_set_rules('', '', 'required') ;
            $data = array(
