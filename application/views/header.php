@@ -77,7 +77,7 @@
                                     ?> ><a href="<?php echo site_url('dashboard'); ?>"><?php echo $this->lang->line('dashboard'); ?></a></li>
 
 
-                                    <li class="dropdown" <?php
+                                    <!--li class="dropdown" <?php
                                     if ($this->uri->segment(1) == 'user') {
                                         echo "class='active'";
                                     }
@@ -88,8 +88,20 @@
                                             <li><a href="<?php echo site_url('user'); ?>"><?php echo $this->lang->line('users'); ?> <?php echo $this->lang->line('list'); ?></a></li>
 
                                         </ul>
-                                    </li>
+                                    </li-->
 
+                                    <li class="dropdown" <?php
+                                    if ($this->uri->segment(1) == 'student') {
+                                        echo "class='active'";
+                                    }
+                                    ?> >
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('students'); ?> <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="<?php echo site_url('student/new_student'); ?>"><?php echo $this->lang->line('add_new'); ?></a></li>
+                                            <li><a href="<?php echo site_url('student'); ?>"><?php echo $this->lang->line('student_list'); ?></a></li>
+
+                                        </ul>
+                                    </li>
 
 
                                     <li class="dropdown" <?php
@@ -135,6 +147,14 @@
                                             <li><a href="<?php echo site_url('qbank/category_list'); ?>"><?php echo $this->lang->line('category_list'); ?></a></li>
                                             <li><a href="<?php echo site_url('category/sub_category_list');?>"><?php echo $this->lang->line('sub_category_list')?></a></li>
                                             <li><a href="<?php echo site_url('qbank/level_list'); ?>"><?php echo $this->lang->line('level_list'); ?></a></li>
+                                            <hr style="margin-bottom: 4px">
+                                            
+                                            <li><a href="<?php echo site_url('school/circo'); ?>"><?php echo $this->lang->line('circo_list'); ?></a></li>
+                                            <li><a href="<?php echo site_url('school/etab_list'); ?>"><?php echo $this->lang->line('etab_list'); ?></a></li>
+                                            <li><a href="<?php echo site_url('school/cycle'); ?>"><?php echo $this->lang->line('cycle_list'); ?></a></li>
+                                            <li><a href="<?php echo site_url('school/class_list'); ?>"><?php echo $this->lang->line('class_list'); ?></a></li>
+                                            
+                                            <hr style="margin-bottom: 4px">
  					    <li><a href="<?php echo site_url('user/config_mail'); ?>"><?php echo $this->lang->line('custom_mail_result'); ?></a></li>
                                             <li><a href="<?php echo site_url('dashboard/config'); ?>"><?php echo $this->lang->line('config'); ?></a></li>
                                             <li><a href="<?php echo site_url('dashboard/css'); ?>"><?php echo $this->lang->line('custom_css'); ?></a></li>

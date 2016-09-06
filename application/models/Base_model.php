@@ -34,7 +34,7 @@ Class Base_model extends CI_Model {
             $params['level'] = 'H';
             $params['size'] = 10;
             $filename = $identifiant . md5($params['data']) . '.png';
-            $params['savename'] = FCPATH . 'images/qrcode/' . $filename;
+            $params['savename'] = FCPATH . 'ressources/qrcode/' . $filename;
 
             if ($this->ciqrcode->generate($params)) {
                 $qrcode = $filename;
@@ -73,7 +73,7 @@ Class Base_model extends CI_Model {
             
             $new_id = strtolower($identifiant.'-'.$rne_short);
 
-            $query = $this->db->select('login')->like('login', $new_id, 'after')->get(DB_PREFIX.'users');
+            $query = $this->db->select('login')->like('login', $new_id, 'after')->get(DB_PREFIX.'student');
             $array_index = array();
             if ($query->num_rows() > 0) {
                 $ids = $query->result();
@@ -175,6 +175,4 @@ Class Base_model extends CI_Model {
         return $date;
     }
     
-    
-
 }

@@ -106,7 +106,7 @@
 
 
 
-    <div class="row">
+    <!--div class="row">
         <div class="col-md-8">
             <h3><?php echo $this->lang->line('payment_history'); ?></h3>
             <table class="table table-bordered">
@@ -145,7 +145,7 @@ foreach ($payment_history as $key => $val) {
 
         </div>
 
-    </div>
+    </div-->
 
 
 

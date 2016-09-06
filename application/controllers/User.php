@@ -32,7 +32,7 @@ class User extends CI_Controller {
         $data['tot'] = $this->user_model->count_users();
 
         $this->load->view('header', $data);
-        $this->load->view('user_list', $data);
+        $this->load->view('users/user_list', $data);
         $this->load->view('footer', $data);
     }
 
@@ -48,7 +48,7 @@ class User extends CI_Controller {
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $this->load->view('header', $data);
-        $this->load->view('new_user', $data);
+        $this->load->view('users/new_user', $data);
         $this->load->view('footer', $data);
     }
 
@@ -133,15 +133,15 @@ class User extends CI_Controller {
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('user');
         // fetching user
         $data['result'] = $this->user_model->get_user($uid);
-        $this->load->model("payment_model");
-        $data['payment_history'] = $this->payment_model->get_payment_history($uid);
+        //$this->load->model("payment_model");
+        //$data['payment_history'] = $this->payment_model->get_payment_history($uid);
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
         $this->load->view('header', $data);
         if ($logged_in['su'] == '1') {
-            $this->load->view('edit_user', $data);
+            $this->load->view('users/edit_user', $data);
         } else {
-            $this->load->view('myaccount', $data);
+            $this->load->view('users/myaccount', $data);
         }
         $this->load->view('footer', $data);
     }
@@ -178,7 +178,7 @@ class User extends CI_Controller {
         $data['group_list'] = $this->user_model->group_list();
         $data['title'] = $this->lang->line('group_list');
         $this->load->view('header', $data);
-        $this->load->view('group_list', $data);
+        $this->load->view('users/group_list', $data);
         $this->load->view('footer', $data);
     }
 
@@ -259,7 +259,7 @@ class User extends CI_Controller {
             $data['users'] = $this->user_model->user_list_st();
         }
 
-        $this->pdf->load_view('export_user', $data);
+        $this->pdf->load_view('users/export_user', $data);
         $this->pdf->render();
         $this->pdf->stream($filename, $data);
     }

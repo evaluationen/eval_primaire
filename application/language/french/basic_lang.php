@@ -261,3 +261,16 @@ $lang['link'] = "Relier";
 $lang['select_sub_category'] = "Sélectionner une sous-domaine";
 $lang['sub_category_list'] = "Liste de sous-domaines";
 $lang['sub_category'] = "Sous domaine";
+$lang['cycle'] = "Cycle";
+
+$lang['circo_list'] = "Liste des circonscriptions";
+$lang['rne'] = 'RNE';
+$lang['circo'] = 'Circo.';
+$lang['etab_list'] = "Liste des Ecoles";
+$lang['school'] = "Ecole";
+$lang['cycle_list'] = "Liste de cycles";
+$lang['class_list'] = "Liste des classes";
+$lang['class'] = "Classe";
+
+$lang['students'] = "Elèves";
+$lang['student_list'] = "Liste des élèves";
