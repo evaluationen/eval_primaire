@@ -363,7 +363,7 @@ class User extends CI_Controller {
      * export et suppression
      *      */
 
-    function operation($action = NULL) {
+    /*function operation($action = NULL) {
 		ini_set('max_execution_time', -1);
         if ($this->input->post('check_user')) {
 
@@ -388,7 +388,7 @@ class User extends CI_Controller {
                 $this->pdf->stream($filename, $data);
             }
         }
-    }
+    }*/
 
     function config_mail() {
         $this->load->helper('form');

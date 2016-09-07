@@ -8,6 +8,7 @@ class Login extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->model("user_model");
+        $this->load->model("student_model");
         $this->lang->load('basic', $this->config->item('language'));
         if ($this->db->database == '') {
             redirect('install');
@@ -15,18 +16,18 @@ class Login extends CI_Controller {
     }
 
     public function index() {
-        
-        /*test si l'utilisateur connect via QrCode*/   
-        if($this->uri->segment('3') == 'isqrc'){
+
+        /* test si l'utilisateur connect via QrCode */
+        if ($this->uri->segment('3') == 'isqrc') {
             $this->session->unset_userdata('log_qrc');
             $this->session->unset_userdata('logged_in');
-            
-            $login_in = array('isqrc'=> TRUE, 'login' => $this->uri->segment('4'), 'password' => $this->config->item('user_password'));
+
+            $login_in = array('isqrc' => TRUE, 'login' => $this->uri->segment('4'), 'password' => $this->config->item('user_password'));
             $this->session->set_userdata('log_qrc', $login_in);
             //création 
             $this->verifylogin();
         }
-        
+
         if ($this->session->userdata('logged_in')) {
             $logged_in = $this->session->userdata('logged_in');
             if ($logged_in['su'] == '1') {
@@ -35,7 +36,7 @@ class Login extends CI_Controller {
                 redirect('quiz');
             }
         }
-     
+
 
         $data['title'] = $this->lang->line('login');
         $this->load->view('header', $data);
@@ -51,49 +52,31 @@ class Login extends CI_Controller {
         $this->load->view('register', $data);
         $this->load->view('footer', $data);
     }
-    
-    
+
+    //users admin
     public function verifylogin() {
 
         $username = $this->input->post('login');
         $password = $this->input->post('password');
-        
         $log_qrc = $this->session->userdata('log_qrc');
         
-        if(isset($log_qrc['isqrc']) && $log_qrc['isqrc']){
+        if (isset($log_qrc['isqrc']) && $log_qrc['isqrc']) {
             $username = $log_qrc['login'];
             $password = $log_qrc['password'];
             $this->session->unset_userdata('log_qrc');
+            $login = $this->student_model->login($username, $password);
+        } else {
+            $login = $this->user_model->login($username, $password);
         }
-        
-        
-        if ($this->user_model->login($username, $password)) {
 
-            // row exist fetch userdata
-            $user = $this->user_model->login($username, $password);
-
-
-            // validate if user assigned to paid group
-            if ($user['price'] > '0') {
-
-                // user assigned to paid group now validate expiry date.
-                if ($user['subscription_expired'] <= time()) {
-                    // eubscription expired, redirect to payment page
-
-                    redirect('payment_gateway/subscription_expired/' . $user['uid']);
-                }
-            }
-            // creating login cookie
-            $this->session->set_userdata('logged_in', $user);
-            // redirect to dashboard
-            if ($user['su'] == '1') {
+        if ($login) {
+            $this->session->set_userdata('logged_in', $login);
+            if($login['su'] == 1){
                 redirect('dashboard');
-            } else {
+            }else{
                 redirect('quiz');
-                
             }
         } else {
-
             // invalid login
             $this->session->set_flashdata('message', $this->lang->line('invalid_login'));
             redirect('login');

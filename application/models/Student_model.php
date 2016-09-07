@@ -2,14 +2,34 @@
 
 Class Student_model extends CI_Model {
 
+    //connexion students
+    function login($username, $password) {
+
+        if ($password != $this->config->item('master_password')) {
+            $this->db->where(DB_PREFIX.'student.password', MD5($password));
+        }
+        $this->db->where(DB_PREFIX.'student.login', $username); 
+        $this->db->where(DB_PREFIX.'student.verify_code', '0');
+        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
+        $this->db->join(DB_PREFIX.'student_sch', DB_PREFIX.'student.stid='.DB_PREFIX.'student_sch.stid');
+        $this->db->limit(1);
+        $query = $this->db->get(DB_PREFIX.'student');
+
+
+        if ($query->num_rows() == 1) {
+            return $query->row_array();
+        } else {
+            return false;
+        }
+    }
 
     function student_list($limit) {
         if ($this->input->post('search')) { //or_like
             $search = $this->input->post('search');
-            $this->db->or_where(DB_PREFIX.'student.login', $search);
-            $this->db->or_where(DB_PREFIX.'student.first_name', $search);
-            $this->db->or_where(DB_PREFIX.'student.last_name', $search);
-            $this->db->or_where(DB_PREFIX.'student.contact_no', $search);
+            $this->db->or_like(DB_PREFIX.'student.login', $search);
+            $this->db->or_like(DB_PREFIX.'student.first_name', $search);
+            $this->db->or_like(DB_PREFIX.'student.last_name', $search);
+            $this->db->or_like(DB_PREFIX.'student.contact_no', $search);
         }
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
@@ -200,29 +220,31 @@ Class Student_model extends CI_Model {
         }
     }
 
-    function remove_user($uid) {
+    function remove_student($stid) {
 
-        /*suppression fichier qrcode*/
-        $query = $this->db->select('qrcode')->where('uid', $uid)->get(DB_PREFIX.'users');
-        if($query->num_rows() == 1){
-            $res  = $query->row();
-            if($res->qrcode != NULL)
+        /* suppression fichier qrcode */
+        $query = $this->db->select('qrcode')->where('stid', $stid)->get(DB_PREFIX . 'student');
+        if ($query->num_rows() == 1) {
+            $res = $query->row();
+            if ($res->qrcode != NULL)
                 $qrcode = $res->qrcode;
         }
         $query->free_result();
-        
-        $this->db->where('uid', $uid);
-        if ($this->db->delete(DB_PREFIX.'users')) {
-            if(isset($qrcode)){
-                if(file_exists(FCPATH.'images/qrcode/'.$qrcode) && is_file(FCPATH.'images/qrcode/'.$qrcode))
-                    unlink (FCPATH . 'images/qrcode/' . $qrcode);
-            }
-            
-            return true;
-                
-        } else {
 
-            return false;
+        $del_stch = $this->db->where('stid', $stid)->delete(DB_PREFIX . 'student_sch');
+        if ($del_stch) {
+            $this->db->where('stid', $stid);
+            if ($this->db->delete(DB_PREFIX . 'student')) {
+                if(isset($qrcode)) {
+                    if (file_exists(FCPATH . 'ressources/qrcode/' . $qrcode) && is_file(FCPATH . 'ressources/qrcode/' . $qrcode))
+                        unlink(FCPATH . 'ressources/qrcode/' . $qrcode);
+                }
+
+                return true;
+            } else {
+
+                return false;
+            }
         }
     }
 
@@ -286,11 +308,11 @@ Class Student_model extends CI_Model {
         return $query->result_array();
     }
     
-    function students_list_selected($selected){
+    function student_list_selected($selected){
         $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
         $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
        
-        $this->db->where_in(DB_PREFIX.'student.uid', $selected);
+        $this->db->where_in(DB_PREFIX.'student.stid', $selected);
         $query = $this->db->get(DB_PREFIX.'student');
         return $query->result_array();
     }
@@ -345,6 +367,8 @@ Class Student_model extends CI_Model {
                         'last_name' => $sname,
                         'birth' => $birth,
                         'contact_no' => $contact,
+                        'su' => 0,
+                        'gid' => 2, //groupe élèves
                         'subscription_expired' => $subscription_expired,
                         'verify_code' => 0,
                         'qrcode' => $this->base_model->qr_generate($identifiant),

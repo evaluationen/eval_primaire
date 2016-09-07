@@ -638,7 +638,7 @@ $(document).ready(function () {
     //suppression des utilisateurs selectionnés
 
     $("#delete_selected").confirm({
-        title: "Suppression des utilisateurs sélectionnés",
+        title: "Suppression des élèves sélectionnés",
         text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
         confirm: function (button) {
             button.fadeOut(2000).fadeIn(2000);
@@ -649,13 +649,13 @@ $(document).ready(function () {
 
             $.ajax({
                 type: "POST",
-                url: base_url + "user/operation/del",
+                url: base_url + "student/operation/del",
                 data: 'check_user=' + myCheckboxes,
                 asynchronous: true,
                 //cache: false,
                 //beforeSend: function(){},
                 success: function (data) {
-                    window.location = base_url + 'user';
+                    window.location = base_url + 'student';
 
                 }
             });

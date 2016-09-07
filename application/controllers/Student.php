@@ -55,31 +55,76 @@ class Student extends CI_Controller {
     }
     
     /*remove student*/
-    function remove_student(){
-        
+     public function remove_student($stid) {
+
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] != '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+        if ($stid == '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+        //suppression image qrcode généré lors de la suppression user
+
+
+        if ($this->student_model->remove_student($stid)) {
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_remove') . " </div>");
+        }
+        redirect('student');
     }
+
     
     /*affect one student an other class*/
     function affect_student(){
-        
+       
     }
     
+    function operation($action = NULL) {
+	ini_set('max_execution_time', -1);
+        if ($this->input->post('check_user')) {
+
+            $selected = $this->input->post('check_user');
+
+            if ($action == 'del') {
+                $list = array_map('trim', explode(",", $selected));
+                foreach ($list as $uid) {
+                    $this->student_model->remove_student($uid);
+                }
+                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+            } elseif ($action == 'exp') {
+
+                
+                $this->load->library('pdf');
+
+                $filename = date('Y-m-d_H:i:s', time()) . '_eleves.pdf';
+                $data['students'] = $this->student_model->student_list_selected($selected);
+
+                $this->pdf->load_view('students/export_student', $data);
+                $this->pdf->render();
+                $this->pdf->stream($filename, $data);
+            }
+        }
+    }
+
     
     function export_student() {
-
+ 
         ini_set('max_execution_time', -1);
-        $this->load->model('user_model');
+        //$this->load->model('student_model');
         $this->load->library('pdf');
 
         if ($this->uri->segment('3')) {
             $filename = date('Y-m-d_H:i:s', time()) . '_.pdf';
-            $data['users'] = $this->user_model->student_list_st($this->uri->segment('3'));
+            $data['students'] = $this->student_model->student_list_st($this->uri->segment('3'));
         } else {
             $filename = date('Y-m-d_H:i:s', time()) . 'eleves.pdf';
-            $data['users'] = $this->user_model->student_list_st();
+            $data['students'] = $this->student_model->student_list_st();
         }
 
-        $this->pdf->load_view('student/export_student', $data);
+        $this->pdf->load_view('students/export_student', $data);
         $this->pdf->render();
         $this->pdf->stream($filename, $data);
     }

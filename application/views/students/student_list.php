@@ -8,7 +8,7 @@
     <div class="row">
  
   <div class="col-lg-6">
-    <form method="post" action="<?php echo site_url('user/index/');?>">
+    <form method="post" action="<?php echo site_url('student/index/');?>">
             <div class="input-group">
             <input type="text" class="form-control" name="search" placeholder="<?php echo $this->lang->line('search');?>...">
               <span class="input-group-btn">
@@ -27,12 +27,12 @@
 
 
   <div class="row">
-      <form id="user_checked" action="<?php echo base_url('user/operation/exp');?>" method="post">
+      <form id="user_checked" action="<?php echo base_url('student/operation/exp');?>" method="post">
           <br>      
   <div class="col-lg-6 col-md-12">
         <!--btn export -->
                 <div class="input-group">
-                    <a href="<?php echo site_url('user/export_user/')?>" class="btn btn-success rightalign export_all"><?php echo $this->lang->line('export_all');?></a>
+                    <a href="<?php echo site_url('student/export_student/')?>" class="btn btn-success rightalign export_all"><?php echo $this->lang->line('export_all');?></a>
                      <button type="submit" style="display:none" value="" class="btn btn-success rightalign export"><?php echo $this->lang->line('export_user_selected');?></button>
                      <a id="delete_selected" style="display:none" href="#" class="btn btn-danger rightalign export"><?php echo $this->lang->line('delete_user_selected');?></a>
                 </div>
@@ -90,8 +90,8 @@ foreach($result as $key => $val){
 </td>
 <td>
 <a href="<?php echo site_url('user/edit_user/'.$val['stid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/edit.png');?>"></a>
-<?php if ($val['stid'] != 1) : ?> <a href="javascript:remove_entry('user/remove_user/<?php echo $val['stid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
-<?php if(file_exists(FCPATH.'ressources/qrcode/'.$val['qrcode']) && is_file(FCPATH.'ressources/qrcode/'.$val['qrcode'])) : ?><a title="<?php echo $this->lang->line('print_user_qr')?>" href="<?php echo site_url('student/export_student/'.$val['stid']);?>"><img class="no-marg" src="<?php echo base_url('images/pdf.png');?>"></a><?php endif; ?>
+<?php if ($val['stid'] != 1) : ?> <a href="javascript:remove_entry('student/remove_student/<?php echo $val['stid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
+<?php if(file_exists(FCPATH.'ressources/qrcode/'.$val['qrcode']) && is_file(FCPATH.'ressources/qrcode/'.$val['qrcode'])) : ?><a title="<?php echo $this->lang->line('print_user_qr')?>" href="<?php echo site_url('student/export_student/'.$val['stid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/pdf.png');?>"></a><?php endif; ?>
 </td>
 </tr>
 

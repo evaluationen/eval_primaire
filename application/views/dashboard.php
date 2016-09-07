@@ -76,7 +76,7 @@
                 <tr>
                     <th><?php echo $this->lang->line('login'); ?></th>
                     <th><?php echo $this->lang->line('first_name'); ?> <?php echo $this->lang->line('last_name'); ?></th>
-                    <th><?php echo $this->lang->line('birth'); ?></th>
+                    <!--th><?php //echo $this->lang->line('birth'); ?></th-->
                     <th><?php echo $this->lang->line('group_name'); ?> </th>
                     <th><?php echo $this->lang->line('contact_no'); ?> </th>
                 </tr>
@@ -93,7 +93,7 @@
                     <tr>
                         <td><?php echo $val['login']; ?></td>
                         <td><?php echo $val['first_name']; ?> <?php echo $val['last_name']; ?></td>
-                        <td  class="tr_border" style="width: 20%"><?php echo $this->base_model->date_fr($val['birth']) ?></td>
+                        <!--td  class="tr_border" style="width: 20%"><?php //echo $this->base_model->date_fr($val['birth']) ?></td-->
                         <td><?php echo $val['group_name']; ?></td>
                         <td><?php echo $val['contact_no']; ?></td>
                     </tr>
