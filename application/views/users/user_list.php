@@ -55,9 +55,9 @@
 <th><?php echo $this->lang->line('login');?></th>
 <th><?php echo $this->lang->line('last_name');?></th>
 <th><?php echo $this->lang->line('first_name');?></th>
-<th><?php echo $this->lang->line('birth');?></th>
+<!--th><?php echo $this->lang->line('birth');?></th-->
 <th><?php echo $this->lang->line('group_name'); ?></th>
-<th><?php echo $this->lang->line('qrcode');?></th>
+<!--th><?php echo $this->lang->line('qrcode');?></th-->
 <th><?php echo $this->lang->line('action');?> </th>
 
 </tr>
@@ -80,18 +80,18 @@ foreach($result as $key => $val){
 <td><?php echo $val['login'];?></td>
 <td><?php echo $val['last_name'];?></td>
 <td><?php echo $val['first_name'];?></td>
-<td><?php echo $this->base_model->date_fr($val['birth'])?></td>
+<!--td><?php echo $this->base_model->date_fr($val['birth'])?></td-->
 <td><?php echo $val['group_name']; ?></td>
-<td style="width:20%"><?php if(file_exists(FCPATH.'images/qrcode/'.$val['qrcode']) && is_file(FCPATH.'images/qrcode/'.$val['qrcode'])) : ?>
-    <a href="<?php echo base_url('images/qrcode/'.$val['qrcode']);?>"><img class="no-marg" width="20%" src="<?php echo base_url('images/qrcode/'.$val['qrcode']);?>"></a>
+<!--td style="width:20%"><?php if(file_exists(FCPATH.'images/qrcode/'.$val['qrcode']) && is_file(FCPATH.'images/qrcode/'.$val['qrcode'])) : ?>
+    <a href="<?php //echo base_url('images/qrcode/'.$val['qrcode']);?>"><img class="no-marg" width="20%" src="<?php echo base_url('images/qrcode/'.$val['qrcode']);?>"></a>
     <?php else : ?>
     --    
     <?php endif; ?>
-</td>
+</td-->
 <td>
 <a href="<?php echo site_url('user/edit_user/'.$val['uid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/edit.png');?>"></a>
 <?php if ($val['uid'] != 1) : ?> <a href="javascript:remove_entry('user/remove_user/<?php echo $val['uid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
-<?php if(file_exists(FCPATH.'images/qrcode/'.$val['qrcode']) && is_file(FCPATH.'images/qrcode/'.$val['qrcode'])) : ?><a title="<?php echo $this->lang->line('print_user_qr')?>" href="<?php echo site_url('user/export_user/'.$val['uid']);?>"><img class="no-marg" src="<?php echo base_url('images/pdf.png');?>"></a><?php endif; ?>
+
 </td>
 </tr>
 
@@ -117,23 +117,23 @@ if(($limit-($this->config->item('number_of_rows')))>=0){ $back=$limit-($this->co
 
 <?php endif; ?>
 
-<div class="login-panel panel panel-default">
+<!--div class="login-panel panel panel-default">
 		<div class="panel-body"> 
 
-<?php echo form_open('user/import',array('enctype'=>'multipart/form-data')); ?>
- <h4><?php echo $this->lang->line('import_user');?></h4> 
+<?php //echo form_open('user/import',array('enctype'=>'multipart/form-data')); ?>
+ <h4><?php //echo $this->lang->line('import_user');?></h4> 
  
  
-<?php echo $this->lang->line('upload_excel');?>
+<?php //echo $this->lang->line('upload_excel');?>
 	<input type="hidden" name="size" value="3500000">
         <input type="file" name="xlsfile" style="width:150px;float:left;margin-left:10px;" accept="">
 	<div style="clear:both;"></div>
 	<input type="submit" value="Import" style="margin-top:5px;" class="btn btn-default">
 	
-<a href="<?php echo base_url();?>ressources/sample/sample_user.xls" target="new">Click here</a> <?php echo $this->lang->line('upload_excel_info');?> 
+<a href="<?php //echo base_url();?>ressources/sample/sample_user.xls" target="new">Click here</a> <?php //echo $this->lang->line('upload_excel_info');?> 
 </form>
 
 </div>
 </div>
 
-</div>
+</div-->

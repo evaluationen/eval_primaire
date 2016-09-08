@@ -615,6 +615,30 @@ Class Qbank_model extends CI_Model {
         }
         return false;
     }
+    
+    
+    //==========================================================================
+    
+    function insert_parent_q(){
+        $data = array(
+            'title' => $this->input->post('title'),
+            'description' => $this->input->post('description')
+        );
+        $this->db->insert(DB_PREFIX.'qbank_parent', $data);
+        
+        return TRUE;
+    }
+    
+    
+    //==========================================================================
+    function get_parent_qlist(){
+        if($this->input->post('search')){
+            $this->db->or_where(DB_PREFIX.'qbank_parent.title', $search);
+            $this->db->or_where(DB_PREFIX.'qbank_parent.description', $search);
+        }
+        $query = $this->db->get(DB_PREFIX.'qbank_parent');
+        return $query->result();
+    }
 
 }
 

@@ -21,13 +21,28 @@ class School_model extends CI_Model {
         return $query->result();
     }
 
-    function insert_class($data) {
+    function insert_class() {
 
+        $data = array(
+            'code' => $this->input->post('code'),
+            'cyid' => $this->input->post('cyid')
+        );
         if ($this->db->insert(DB_PREFIX . 'class', $data)) {
 
             return true;
         } else {
 
+            return false;
+        }
+    }
+    
+    
+    function remove_class($clid) {
+
+        $this->db->where('clid', $clid);
+        if ($this->db->delete(DB_PREFIX . 'class')) {
+            return true;
+        } else {
             return false;
         }
     }

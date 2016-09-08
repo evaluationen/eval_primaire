@@ -242,3 +242,7 @@ td {padding-top:15px !important; padding-bottom:15px !important;}
 .action{
     margin: 0;
 }
+
+.error{
+    color: #FF0000;
+}

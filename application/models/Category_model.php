@@ -46,7 +46,7 @@ class Category_model extends CI_Model{
     //get sub_category by category_id
     function get_sub_category($catg_id = FALSE){
         if($catg_id){
-           $this->db->where('cid', $catg_id);
+           $this->db->where(DB_PREFIX.'sub_category.cid', $catg_id);
        }
        $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid = '.DB_PREFIX.'sub_category.cid');
        $query = $this->db->get(DB_PREFIX.'sub_category');

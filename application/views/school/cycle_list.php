@@ -31,7 +31,6 @@
                             <td><input type="text"   class="form-control"  value="<?php echo $val->cycle_name; ?>" onBlur="updatecycle(this.value, '<?php echo $val->cyid; ?>');" ></td>
                             <td>
                                 <a href="javascript:remove_entry('school/remove_cycle/<?php echo $val->cyid; ?>');"><img src="<?php echo base_url('ressources/images/cross.png'); ?>"></a>
-
                             </td>
                         </tr>
 

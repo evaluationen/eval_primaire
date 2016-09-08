@@ -67,10 +67,18 @@ class Category extends CI_Controller{
    
    
    //function ajax
-   function ajax_sub_category($ctgid){
-       $list_sub = $this->category_model->get_sub_category($ctgid);      
-       print_r($list_sub);
-       die;
+   function ajax_sub_category(){
+       $catg_id  = $this->input->post('catg_id');
+       $list_sub = $this->category_model->get_sub_category($catg_id);     
+       if(!empty($list_sub)){
+           foreach ($list_sub as $key => $value) {
+               echo '<option value="'.$value->scid.'">'.$value->sub_catg_name.'</option>';
+           }
+       }else{
+           echo '<option selected="selected">Aucun sous domaine</option>';
+       }
+       /*print_r($list_sub);
+       die;*/
    }
    
    

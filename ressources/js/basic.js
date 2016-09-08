@@ -131,7 +131,7 @@ function hidenop(vall) {
         $("#nop").css('display', 'block');
         $("#nop-long").css('display', 'none');
     } else {
-        if (vall == '5'){
+        if (vall == '5') {
             $("#nop-long").css('display', 'block');
         } else {
             $("#nop-long").css('display', 'none');
@@ -618,6 +618,8 @@ function is_check_user() {
     }
 }
 
+
+
 $(document).ready(function () {
 
     $('#confbtn').css('visibility', 'hidden');
@@ -671,73 +673,113 @@ $(document).ready(function () {
 
 
     //update sub_category
-   /*$('.edit_sub').each(function(){
-       //var test = $(this).attr('data-id').val();
-       $(this).click(function(){
-           alert($(this).attr('data-id'));
-           var row = $(this).closest("tr");
-            tds = row.find("td:nth-child(2)");
-            alert(tds);
-       });
-       
-   });*/
+    /*$('.edit_sub').each(function(){
+     //var test = $(this).attr('data-id').val();
+     $(this).click(function(){
+     alert($(this).attr('data-id'));
+     var row = $(this).closest("tr");
+     tds = row.find("td:nth-child(2)");
+     alert(tds);
+     });
+     
+     });*/
     //delete sub_category
-   
-    $(".deleted_sub").each(function(e){
-        $(this).click(function(){
-            if(confirm("Vous voulez vraiment les supprimer? Cette suppression est irreversible")){
+
+    $(".deleted_sub").each(function (e) {
+        $(this).click(function () {
+            if (confirm("Vous voulez vraiment les supprimer? Cette suppression est irreversible")) {
                 window.location = $(this).attr('href');
             }
-        //alert(JSON.stringify($(this).attr('href')));
-            
-            /*$(this).confirm({
-                title: "Suppression des utilisateurs sélectionnés",
-                text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
-                confirm: function (button) {
-                    button.fadeOut(2000).fadeIn(2000);
-                   alert(JSON.stringify($(this).attr('href')));
-                    $.ajax({
-                        type: "GET",
-                        url: $(this).attr('data-href'),
-                        //data: 'check_user=' + myCheckboxes,
-                        asynchronous: true,
-                        //cache: false,
-                        //beforeSend: function(){},
-                        success: function (data) {
-                            window.location = base_url + 'category/sub_category_list';
+            //alert(JSON.stringify($(this).attr('href')));
 
-                        }
-                    });
-                },
-                cancel: function (button) {
-                    button.fadeOut(2000).fadeIn(2000);
-                    //alert("You aborted the operation.");
-                },
-                confirmButton: "Oui",
-                cancelButton: "Non"
-            });*/
+            /*$(this).confirm({
+             title: "Suppression des utilisateurs sélectionnés",
+             text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
+             confirm: function (button) {
+             button.fadeOut(2000).fadeIn(2000);
+             alert(JSON.stringify($(this).attr('href')));
+             $.ajax({
+             type: "GET",
+             url: $(this).attr('data-href'),
+             //data: 'check_user=' + myCheckboxes,
+             asynchronous: true,
+             //cache: false,
+             //beforeSend: function(){},
+             success: function (data) {
+             window.location = base_url + 'category/sub_category_list';
+             
+             }
+             });
+             },
+             cancel: function (button) {
+             button.fadeOut(2000).fadeIn(2000);
+             //alert("You aborted the operation.");
+             },
+             confirmButton: "Oui",
+             cancelButton: "Non"
+             });*/
         });
-        
+
     });
-     
-   
-   $('[data-toggle="modal"]').click(function(e) {
-	e.preventDefault();
-	var url = $(this).attr('href');
-	if (url.indexOf('#') == 0) {
-		$(url).modal('open');
-	} else {
-		$.get(url, function(data) {
-			$('<div class="modal hide fade">' + data + '</div>').modal();
-		}).success(function() { $('input:text:visible:first').focus(); });
-            }
-    });         
-    
-    
-   $('.edit-modal').on('click', function(e){
+
+
+    $('[data-toggle="modal"]').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+        if (url.indexOf('#') == 0) {
+            $(url).modal('open');
+        } else {
+            $.get(url, function (data) {
+                $('<div class="modal hide fade">' + data + '</div>').modal();
+            }).success(function () {
+                $('input:text:visible:first').focus();
+            });
+        }
+    });
+
+
+    $('.edit-modal').on('click', function (e) {
         e.preventDefault();
         $('#editModal').modal('show').find('.modal-body').load($(this).attr('href'));
-    }); 
-  
+    });
+
+
+
+    //check object question
+    if ($('#check-object').is(":checked")) {
+        $('.object-list').css('display', 'block');
+    } else {
+        $('.object-list').css('display', 'none');
+
+    }
+
+    $('#check-object').click(function () {
+        if ($(this).is(":checked")) {
+            /*var returnVal = confirm("Are you sure?");
+             $(this).attr("checked", returnVal);*/
+            $('.object-list').css('display', 'block');
+
+        } else {
+            $('.object-list').css('display', 'none');
+        }
+
+    });
+
+    //=============================================================================
+    $('.catg').on('change', function (e) {
+        var id = $(this).val();
+        var dataString = 'catg_id=' + id;
+        $.ajax({
+            type: "POST",
+            url: base_url + "category/ajax_sub_category/",
+            data: dataString,
+            cache: false,
+            success: function (html)
+            {
+                $(".sub-catg").html(html);
+            }
+        });
+    });
+
 });
 // end - quiz attempt functions 

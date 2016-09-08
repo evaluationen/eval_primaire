@@ -43,17 +43,17 @@
                                     </select-->
                                 </td>
                                 <td>
-                                    <!--a  href='<?php echo base_url('category/edit_sub_catg'); ?>' class='ls-modal'><img style="display: none" class="action save_sub" src="<?php //echo base_url('ressources/images/save.png') ?>" data-id="<?php echo $item->scid; ?>"/></a-->
+                                  
                                     <a  href='<?php echo base_url('category/edit_sub_catg/' . $item->scid); ?>' class='edit-modal'><img class="action edit_sub" src="<?php echo base_url('ressources/images/edit.png') ?>" data-id="<?php echo $item->scid; ?>"/></a>
-                                    <a  href="<?php echo base_url('category/ajax_delete/' . $item->scid); ?>" class="action deleted_sub"> <img data-value="1-1" src="<?php echo base_url('ressources/images/cross.png') ?>" /></a>
+                                    <a  href="<?php echo base_url('category/ajax_delete/' . $item->scid); ?>" class="action deleted_sub"> <img src="<?php echo base_url('ressources/images/cross.png') ?>" /></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
                     <tr>
-                        <td><input required="" name="sub_catg_name" value=""></td>
+                        <td><input class="form-control" required="" name="sub_catg_name" value=""></td>
                         <td>
-                            <select name="cid" required="">
+                            <select class="form-control" name="cid" required="">
                                 <option value="">--<?php echo $this->lang->line('select_category'); ?>--</option>
                                 <?php
                                 if ($catg) {

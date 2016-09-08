@@ -9,6 +9,7 @@ class Qbank extends CI_Controller {
 
         $this->load->database();
         $this->load->model("qbank_model");
+        $this->load->library("form_validation");
         $this->lang->load('basic', $this->config->item('language'));
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
@@ -145,6 +146,18 @@ class Qbank extends CI_Controller {
         $this->load->view('footer', $data);
     }
 
+    
+    //==========================================================================
+    function parent_question(){
+        $this->form_validation->set_rules('title', $this->lang->line('title'), 'required');
+        $this->form_validation->set_rules('description', $this->lang->line('description'), 'required');
+        
+        if($this->form_validation->run()){
+            //insert question parent = link with qbank
+            $this->qbank_model->insert_parent_q();
+            
+        }
+    }
     //==========================================================================
     //==========================================================================
     //edit question
@@ -495,5 +508,33 @@ class Qbank extends CI_Controller {
         $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_imported_successfully') . " </div>");
         redirect('qbank');
     }
+    
+    
+    
+    //==========================================================================
+    //parent question
+    //==========================================================================
+    function group_question(){
+        $data['title'] = $this->lang->line('group_question');
+        $data['olist'] = $this->qbank_model->get_parent_qlist();
+        $this->load->view('question/question_plist', $data);
+    }
+    
+    
+    //==========================================================================
+    function group_question_add(){
+       $data['title'] = $this->lang->line('add_new');
+       $this->form_validation->set_rules('title', $this->lang->line('title'), 'required|trim');
+       $this->form_validation->set_rules('description', $this->lang->line('description'), 'required|trim');
+       if($this->form_validation->run()){
+            
+        }else{
+            
+        }
+       $this->load->view('question/question_padd', $data); 
+    }
+    
+    
+  
 
 }

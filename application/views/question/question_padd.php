@@ -1,0 +1,35 @@
+<?php $this->load->view('header'); ?>
+<div class="container">
+    <h3><?php echo $title; ?></h3>
+    <div class="row">
+        <form method="post" action="<?php echo site_url('qbank/group_question_add'); ?>">
+            <div class="col-md-8">
+                <br> 
+                <div class="login-panel panel panel-default">
+                    <div class="panel-body"> 
+                        <?php
+                        if ($this->session->flashdata('message')) {
+                            echo $this->session->flashdata('message');
+                        }
+                        ?>
+                        <?php echo validation_errors('<div class="error">', '</div>'); ?>
+                        <div class="form-group">	 
+                            <label for="title"  ><?php echo $this->lang->line('title'); ?></label> 
+                            <input type="text" required=""  name="title"  class="form-control" value="" placeholder="<?php echo $this->lang->line('title');?>">
+                        </div>
+                        
+                        <div class="form-group">	 
+                            <label for="description"  ><?php echo $this->lang->line('description'); ?></label> 
+                            <textarea  name="description"  class="form-control"></textarea>
+                            <?php //echo form_error('description'); ?>
+                        </div>
+                     
+
+                        <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>
+<?php $this->load->view('footer'); ?>

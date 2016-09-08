@@ -71,16 +71,15 @@ DROP TABLE IF EXISTS `eval_class`;
 CREATE TABLE `eval_class` (
   `clid` int(11) NOT NULL AUTO_INCREMENT,
   `code` char(3) NOT NULL,
-  `class_name` varchar(255) DEFAULT NULL,
   `cyid` int(11) NOT NULL,
   UNIQUE KEY `clid` (`clid`),
   KEY `FK_eval_class` (`cyid`),
   CONSTRAINT `FK_eval_class` FOREIGN KEY (`cyid`) REFERENCES `eval_cycle` (`cyid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 /*Data for the table `eval_class` */
 
-insert  into `eval_class`(`clid`,`code`,`class_name`,`cyid`) values (1,'PS',NULL,1),(2,'MS',NULL,1),(3,'GS',NULL,1),(4,'CP',NULL,2),(5,'CE1',NULL,2),(6,'CE2',NULL,3),(7,'CM1',NULL,3),(8,'CM2',NULL,3);
+insert  into `eval_class`(`clid`,`code`,`cyid`) values (1,'PS',1),(2,'MS',1),(3,'GS',1),(4,'CP',2),(5,'CE1',2),(6,'CE2',3),(7,'CM1',3),(8,'CM2',3);
 
 /*Table structure for table `eval_coef` */
 
@@ -177,7 +176,7 @@ CREATE TABLE `eval_group` (
 
 /*Data for the table `eval_group` */
 
-insert  into `eval_group`(`gid`,`group_name`,`validate_for_days`) values (1,'Elèves',0),(2,'Professeur\r\n',0);
+insert  into `eval_group`(`gid`,`group_name`,`validate_for_days`) values (1,'Super Admin\r\n',0),(2,'Elèves',0);
 
 /*Table structure for table `eval_level` */
 
@@ -187,11 +186,11 @@ CREATE TABLE `eval_level` (
   `lid` int(11) NOT NULL AUTO_INCREMENT,
   `level_name` varchar(1000) NOT NULL,
   PRIMARY KEY (`lid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_level` */
 
-insert  into `eval_level`(`lid`,`level_name`) values (1,'Niveau 1');
+insert  into `eval_level`(`lid`,`level_name`) values (1,'Niveau 1'),(2,'Niveau 2'),(3,'Niveau 3'),(4,'Niveau 4'),(5,'Niveau 5');
 
 /*Table structure for table `eval_options` */
 
@@ -223,6 +222,7 @@ CREATE TABLE `eval_qbank` (
   `default_txt` mediumtext NOT NULL,
   `lid` int(11) NOT NULL,
   `cid` int(11) NOT NULL,
+  `pqid` int(11) DEFAULT NULL,
   `no_time_served` int(11) NOT NULL DEFAULT '0',
   `no_time_corrected` int(11) NOT NULL DEFAULT '0',
   `no_time_incorrected` int(11) NOT NULL DEFAULT '0',
@@ -230,11 +230,26 @@ CREATE TABLE `eval_qbank` (
   PRIMARY KEY (`qid`),
   KEY `FK_eval_qbank_categ` (`cid`),
   KEY `FK_eval_qbank_level` (`lid`),
+  KEY `FK_eval_qbank_parent` (`pqid`),
   CONSTRAINT `FK_eval_qbank_categ` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`),
-  CONSTRAINT `FK_eval_qbank_level` FOREIGN KEY (`lid`) REFERENCES `eval_level` (`lid`)
+  CONSTRAINT `FK_eval_qbank_level` FOREIGN KEY (`lid`) REFERENCES `eval_level` (`lid`),
+  CONSTRAINT `FK_eval_qbank_parent` FOREIGN KEY (`pqid`) REFERENCES `eval_qbank_parent` (`pqid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_qbank` */
+
+/*Table structure for table `eval_qbank_parent` */
+
+DROP TABLE IF EXISTS `eval_qbank_parent`;
+
+CREATE TABLE `eval_qbank_parent` (
+  `pqid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `description` text,
+  UNIQUE KEY `pqid` (`pqid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+
+/*Data for the table `eval_qbank_parent` */
 
 /*Table structure for table `eval_qcl` */
 
@@ -348,6 +363,7 @@ CREATE TABLE `eval_student` (
   `last_name` varchar(100) NOT NULL,
   `birth` date NOT NULL,
   `contact_no` varchar(1000) NOT NULL,
+  `su` int(11) DEFAULT NULL,
   `gid` int(11) DEFAULT NULL,
   `subscription_expired` int(11) NOT NULL DEFAULT '0',
   `verify_code` int(11) NOT NULL DEFAULT '0',
@@ -362,7 +378,7 @@ CREATE TABLE `eval_student` (
 
 /*Data for the table `eval_student` */
 
-insert  into `eval_student`(`stid`,`login`,`password`,`first_name`,`last_name`,`birth`,`contact_no`,`gid`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`) values (4,'cjean-marie-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','CORVA','JEAN MARIE','2009-12-01','0639000000',1,1623196800,0,'cjean-marie-022vc90df17fb1f14cc569bcaf39fd11635a.png',1,1),(5,'fgustavo-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','FLEINK','GUSTAVO','2006-05-23','0639000000',1,1591660800,0,'fgustavo-022vca98ce2f2839217e5651430d39052fd0.png',1,1),(6,'cjean-marie1-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','CORVA','JEAN MARIE','2009-12-01','0639000000',1,1623196800,0,'cjean-marie1-022v59695b226b15aa433cc30b29f6ad66a3.png',1,1),(7,'fgustavo1-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','FLEINK','GUSTAVO','2006-05-23','0639000000',1,1591660800,0,'fgustavo1-022v3d3af89ecd8ec827c0fac894364d5a93.png',1,1);
+insert  into `eval_student`(`stid`,`login`,`password`,`first_name`,`last_name`,`birth`,`contact_no`,`su`,`gid`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`) values (7,'fgustavo1-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','FLEINK','GUSTAVO','2006-05-23','0639000000',0,2,1591660800,0,'fgustavo1-022v3d3af89ecd8ec827c0fac894364d5a93.png',1,1);
 
 /*Table structure for table `eval_student_sch` */
 
@@ -395,7 +411,7 @@ CREATE TABLE `eval_student_sch` (
 
 /*Data for the table `eval_student_sch` */
 
-insert  into `eval_student_sch`(`ssid`,`stid`,`add_uid`,`edit_uid`,`eid`,`clid`,`sid`,`date_add`,`date_upd`) values (1,4,1,1,1,4,1,'2016-09-06 13:51:46','2016-09-06 13:51:46'),(2,5,1,1,1,5,1,'2016-09-06 13:51:46','2016-09-06 13:51:46'),(3,6,1,1,1,4,1,'2016-09-06 13:53:55','2016-09-06 13:53:55'),(4,7,1,1,1,5,1,'2016-09-06 13:53:55','2016-09-06 13:53:55');
+insert  into `eval_student_sch`(`ssid`,`stid`,`add_uid`,`edit_uid`,`eid`,`clid`,`sid`,`date_add`,`date_upd`) values (4,7,1,1,1,5,1,'2016-09-06 13:53:55','2016-09-06 13:53:55');
 
 /*Table structure for table `eval_sub_category` */
 
@@ -408,11 +424,11 @@ CREATE TABLE `eval_sub_category` (
   PRIMARY KEY (`scid`),
   KEY `FK_eval_sub_category_sub` (`cid`),
   CONSTRAINT `FK_eval_sub_category_sub` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `eval_sub_category` */
 
-insert  into `eval_sub_category`(`scid`,`sub_catg_name`,`cid`) values (5,'LECTURE',2);
+insert  into `eval_sub_category`(`scid`,`sub_catg_name`,`cid`) values (5,'LECTURE',2),(6,'NOMBRES ET CALCULS',3);
 
 /*Table structure for table `eval_users` */
 
@@ -427,6 +443,7 @@ CREATE TABLE `eval_users` (
   `last_name` varchar(100) NOT NULL,
   `contact_no` varchar(1000) NOT NULL,
   `gid` int(11) DEFAULT NULL,
+  `verify_code` int(11) DEFAULT NULL,
   `su` int(11) NOT NULL DEFAULT '0',
   `admin_id` int(11) NOT NULL,
   `eid` int(11) NOT NULL,
@@ -441,7 +458,7 @@ CREATE TABLE `eval_users` (
 
 /*Data for the table `eval_users` */
 
-insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`contact_no`,`gid`,`su`,`admin_id`,`eid`,`date_add`,`date_upd`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','Nathalie','HARITINIAINA','0269618838',1,1,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
+insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`contact_no`,`gid`,`verify_code`,`su`,`admin_id`,`eid`,`date_add`,`date_upd`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','Nathalie','HARITINIAINA','0269618838',1,0,1,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

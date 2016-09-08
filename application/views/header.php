@@ -114,7 +114,8 @@
                                             <li><a href="<?php echo site_url('qbank/pre_new_question'); ?>"><?php echo $this->lang->line('add_new'); ?></a></li>
                                             <li><a href="<?php echo site_url('qbank'); ?>"><?php echo $this->lang->line('question'); ?> <?php echo $this->lang->line('list'); ?></a></li>
                                             <hr style="margin-bottom: 4px">
-                                            <li><a href="">Sujet des questions</a></li>
+                                            <li><a href="<?php echo site_url('qbank/group_question'); ?>"><?php echo $this->lang->line('group_question');?></a></li>
+                                            <li><a href="<?php echo site_url('qbank/group_question_add'); ?>"><?php echo $this->lang->line('add_new');?></a></li>
                                         </ul>
                                     </li>
 

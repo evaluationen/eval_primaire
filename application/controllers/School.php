@@ -47,7 +47,7 @@ class School extends CI_Controller {
 
     public function insert_circo() {
 
-        $this->form_validation->set_rules('rne', $this->lang->line('rne'), 'required|is_unique['.DB_PREFIX.'circo.rne]');
+        $this->form_validation->set_rules('rne', $this->lang->line('rne'), 'required|is_unique[' . DB_PREFIX . 'circo.rne]');
         $this->form_validation->set_rules('label', $this->lang->line('circo'), 'required');
 
         if ($this->form_validation->run()) {
@@ -56,8 +56,8 @@ class School extends CI_Controller {
             } else {
                 $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
             }
-        }else{
-                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
         }
         redirect('school/circo/');
     }
@@ -96,17 +96,37 @@ class School extends CI_Controller {
     //===========================================================================
     //classes
     function class_list() {
-        
+        $data['title'] = $this->lang->line('class_list');
+        $data['class_list'] = $this->school_model->list_class();
+        $data['cycle_list'] = $this->school_model->list_cycle();
+        $this->load->view('school/class_list', $data);
     }
 
     public function insert_class() {
 
-        if ($this->school_model->insert_class()) {
-            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+        $this->form_validation->set_rules('code', $this->lang->line('class'), 'required|is_unique[' . DB_PREFIX . 'class.code]');
+        $this->form_validation->set_rules('cyid', $this->lang->line('cycle'), 'required|trim');
+
+        if ($this->form_validation->run()) {
+            if ($this->school_model->insert_class()) {
+                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+            } else {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
+            }
         } else {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
         }
         redirect('school/class_list/');
+    }
+    
+     public function remove_class($clid) {
+
+        if ($this->school_model->remove_class($clid)) {
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_remove') . " </div>");
+        }
+        redirect('school/class_list');
     }
 
 }

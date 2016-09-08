@@ -153,7 +153,7 @@ $lang['category_name'] = "Nom de domaine";
 $lang['level_list'] = "Liste de niveau";
 $lang['level_name'] = "Niveau";
 $lang['select_group'] = "Sélectionner le groupe";
-$lang['select_category'] = "Sélectionner une domaine";
+$lang['select_category'] = "Sélectionner un domaine";
 $lang['category'] = "Domaine";
 $lang['percentage'] = "Pourcentage";
 $lang['select_level'] = "Choisir le niveau";
@@ -258,19 +258,24 @@ $lang['split_word'] = "Découper les phrases";
 $lang['highlight'] = "Surligner les mots";
 $lang['reorganize'] = "Réorganiser les mots";
 $lang['link'] = "Relier";
-$lang['select_sub_category'] = "Sélectionner une sous-domaine";
+$lang['select_sub_category'] = "Sélectionner un sous-domaine";
 $lang['sub_category_list'] = "Liste de sous-domaines";
 $lang['sub_category'] = "Sous domaine";
 $lang['cycle'] = "Cycle";
+$lang['cycle_list'] = "Liste de cycles";
+$lang['select_cycle'] = "Sélectionner un cycle d'enseign.";
 
 $lang['circo_list'] = "Liste des circonscriptions";
 $lang['rne'] = 'RNE';
 $lang['circo'] = 'Circo.';
 $lang['etab_list'] = "Liste des Ecoles";
 $lang['school'] = "Ecole";
-$lang['cycle_list'] = "Liste de cycles";
+
 $lang['class_list'] = "Liste des classes";
 $lang['class'] = "Classe";
 
 $lang['students'] = "Elèves";
 $lang['student_list'] = "Liste des élèves";
+
+$lang['group_question'] = "Groupe des questions";
+$lang['title'] = "Titre";
