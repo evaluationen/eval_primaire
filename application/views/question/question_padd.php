@@ -17,6 +17,18 @@
                             <label for="title"  ><?php echo $this->lang->line('title'); ?></label> 
                             <input type="text" required=""  name="title"  class="form-control" value="" placeholder="<?php echo $this->lang->line('title');?>">
                         </div>
+                        <div class="form-group">	 
+                            <label><?php echo $this->lang->line('select_category'); ?></label> 
+                            <select class="form-control" name="cid">
+                                <?php
+                                foreach ($category_list as $key => $val) {
+                                    ?>
+                                    <option value="<?php echo $val['cid']; ?>" ><?php echo $val['category_name']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                        </div>
                         
                         <div class="form-group">	 
                             <label for="description"  ><?php echo $this->lang->line('description'); ?></label> 
@@ -32,4 +44,6 @@
         
     </div>
 </div>
+
+
 <?php $this->load->view('footer'); ?>

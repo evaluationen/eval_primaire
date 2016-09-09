@@ -278,4 +278,6 @@ $lang['students'] = "Elèves";
 $lang['student_list'] = "Liste des élèves";
 
 $lang['group_question'] = "Groupe des questions";
+$lang['attach_group_question'] = "Rattacher à une groupe";
 $lang['title'] = "Titre";
+$lang['order'] = "Consigne";

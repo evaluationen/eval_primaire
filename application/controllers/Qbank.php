@@ -91,6 +91,8 @@ class Qbank extends CI_Controller {
         }
 
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('question');
+        $data['question_type'] = $this->base_model->question_type();
+        var_dump($data['question_type']);
         $this->load->view('header', $data);
         $this->load->view('question/pre_new_question', $data);
         $this->load->view('footer', $data);
@@ -147,17 +149,7 @@ class Qbank extends CI_Controller {
     }
 
     
-    //==========================================================================
-    function parent_question(){
-        $this->form_validation->set_rules('title', $this->lang->line('title'), 'required');
-        $this->form_validation->set_rules('description', $this->lang->line('description'), 'required');
-        
-        if($this->form_validation->run()){
-            //insert question parent = link with qbank
-            $this->qbank_model->insert_parent_q();
-            
-        }
-    }
+  
     //==========================================================================
     //==========================================================================
     //edit question
@@ -522,16 +514,39 @@ class Qbank extends CI_Controller {
     
     
     //==========================================================================
+    function group_question_new(){
+        $data['title'] = $this->lang->line('add_new');
+        $data['category_list'] = $this->qbank_model->category_list();
+        $this->load->view('question/question_padd', $data);
+    }
+    
+    //==========================================================================
     function group_question_add(){
-       $data['title'] = $this->lang->line('add_new');
+       
        $this->form_validation->set_rules('title', $this->lang->line('title'), 'required|trim');
        $this->form_validation->set_rules('description', $this->lang->line('description'), 'required|trim');
+       
        if($this->form_validation->run()){
-            
+           if($this->qbank_model->insert_parent_q()){
+               $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+           }
         }else{
-            
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
         }
-       $this->load->view('question/question_padd', $data); 
+        redirect('qbank/group_question'); 
+    }
+    
+    //==========================================================================
+    function ajax_group_question(){
+       $catg_id  = $this->input->post('catg_id');
+       $list_pq = $this->qbank_model->get_parent_qlist($catg_id);     
+       if(!empty($list_pq)){
+           foreach ($list_pq as $value) {
+               echo '<option value="'.$value->pqid.'">'.$value->title.'</option>';
+           }
+       }else{
+           echo '<option selected="selected">Aucun groupe pour le domaine sélectionné</option>';
+       }
     }
     
     

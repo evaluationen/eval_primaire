@@ -244,9 +244,12 @@ DROP TABLE IF EXISTS `eval_qbank_parent`;
 
 CREATE TABLE `eval_qbank_parent` (
   `pqid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `description` text,
-  UNIQUE KEY `pqid` (`pqid`)
+  UNIQUE KEY `pqid` (`pqid`),
+  KEY `FK_eval_qbank_parent_catg` (`cid`),
+  CONSTRAINT `FK_eval_qbank_parent_catg` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `eval_qbank_parent` */

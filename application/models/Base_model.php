@@ -175,4 +175,38 @@ Class Base_model extends CI_Model {
         return $date;
     }
     
+    //==========================================================================
+    
+    function question_type(){
+        $qtypes = array(
+            '1' => $this->lang->line('multiple_choice_single_answer'),
+            '2' => $this->lang->line('multiple_choice_multiple_answer'),
+            '3' => $this->lang->line('match_the_column'),//drag and drop
+            '4' => $this->lang->line('short_answer'),//question_answer ( definir le nbre des questions)
+            '5' => $this->lang->line('long_answer'),
+            '6' => $this->lang->line('syllabes'),
+            '7' => $this->lang->line('highlight'),
+            //'8' => $this->lang->line('reorganize'),
+            //'9' => $this->lang->line('split_word'),
+        );
+                
+        return $qtypes;        
+    }
+    
 }
+
+/*
+
+ * 
+ * <option value="1"><?php echo $this->lang->line('multiple_choice_single_answer'); ?></option>
+                                <option value="2"><?php echo $this->lang->line('multiple_choice_multiple_answer'); ?></option>
+                                <option value="3"><?php echo $this->lang->line('match_the_column'); ?></option>
+                                <option value="4"><?php echo $this->lang->line('short_answer'); ?></option>
+                                <option value="5"><?php echo $this->lang->line('long_answer'); ?></option>
+                                <!-- news type of questions-->
+                                <option value="6"><?php echo $this->lang->line('question_answer'); ?></option>
+                                <option value="7"><?php echo $this->lang->line('syllabes'); ?></option>
+                                <option value="8"><?php echo $this->lang->line('split_word');?></option>
+                                <option value="9"><?php echo $this->lang->line('highlight') ?></option>
+                                <option value="10"><?php  echo $this->lang->line('reorganize'); ?></option>
+                                <option value="11"><?php echo $this->lang->line('link'); ?></option> */

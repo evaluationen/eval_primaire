@@ -72,12 +72,19 @@ Class Qbank_model extends CI_Model {
 
     function insert_question_1() {
 
-
+        if($this->input->post('is_check-parent')){
+            $pqid = $this->input->post('pqid');
+        }else{
+            $pqid = '';
+        }
+        
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $this->input->post('pqid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->insert(DB_PREFIX.'qbank', $userdata);
@@ -622,7 +629,8 @@ Class Qbank_model extends CI_Model {
     function insert_parent_q(){
         $data = array(
             'title' => $this->input->post('title'),
-            'description' => $this->input->post('description')
+            'cid' => $this->input->post('cid'),
+            'description' => html_entity_decode($this->input->post('description'))
         );
         $this->db->insert(DB_PREFIX.'qbank_parent', $data);
         
@@ -631,11 +639,16 @@ Class Qbank_model extends CI_Model {
     
     
     //==========================================================================
-    function get_parent_qlist(){
+    function get_parent_qlist($catg_id =FALSE){
         if($this->input->post('search')){
             $this->db->or_where(DB_PREFIX.'qbank_parent.title', $search);
             $this->db->or_where(DB_PREFIX.'qbank_parent.description', $search);
         }
+        
+        if($catg_id){
+            $this->db->where(DB_PREFIX.'qbank_parent.cid', $catg_id);
+        }
+        $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid = '. DB_PREFIX.'qbank_parent.cid');
         $query = $this->db->get(DB_PREFIX.'qbank_parent');
         return $query->result();
     }

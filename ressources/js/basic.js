@@ -618,12 +618,35 @@ function is_check_user() {
     }
 }
 
+// get group of the questions
+function group_question() {
+    
+     if ($('#check-object').is(":checked")){
+            if ($('.catg').val() == "-1") {
+               $('.pquestion').css('display', 'none');
+               $('.object-list').css('display', 'none');
+            }else{
+                $('.pquestion').css('display', 'block');
+                var datas = 'catg_id=' + $('.catg').val();
+                $.ajax({
+                    type: "POST",
+                    url: base_url + "qbank/ajax_group_question/",
+                    data: datas,
+                    cache: false,
+                    success: function (html)
+                    {
+                        $(".object-list").html(html);
+                    }
+                });
+            }
+     }
+}
 
 
 $(document).ready(function () {
 
     $('#confbtn').css('visibility', 'hidden');
-
+    
     if (document.getElementById("select-nop")) {
         var selected_nop = document.getElementById("select-nop").value;
         hidenop(selected_nop);
@@ -746,8 +769,10 @@ $(document).ready(function () {
 
 
     //check object question
+    
     if ($('#check-object').is(":checked")) {
         $('.object-list').css('display', 'block');
+        group_question();
     } else {
         $('.object-list').css('display', 'none');
 
@@ -755,20 +780,21 @@ $(document).ready(function () {
 
     $('#check-object').click(function () {
         if ($(this).is(":checked")) {
-            /*var returnVal = confirm("Are you sure?");
-             $(this).attr("checked", returnVal);*/
             $('.object-list').css('display', 'block');
-
+            //   parent_questtion(id);
         } else {
             $('.object-list').css('display', 'none');
         }
 
     });
+    
+    
 
     //=============================================================================
     $('.catg').on('change', function (e) {
         var id = $(this).val();
         var dataString = 'catg_id=' + id;
+          group_question();
         $.ajax({
             type: "POST",
             url: base_url + "category/ajax_sub_category/",
@@ -777,9 +803,13 @@ $(document).ready(function () {
             success: function (html)
             {
                 $(".sub-catg").html(html);
+               
             }
         });
+       
     });
+    
+    group_question();
 
 });
 // end - quiz attempt functions 

@@ -14,6 +14,7 @@
                         <div class="form-group">	 
                             <label   ><?php echo $this->lang->line('select_question_type'); ?></label> 
                             <select class="form-control" name="question_type" onChange="hidenop(this.value);" id="select-nop">
+                                <?php $type_questtion ?>
                                 <option value="1"><?php echo $this->lang->line('multiple_choice_single_answer'); ?></option>
                                 <option value="2"><?php echo $this->lang->line('multiple_choice_multiple_answer'); ?></option>
                                 <option value="3"><?php echo $this->lang->line('match_the_column'); ?></option>

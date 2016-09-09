@@ -28,9 +28,9 @@
 
             <table class="table table-bordered responstable">
                 <tr>
-                    <th>#</th>
                     <th><?php echo $this->lang->line('title'); ?></th>
                     <th><?php echo $this->lang->line('description'); ?></th>
+                    <th><?php echo $this->lang->line('category'); ?></th>
                     <th><?php echo $this->lang->line('action'); ?> </th>
                 </tr>
                 <?php
@@ -48,8 +48,8 @@
                     <tr>
                         <td>  <?php echo $val->title; ?></td>
                         <td><?php echo substr(strip_tags($val->description), 0, 20); ?></td>
-                        <td><?php echo substr(strip_tags($val['description']), 0, 20); ?></td>
-                        
+                        <td><?php echo $val->category_name; ?></td>
+                        <td></td>
                     </tr>
 
                     <?php

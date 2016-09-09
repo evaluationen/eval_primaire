@@ -1,7 +1,7 @@
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <div class="row">
-        <form method="post" action="<?php echo site_url('qbank/new_question_1/' . $nop); ?>">
+        <form method="post" action="<?php echo site_url('qbank/new_question/1/' . $nop); ?>">
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
@@ -11,28 +11,15 @@
                             echo $this->session->flashdata('message');
                         }
                         ?>
-                        
                         <div class="form-group">	 
                             <?php echo $this->lang->line('multiple_choice_single_answer'); ?>
                         </div>
                         
-                        <!-- begin form question-->
-                        <div class="form-group">
-                            <label>Rattaché à un sujet</label>
-                            <input type="checkbox" id="check-object">
-                        </div>
-                        <!-- liste des sujets -->
-                        <div class="object-list">
-                            <select name="">
-                                <option>
-                                    
-                                </option>
-                            </select>
-                        </div>
+                       
                         <div class="form-group">	 
                             <label   ><?php echo $this->lang->line('select_category'); ?></label> 
                             <select class="form-control catg" name="cid">
-                                <option selected="selected"><?php echo $this->lang->line('select_category');?></option>
+                                <option selected="selected" value="-1"><?php echo $this->lang->line('select_category');?></option>
                                 <?php
                                 foreach ($category_list as $key => $val) {
                                     ?>
@@ -62,12 +49,25 @@
                                 ?>
                             </select>
                         </div>
+                         <!-- begin form question-->
+                         
+                        <div class="form-group pquestion">
+                            <label><?php echo $this->lang->line('attach_group_question');?></label><!--Rattaché à un sujet-->
+                            <input type="checkbox" id="check-object" name="is_check-parent">
+                        </div>
+                        <!-- liste des sujets -->
+                        <div class="form-group">
+                            <select name="pqid" class="object-list form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                        
                         <div class="form-group">	 
-                            <label for="inputEmail"  ><?php echo $this->lang->line('question'); ?></label> 
+                            <label for="question"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ></textarea>
                         </div>
                         <div class="form-group">	 
-                            <label for="inputEmail"  ><?php echo $this->lang->line('description'); ?></label> 
+                            <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
                             <textarea  name="description"  class="form-control"></textarea>
                         </div>
                         <?php

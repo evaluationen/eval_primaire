@@ -77,8 +77,7 @@ class Category extends CI_Controller{
        }else{
            echo '<option selected="selected">Aucun sous domaine</option>';
        }
-       /*print_r($list_sub);
-       die;*/
+      
    }
    
    
