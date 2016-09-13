@@ -92,7 +92,7 @@ class Qbank extends CI_Controller {
 
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('question');
         $data['question_type'] = $this->base_model->question_type();
-        var_dump($data['question_type']);
+        //var_dump($data['question_type']);
         $this->load->view('header', $data);
         $this->load->view('question/pre_new_question', $data);
         $this->load->view('footer', $data);
@@ -101,10 +101,12 @@ class Qbank extends CI_Controller {
     //number question and number of option
     public function new_question($no, $nop = '4') {
         $logged_in = $this->session->userdata('logged_in');
+          
         if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
         }
         $insert = FALSE;
+        $_POST['question_type'] = $no;
         //switch by number of the question
         if ($this->input->post('question')) {
             switch ($no) {

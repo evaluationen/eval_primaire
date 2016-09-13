@@ -63,10 +63,9 @@
 <tr>
  <th>#</th>
  <th><?php echo $this->lang->line('question');?></th>
- <th><?php echo $this->lang->line('description');?></th>
-<th><?php echo $this->lang->line('question_type');?></th>
+ <th><?php echo $this->lang->line('question_type');?></th>
 <th><?php echo $this->lang->line('category_name');?> / <?php echo $this->lang->line('level_name');?></th>
- 
+ <th><?php echo $this->lang->line('sub_category');?></th>
 <th><?php echo $this->lang->line('percent_corrected');?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
@@ -105,10 +104,10 @@ foreach($result as $key => $val){
  
  
  </td>
- <td><?php echo substr(strip_tags($val['description']),0,20);?></td>
-<td><?php echo $val['question_type'];?></td>
+ <!--td><?php //echo substr(strip_tags($val['description']),0,20);?></td-->
+<td><?php $type_q =$this->base_model->question_type(); echo $type_q[$val['question_type']]?></td>
 <td><?php echo $val['category_name'];?> / <span style="font-size:12px;"><?php echo $val['level_name'];?></span></td>
- 
+<td><?php echo $val['sub_catg_name']; ?></td> 
 <td><?php if($val['no_time_served']!='0'){ $perc=($val['no_time_corrected']/$val['no_time_served'])*100; 
 ?>
 
@@ -120,7 +119,7 @@ foreach($result as $key => $val){
 
 <td>
 <?php 
-$qn=1;
+/*$qn=1;
 if($val['question_type']==$this->lang->line('multiple_choice_single_answer')){
 	$qn=1;
 }
@@ -135,12 +134,15 @@ if($val['question_type']==$this->lang->line('short_answer')){
 }
 if($val['question_type']==$this->lang->line('long_answer')){
 	$qn=5;
-}
+}*/
+$qn = isset($val['question_type'])  ?  $val['question_type'] : 1;
 
 
 ?>
+<a href="<?php echo site_url('qbank/duplicate/'.$val['qid']);?>"><img src="<?php echo base_url('ressources/images/duplicate.png');?>"></a>
 <a href="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']);?>"><img src="<?php echo base_url('ressources/images/edit.png');?>"></a>
 <a href="javascript:remove_entry('qbank/remove_question/<?php echo $val['qid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a>
+
 
 </td>
 </tr>

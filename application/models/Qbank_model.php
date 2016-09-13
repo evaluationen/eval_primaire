@@ -16,6 +16,7 @@ Class Qbank_model extends CI_Model {
             $this->db->where(DB_PREFIX.'qbank.lid', $lid);
         }
         $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid');
+        $this->db->join(DB_PREFIX.'sub_category', DB_PREFIX.'sub_category.scid='.DB_PREFIX.'qbank.scid');
         $this->db->join(DB_PREFIX.'level', DB_PREFIX.'level.lid='.DB_PREFIX.'qbank.lid');
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by(DB_PREFIX.'qbank.qid', 'desc');
@@ -81,12 +82,13 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('multiple_choice_single_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'pqid' => $this->input->post('pqid'),
             'lid' => $this->input->post('lid')
         );
+        
         $this->db->insert(DB_PREFIX.'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
@@ -112,7 +114,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('multiple_choice_multiple_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -141,7 +143,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('match_the_column'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -167,7 +169,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('short_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -191,7 +193,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid'),
             'is_default_txt' => (isset($extra['is_default_txt']) && !empty($extra['is_default_txt'])) ? $extra['is_default_txt'] : 0,
@@ -210,7 +212,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('multiple_choice_single_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -243,7 +245,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('multiple_choice_multiple_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -274,7 +276,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('match_the_column'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -302,7 +304,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->lang->line('short_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
@@ -330,7 +332,7 @@ Class Qbank_model extends CI_Model {
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'default_txt' => $this->input->post('default_txt'),
-            'question_type' => $this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
