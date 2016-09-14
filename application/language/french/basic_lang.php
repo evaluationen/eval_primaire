@@ -281,3 +281,6 @@ $lang['group_question'] = "Groupe des questions";
 $lang['attach_group_question'] = "Rattacher à une groupe";
 $lang['title'] = "Titre";
 $lang['order'] = "Consigne";
+
+$lang['search_response'] = "Recherches / Réponse";
+$lang['table_editable'] = "Tableau éditable";

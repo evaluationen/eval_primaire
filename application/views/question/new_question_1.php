@@ -17,7 +17,7 @@
                         
                        
                         <div class="form-group">	 
-                            <label   ><?php echo $this->lang->line('select_category'); ?></label> 
+                            <label><?php echo $this->lang->line('select_category'); ?></label> 
                             <select class="form-control catg" name="cid">
                                 <option selected="selected" value="-1"><?php echo $this->lang->line('select_category');?></option>
                                 <?php

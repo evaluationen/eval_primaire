@@ -125,7 +125,8 @@ class Qbank extends CI_Controller {
                     }
                     $insert = $this->qbank_model->insert_question_5($extra);
                     break;
-
+                case '6': $insert = $this->qbank_model->insert_question_6();
+                    break;    
                 default : break;
             }
             if ($insert) {
@@ -552,6 +553,17 @@ class Qbank extends CI_Controller {
     }
     
     
-  
+  function duplicate($qid){
+      
+      
+      if($this->qbank_model->duplicate_question($qid)){
+          $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+      }else{
+          $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
+      }
+      
+      
+      redirect('qbank');
+  }
 
 }

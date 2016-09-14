@@ -61,9 +61,9 @@ Class Qbank_model extends CI_Model {
     function remove_question($qid) {
 
         $this->db->where('qid', $qid);
-        if ($this->db->delete(DB_PREFIX.'qbank')) {
+        if ($this->db->delete(DB_PREFIX.'options')) {
             $this->db->where('qid', $qid);
-            $this->db->delete(DB_PREFIX.'options');
+            $this->db->delete(DB_PREFIX.'qbank');
             return true;
         } else {
 
@@ -85,7 +85,7 @@ Class Qbank_model extends CI_Model {
             'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
-            'pqid' => $this->input->post('pqid'),
+            'pqid' => $pqid,//$this->input->post('pqid'),
             'lid' => $this->input->post('lid')
         );
         
@@ -106,6 +106,52 @@ Class Qbank_model extends CI_Model {
         }
 
         return true;
+    }
+    
+    
+    //==========================================================================
+    function duplicate_question($qid){
+        $data = array();
+        
+        $this->db->trans_start();
+        $data['qbank'] = $this->get_question($qid);
+        $data['option'] = $this->get_option($qid) ;
+        
+        if( $data['qbank']){
+           $duplicate = array(
+             'question_type'  => $data['qbank']['question_type'],
+            'question' => $data['qbank']['question'],
+            'description' => $data['qbank']['description'],
+            'is_default_txt' => $data['qbank']['is_default_txt'],
+            'default_txt' => $data['qbank']['default_txt'],
+            'lid' => $data['qbank']['lid'],
+            'cid' => $data['qbank']['cid'],
+            'scid' => $data['qbank']['scid'],
+            'pqid' => $data['qbank']['pqid'],
+            'no_time_served' => $data['qbank']['no_time_served'],
+            'no_time_corrected' => $data['qbank']['no_time_corrected'],
+            'no_time_incorrected' => $data['qbank']['no_time_incorrected'],
+            'no_time_unattempted' => $data['qbank']['no_time_unattempted']);
+        }
+        
+        $this->db->insert(DB_PREFIX.'qbank', $duplicate);
+        $qnid = $this->db->insert_id();
+        
+        foreach ($data['option'] as $key => $val) {
+            $dataop = array(
+                'qid' => $qnid,
+                'q_option' => $val['q_option'],
+                'q_option_match' => $val['q_option_match'],
+                'score' => $val['score'],
+            );
+            
+            $this->db->insert(DB_PREFIX.'options', $dataop);
+        }
+        
+        $this->db->trans_complete();
+        
+        return $this->db->trans_status();
+        
     }
 
     function insert_question_2() {
@@ -206,8 +252,25 @@ Class Qbank_model extends CI_Model {
         return true;
     }
 
-    function update_question_1($qid) {
+    //==========================================================================
+    
+    function insert_question_6(){
+          $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => $this->input->post('question_type'),
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid'),
+        );
+          
+        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $qid = $this->db->insert_id();
 
+        return true;
+    }
+    
+    function update_question_1($qid) {
 
         $userdata = array(
             'question' => $this->input->post('question'),

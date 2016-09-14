@@ -13,6 +13,7 @@
                         ?>	
                         <div class="form-group">	 
                             <?php echo $this->lang->line('multiple_choice_single_answer'); ?>
+                            <input type="hidden" value="<?php echo $question['question_type'];?>" name="question_type">
                         </div>
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 

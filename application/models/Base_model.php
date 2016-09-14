@@ -184,14 +184,18 @@ Class Base_model extends CI_Model {
             '3' => $this->lang->line('match_the_column'),//drag and drop
             '4' => $this->lang->line('short_answer'),//question_answer ( definir le nbre des questions)
             '5' => $this->lang->line('long_answer'),
-            '6' => $this->lang->line('syllabes'),
-            '7' => $this->lang->line('highlight'),
+            '6' => $this->lang->line('search_response'),
+            '7' => $this->lang->line('table_editable'),
+            '8' => $this->lang->line('syllabes'),
+            //'7' => $this->lang->line('highlight'),
             //'8' => $this->lang->line('reorganize'),
             //'9' => $this->lang->line('split_word'),
         );
                 
         return $qtypes;        
     }
+    
+    
     
 }
 
