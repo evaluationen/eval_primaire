@@ -53,7 +53,7 @@ if ($this->config->item('tinymce')) {
                                toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
                                image_advtab: true ,
 
-                               external_filemanager_path:"<?php echo base_url(); ?>editor/plugins/responsivefilemanager/",
+                               external_filemanager_path:"<?php echo base_url(); ?>ressources/editor/plugins/responsivefilemanager/",
                                filemanager_title:"Responsive Filemanager" ,
                                external_plugins: { "filemanager" : "plugins/responsivefilemanager/plugin.min.js"}
                              });
@@ -100,7 +100,7 @@ if ($this->config->item('tinymce')) {
                                toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code ",
                                image_advtab: true ,
 
-                               external_filemanager_path:"<?php echo base_url(); ?>editor/plugins/responsivefilemanager/",
+                               external_filemanager_path:"<?php echo base_url(); ?>ressources/editor/plugins/responsivefilemanager/",
                                filemanager_title:"Responsive Filemanager" ,
                                external_plugins: { "filemanager" : "plugins/responsivefilemanager/plugin.min.js"}
                              });

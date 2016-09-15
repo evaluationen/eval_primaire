@@ -68,7 +68,7 @@ $config = array(
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/quiz_eval/upload/',//'/source/',
+	'upload_dir' => '/eval_primaire/ressources/upload/media/',//'/source/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ $config = array(
 	| with final /
 	|
 	*/
-	'current_path' => $_SERVER['DOCUMENT_ROOT'].'/quiz_eval/upload/media/',//../source/',
+	'current_path' => $_SERVER['DOCUMENT_ROOT'].'/eval_primaire/ressources/upload/media/',//../source/',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ $config = array(
 	| DO NOT put inside upload folder
 	|
 	*/
-	'thumbs_base_path' => $_SERVER['DOCUMENT_ROOT'].'/quiz_eval/upload/thumbs/',//'../thumbs/',
+	'thumbs_base_path' => $_SERVER['DOCUMENT_ROOT'].'/eval_primaire/ressources/upload/thumbs/',//'../thumbs/',
 
 	/*
 	|--------------------------------------------------------------------------

@@ -186,17 +186,14 @@ Class Base_model extends CI_Model {
             '5' => $this->lang->line('long_answer'),
             '6' => $this->lang->line('search_response'),
             '7' => $this->lang->line('table_editable'),
-            '8' => $this->lang->line('syllabes'),
-            //'7' => $this->lang->line('highlight'),
+            '8' => $this->lang->line('cases_syllabes'),
+            '9' => $this->lang->line('highlight'), // souligner
             //'8' => $this->lang->line('reorganize'),
             //'9' => $this->lang->line('split_word'),
         );
                 
         return $qtypes;        
     }
-    
-    
-    
 }
 
 /*

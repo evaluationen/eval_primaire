@@ -108,6 +108,8 @@ class Qbank extends CI_Controller {
         $insert = FALSE;
         $_POST['question_type'] = $no;
         //switch by number of the question
+        //var_dump($_POST);
+        
         if ($this->input->post('question')) {
             switch ($no) {
                 case '1': $insert = $this->qbank_model->insert_question_1();
@@ -126,7 +128,13 @@ class Qbank extends CI_Controller {
                     $insert = $this->qbank_model->insert_question_5($extra);
                     break;
                 case '6': $insert = $this->qbank_model->insert_question_6();
-                    break;    
+                    break; 
+                case '7': $insert = $this->qbank_model->insert_question_7();
+                    break; 
+                case '8': $insert = $this->qbank_model->insert_question_8();
+                    break; 
+                case '9': $insert = $this->qbank_model->insert_question_9();
+                    break; 
                 default : break;
             }
             if ($insert) {

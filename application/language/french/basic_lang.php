@@ -253,7 +253,7 @@ $lang['coef'] = 'Coef';
 $lang['by_level'] = "par niveau";
 $lang['by_sequence'] = "par séquence";
 $lang['question_answer'] = "Questions/Réponses(Libre)";
-$lang['syllabes'] = "Syllabes";
+$lang['cases_syllabes'] = "Cases des Syllabes";
 $lang['split_word'] = "Découper les phrases";
 $lang['highlight'] = "Surligner les mots";
 $lang['reorganize'] = "Réorganiser les mots";
@@ -284,3 +284,5 @@ $lang['order'] = "Consigne";
 
 $lang['search_response'] = "Recherches / Réponse";
 $lang['table_editable'] = "Tableau éditable";
+$lang['content'] = "Contenu";
+$lang['text_selection'] = "Texte à sélectionner";

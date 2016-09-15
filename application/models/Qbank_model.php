@@ -155,8 +155,6 @@ Class Qbank_model extends CI_Model {
     }
 
     function insert_question_2() {
-
-
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
@@ -210,19 +208,20 @@ Class Qbank_model extends CI_Model {
     }
 
     function insert_question_4() {
-
-
+      
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'),//$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
-            'lid' => $this->input->post('lid')
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid'),
+           
         );
         $this->db->insert(DB_PREFIX.'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
-            $score = 1;
+            $score = (1/count($this->input->post('option')));
             $userdata = array(
                 'q_option' => $val,
                 'qid' => $qid,
@@ -241,6 +240,7 @@ Class Qbank_model extends CI_Model {
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
             'is_default_txt' => (isset($extra['is_default_txt']) && !empty($extra['is_default_txt'])) ? $extra['is_default_txt'] : 0,
             'default_txt' => (isset($extra['default_txt']) && !empty($extra['default_txt'])) ? $extra['default_txt'] : '',
@@ -270,6 +270,91 @@ Class Qbank_model extends CI_Model {
         return true;
     }
     
+    //==========================================================================
+    
+    function insert_question_7(){
+        
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid'),
+            'is_default_txt' => 1,
+            'default_txt' => $this->input->post('default_txt')
+        );
+        
+        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $qid = $this->db->insert_id();
+        
+        return true;
+        
+    }
+    
+    
+    //==========================================================================
+     function insert_question_8() {
+         
+         echo '<pre>';
+         print_r($_POST);
+        
+        if($this->input->post('is_check-parent')){
+            $pqid = $this->input->post('pqid');
+        }else{
+            $pqid = '';
+        }
+        
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('syllable_cases'),
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $pqid,
+            'lid' => $this->input->post('lid')
+        );
+        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $qid = $this->db->insert_id();
+        
+        
+        foreach ($this->input->post('option') as $key => $val) {
+            if (in_array($key, $this->input->post('score'))) {
+                $score = (1 / count($this->input->post('score')));
+            } else {
+                $score = 0;
+            }
+            $userdata = array(
+                'q_option' => '',
+                'qid' => $qid,
+                'score' => $score,
+            );
+            $this->db->insert(DB_PREFIX.'options', $userdata);
+        }
+ 
+        return true;
+    }
+    
+    //==========================================================================
+    function insert_question_9() {
+
+        echo '<pre>';
+        print_r($_POST);die;
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid'),
+            'is_default_txt' => 1,
+            'default_txt' => $this->input->post('default_txt'),
+        );
+        
+        return true;
+    }
+    
+    //==========================================================================
     function update_question_1($qid) {
 
         $userdata = array(

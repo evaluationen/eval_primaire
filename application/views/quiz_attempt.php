@@ -132,7 +132,6 @@
                 <input type="hidden" name="rid" value="<?php echo $quiz['rid']; ?>">
                 <input type="hidden" name="noq" value="<?php echo $quiz['noq']; ?>">
                 <input type="hidden" name="individual_time"  id="individual_time" value="<?php echo $quiz['individual_time']; ?>">
-
                 <?php
                 $abc = array(
                     '0' => '',
@@ -401,53 +400,7 @@
 ?>
             </form>
         </div>
-        <!--div class="col-md-4" style="padding-bottom:80px;">
-
-            <b> <?php //echo $this->lang->line('questions'); ?></b>
-            <div>
-<?php
-//for ($j = 0; $j < $quiz['noq']; $j++) {
-?>
-
-                    <div class="qbtn" onClick="javascript:show_question('<?php // echo $j; ?>');" id="qbtn<?php //echo $j; ?>" ><?php // echo ($j + 1); ?></div>
-
-<?php
-//}
-?>
-                <div style="clear:both;"></div>
-
-            </div>
-
-
-            <br>
-            <hr>
-            <br>
-            <div>
-
-
-
-                <table>
-                    <tr><td style="font-size:12px;"><div class="qbtn" style="background:#449d44;">&nbsp;</div> <?php // echo $this->lang->line('Answered');  ?> </td></tr>
-                    <tr><td style="font-size:12px;"><div class="qbtn" style="background:#c9302c;">&nbsp;</div> <?php // echo $this->lang->line('UnAnswered');  ?> </td></tr>
-                    <tr><td style="font-size:12px;"><div class="qbtn" style="background:#ec971f;">&nbsp;</div> <?php // echo $this->lang->line('Review-Later');  ?> </td></tr>
-                    <tr><td style="font-size:12px;"><div class="qbtn" style="background:#212121;">&nbsp;</div> <?php // echo $this->lang->line('Not-visited');  ?> </td></tr>
-                </table>
-
-
-
-                <div style="clear:both;"></div>
-
-            </div>
-
-        </div-->
-
-
     </div>
-
-
-
-
-
 </div>
 
 

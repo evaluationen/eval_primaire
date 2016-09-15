@@ -1,7 +1,7 @@
 <div class="container">
-    <h3><?php echo $title; ?></h3>
+ <h3><?php echo $title; ?></h3>
     <div class="row">
-        <form method="post" action="<?php echo site_url('qbank/new_question/4/' . $nop); ?>">
+        <form method="post" action="<?php echo site_url('qbank/new_question/9/' . $nop); ?>">
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
@@ -12,8 +12,9 @@
                         }
                         ?>	
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('short_answer'); ?>
+                            <?php echo $this->lang->line('highlight'); ?>
                         </div>
+                       
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 
                             <select class="form-control catg" name="cid">
@@ -48,28 +49,20 @@
                             </select>
                         </div>
                         <div class="form-group">	 
-                            <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
+                            <label for="inputEmail"  ><?php echo $this->lang->line('order'); ?></label> 
                             <textarea  name="description"  class="form-control"></textarea>
                         </div>
                         <div class="form-group">	 
-                            <label for="question"  ><?php echo $this->lang->line('question'); ?></label> 
+                            <label for="inputEmail"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ></textarea>
                         </div>
-
                         
-                        <?php
-                        for ($i = 1; $i <= $nop; $i++) {
-                            ?>
-                            <div class="form-group">	 
-                                <label for="score"  ><?php echo $this->lang->line('correct_answer'); ?> <?php echo 'N° '.$i; ?> :</label> <br>
-                                <input type="checkbox" name="score[]" checked="" value="<?php echo $i; ?>" style="display: none"> 
-                                <br><input type="text" required="" name="option[]"  class="form-control"  value=""  >
-                            </div>
-                            <?php
-                        }
-                        ?>
+                        <div class="form-group">	 
+                            <label for=""><?php echo $this->lang->line('text_selection'); ?></label> 
+                            <input type="text" required="" name="default_txt"  class="form-control"   />
+                        </div>
                         
-
+                        
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
 
                     </div>

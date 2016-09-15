@@ -1,7 +1,8 @@
 <div class="container">
     <h3><?php echo $title; ?></h3>
     <div class="row">
-        <form method="post" action="<?php echo site_url('qbank/new_question/4/' . $nop); ?>">
+        <form method="post" action="<?php echo site_url('qbank/new_question/8/' . $nop); ?>">
+
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
@@ -11,9 +12,12 @@
                             echo $this->session->flashdata('message');
                         }
                         ?>	
+
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('short_answer'); ?>
+
+                            <?php echo $this->lang->line('cases_syllabes'); ?>
                         </div>
+                        
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 
                             <select class="form-control catg" name="cid">
@@ -47,31 +51,42 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="form-group">	 
-                            <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
-                            <textarea  name="description"  class="form-control"></textarea>
+                         <!-- begin form question-->
+                         
+                        <div class="form-group pquestion">
+                            <label><?php echo $this->lang->line('attach_group_question');?></label><!--Rattaché à un sujet-->
+                            <input type="checkbox" id="check-object" name="is_check-parent">
                         </div>
+                        <!-- liste des sujets -->
+                        <div class="form-group">
+                            <select name="pqid" class="object-list form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                        
                         <div class="form-group">	 
                             <label for="question"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ></textarea>
                         </div>
-
-                        
+                        <div class="form-group">	 
+                            <label for="inputEmail"  ><?php echo $this->lang->line('order'); ?></label> 
+                            <textarea  name="description"  class="form-control"></textarea>
+                        </div>
+                        <label style="font-variant: all-petite-caps"><?php echo $this->lang->line('options'); ?></label>
                         <?php
                         for ($i = 1; $i <= $nop; $i++) {
                             ?>
                             <div class="form-group">	 
-                                <label for="score"  ><?php echo $this->lang->line('correct_answer'); ?> <?php echo 'N° '.$i; ?> :</label> <br>
-                                <input type="checkbox" name="score[]" checked="" value="<?php echo $i; ?>" style="display: none"> 
-                                <br><input type="text" required="" name="option[]"  class="form-control"  value=""  >
+                                <label for="score"  ><?php //echo $this->lang->line('options'); ?> <?php echo 'Case N°[' . $i . ']'; ?></label> <br>
+                                <input type="checkbox" name="score[]" value="<?php echo $i - 1; ?>" <?php if ($i == 1) {
+                            echo 'checked';
+                        } ?> > Select Correct Option 
+                                <br><textarea  name="option[]"  class="form-control" style="display: none"></textarea>
                             </div>
                             <?php
                         }
                         ?>
-                        
-
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
-
                     </div>
                 </div>
 

@@ -126,7 +126,7 @@ function updatelevel(vall, lid) {
 
 function hidenop(vall) {
 
-    var arr = ['1', '2', '3'];
+    var arr = ['1', '2', '3', '4 ','8'];
     if ($.inArray(vall, arr) != -1) { // if type of the question in array
         $("#nop").css('display', 'block');
         $("#nop-long").css('display', 'none');
@@ -486,6 +486,37 @@ function save_answer(qn) {
 }
 
 
+//==============================================================================
+    
+    function submit_qeditable(){
+          
+        
+        var editor = tinymce.get('default_txt'); // use your own editor id here - equals the id of your textarea
+        var content = editor.getContent();
+        
+        content = content.replace(/<td>&nbsp;<\/td>/g,'<td contenteditable="true"></td>');
+        editor.setContent(content);
+
+        var str = $("form").serialize();
+        
+        $.ajax({
+            type : "POST",
+            data : str,
+            url : base_url + "qbank/new_question/7/",
+            sucess : function (data){
+                alert('insert ok');
+            },
+            error : function(error){
+                
+            }
+        });
+        
+    
+    }
+    
+ 
+//==============================================================================
+
 function setIndividual_time(cqn) {//cqn='0' not supported by chrome
     if (cqn == '0') {
         ind_time[qn] = parseInt(ind_time[qn]) + parseInt(ctime);
@@ -814,6 +845,10 @@ $(document).ready(function () {
     });
 
     group_question();
+    
+    
+    
+  
 
 });
 // end - quiz attempt functions 
