@@ -343,7 +343,7 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'),//surligner
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
