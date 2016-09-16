@@ -1,27 +1,16 @@
 <div class="container">
-
-
     <h3><?php echo $title; ?></h3>
-
-
-
     <div class="row">
         <form method="post" action="<?php echo site_url('user/insert_user/'); ?>">
-
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
                     <div class="panel-body"> 
-
-
-
                         <?php
                         if ($this->session->flashdata('message')) {
                             echo $this->session->flashdata('message');
                         }
                         ?>	
-
-
                         <div class="form-group">	 
                             <label for="inputEmail" class="sr-only"><?php echo $this->lang->line('first_name'); ?></label> 
                             <input type="text" required=""  name="first_name"  class="form-control" placeholder="<?php echo $this->lang->line('first_name'); ?>"   autofocus>

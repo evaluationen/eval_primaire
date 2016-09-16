@@ -5,65 +5,65 @@ Class Qbank_model extends CI_Model {
     function question_list($limit, $cid = '0', $lid = '0') {
         if ($this->input->post('search')) {
             $search = $this->input->post('search');
-            $this->db->or_where(DB_PREFIX.'qbank.qid', $search);
-            $this->db->or_like(DB_PREFIX.'qbank.question', $search);
-            $this->db->or_like(DB_PREFIX.'qbank.description', $search);
+            $this->db->or_where(DB_PREFIX . 'qbank.qid', $search);
+            $this->db->or_like(DB_PREFIX . 'qbank.question', $search);
+            $this->db->or_like(DB_PREFIX . 'qbank.description', $search);
         }
         if ($cid != '0') {
-            $this->db->where(DB_PREFIX.'qbank.cid', $cid);
+            $this->db->where(DB_PREFIX . 'qbank.cid', $cid);
         }
         if ($lid != '0') {
-            $this->db->where(DB_PREFIX.'qbank.lid', $lid);
+            $this->db->where(DB_PREFIX . 'qbank.lid', $lid);
         }
-        $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid');
-        $this->db->join(DB_PREFIX.'sub_category', DB_PREFIX.'sub_category.scid='.DB_PREFIX.'qbank.scid');
-        $this->db->join(DB_PREFIX.'level', DB_PREFIX.'level.lid='.DB_PREFIX.'qbank.lid');
+        $this->db->join(DB_PREFIX . 'category', DB_PREFIX . 'category.cid=' . DB_PREFIX . 'qbank.cid');
+        $this->db->join(DB_PREFIX . 'sub_category', DB_PREFIX . 'sub_category.scid=' . DB_PREFIX . 'qbank.scid');
+        $this->db->join(DB_PREFIX . 'level', DB_PREFIX . 'level.lid=' . DB_PREFIX . 'qbank.lid');
         $this->db->limit($this->config->item('number_of_rows'), $limit);
-        $this->db->order_by(DB_PREFIX.'qbank.qid', 'desc');
-        $query = $this->db->get(DB_PREFIX.'qbank');
+        $this->db->order_by(DB_PREFIX . 'qbank.qid', 'desc');
+        $query = $this->db->get(DB_PREFIX . 'qbank');
         return $query->result_array();
     }
 
     function count_quest($cid = '0', $lid = '0') {
         if ($cid != '0') {
-            $this->db->where(DB_PREFIX.'qbank.cid', $cid);
+            $this->db->where(DB_PREFIX . 'qbank.cid', $cid);
         }
         if ($lid != '0') {
-            $this->db->where(DB_PREFIX.'qbank.lid', $lid);
+            $this->db->where(DB_PREFIX . 'qbank.lid', $lid);
         }
-        $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid');
-        $this->db->join(DB_PREFIX.'level', DB_PREFIX.'level.lid='.DB_PREFIX.'qbank.lid');
+        $this->db->join(DB_PREFIX . 'category', DB_PREFIX . 'category.cid=' . DB_PREFIX . 'qbank.cid');
+        $this->db->join(DB_PREFIX . 'level', DB_PREFIX . 'level.lid=' . DB_PREFIX . 'qbank.lid');
 
-        $this->db->order_by(DB_PREFIX.'qbank.qid', 'desc');
-        $query = $this->db->get(DB_PREFIX.'qbank');
+        $this->db->order_by(DB_PREFIX . 'qbank.qid', 'desc');
+        $query = $this->db->get(DB_PREFIX . 'qbank');
 
         return $query->num_rows();
     }
 
     function num_qbank() {
 
-        $query = $this->db->get(DB_PREFIX.'qbank');
+        $query = $this->db->get(DB_PREFIX . 'qbank');
         return $query->num_rows();
     }
 
     function get_question($qid) {
         $this->db->where('qid', $qid);
-        $query = $this->db->get(DB_PREFIX.'qbank');
+        $query = $this->db->get(DB_PREFIX . 'qbank');
         return $query->row_array();
     }
 
     function get_option($qid) {
         $this->db->where('qid', $qid);
-        $query = $this->db->get(DB_PREFIX.'options');
+        $query = $this->db->get(DB_PREFIX . 'options');
         return $query->result_array();
     }
 
     function remove_question($qid) {
 
         $this->db->where('qid', $qid);
-        if ($this->db->delete(DB_PREFIX.'options')) {
+        if ($this->db->delete(DB_PREFIX . 'options')) {
             $this->db->where('qid', $qid);
-            $this->db->delete(DB_PREFIX.'qbank');
+            $this->db->delete(DB_PREFIX . 'qbank');
             return true;
         } else {
 
@@ -73,23 +73,23 @@ Class Qbank_model extends CI_Model {
 
     function insert_question_1() {
 
-        if($this->input->post('is_check-parent')){
+        if ($this->input->post('is_check-parent')) {
             $pqid = $this->input->post('pqid');
-        }else{
+        } else {
             $pqid = '';
         }
-        
+
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_single_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
-            'pqid' => $pqid,//$this->input->post('pqid'),
+            'pqid' => $pqid, //$this->input->post('pqid'),
             'lid' => $this->input->post('lid')
         );
-        
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
             if ($this->input->post('score') == $key) {
@@ -102,67 +102,28 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
     }
-    
-    
-    //==========================================================================
-    function duplicate_question($qid){
-        $data = array();
-        
-        $this->db->trans_start();
-        $data['qbank'] = $this->get_question($qid);
-        $data['option'] = $this->get_option($qid) ;
-        
-        if( $data['qbank']){
-           $duplicate = array(
-             'question_type'  => $data['qbank']['question_type'],
-            'question' => $data['qbank']['question'],
-            'description' => $data['qbank']['description'],
-            'is_default_txt' => $data['qbank']['is_default_txt'],
-            'default_txt' => $data['qbank']['default_txt'],
-            'lid' => $data['qbank']['lid'],
-            'cid' => $data['qbank']['cid'],
-            'scid' => $data['qbank']['scid'],
-            'pqid' => $data['qbank']['pqid'],
-            'no_time_served' => $data['qbank']['no_time_served'],
-            'no_time_corrected' => $data['qbank']['no_time_corrected'],
-            'no_time_incorrected' => $data['qbank']['no_time_incorrected'],
-            'no_time_unattempted' => $data['qbank']['no_time_unattempted']);
-        }
-        
-        $this->db->insert(DB_PREFIX.'qbank', $duplicate);
-        $qnid = $this->db->insert_id();
-        
-        foreach ($data['option'] as $key => $val) {
-            $dataop = array(
-                'qid' => $qnid,
-                'q_option' => $val['q_option'],
-                'q_option_match' => $val['q_option_match'],
-                'score' => $val['score'],
-            );
-            
-            $this->db->insert(DB_PREFIX.'options', $dataop);
-        }
-        
-        $this->db->trans_complete();
-        
-        return $this->db->trans_status();
-        
-    }
 
     function insert_question_2() {
+        if ($this->input->post('is_check-parent')) {
+            $pqid = $this->input->post('pqid');
+        } else {
+            $pqid = '';
+        }
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_multiple_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $pqid, 
             'lid' => $this->input->post('lid')
         );
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
             if (in_array($key, $this->input->post('score'))) {
@@ -175,7 +136,7 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -187,11 +148,12 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('match_the_column'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid')
         );
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
             $score = (1 / count($this->input->post('option')));
@@ -201,33 +163,32 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
     }
 
     function insert_question_4() {
-      
+
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('short_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
-           
         );
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
         foreach ($this->input->post('option') as $key => $val) {
-            $score = (1/count($this->input->post('option')));
+            $score = (1 / count($this->input->post('option')));
             $userdata = array(
                 'q_option' => $val,
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -238,14 +199,14 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
             'is_default_txt' => (isset($extra['is_default_txt']) && !empty($extra['is_default_txt'])) ? $extra['is_default_txt'] : 0,
             'default_txt' => (isset($extra['default_txt']) && !empty($extra['default_txt'])) ? $extra['default_txt'] : '',
         );
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
 
 
@@ -253,9 +214,9 @@ Class Qbank_model extends CI_Model {
     }
 
     //==========================================================================
-    
-    function insert_question_6(){
-          $userdata = array(
+
+    function insert_question_6() {
+        $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'),
@@ -263,61 +224,56 @@ Class Qbank_model extends CI_Model {
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
         );
-          
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
 
         return true;
     }
-    
+
     //==========================================================================
-    
-    function insert_question_7(){
-        
+
+    function insert_question_7() {
+
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
             'is_default_txt' => 1,
             'default_txt' => $this->input->post('default_txt')
         );
-        
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
-        
+
         return true;
-        
     }
-    
-    
+
     //==========================================================================
-     function insert_question_8() {
-         
-         echo '<pre>';
-         print_r($_POST);
-        
-        if($this->input->post('is_check-parent')){
+    function insert_question_8() {
+
+        if ($this->input->post('is_check-parent')) {
             $pqid = $this->input->post('pqid');
-        }else{
+        } else {
             $pqid = '';
         }
-        
+
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('syllable_cases'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('syllable_cases'),
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'pqid' => $pqid,
             'lid' => $this->input->post('lid')
         );
-        $this->db->insert(DB_PREFIX.'qbank', $userdata);
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         $qid = $this->db->insert_id();
-        
-        
+
+
         foreach ($this->input->post('option') as $key => $val) {
             if (in_array($key, $this->input->post('score'))) {
                 $score = (1 / count($this->input->post('score')));
@@ -329,45 +285,89 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
- 
+
         return true;
     }
-    
+
     //==========================================================================
     function insert_question_9() {
 
-        echo '<pre>';
-        print_r($_POST);die;
+        
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//surligner
+            'question_type' => $this->input->post('question_type'), //surligner
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
             'is_default_txt' => 1,
             'default_txt' => $this->input->post('default_txt'),
         );
-        
+
         return true;
     }
-    
+
+    //==========================================================================
+    //==========================================================================
+    function duplicate_question($qid) {
+        $data = array();
+
+        $this->db->trans_start();
+        $data['qbank'] = $this->get_question($qid);
+        $data['option'] = $this->get_option($qid);
+
+        if ($data['qbank']) {
+            $duplicate = array(
+                'question_type' => $data['qbank']['question_type'],
+                'question' => $data['qbank']['question'],
+                'description' => $data['qbank']['description'],
+                'is_default_txt' => $data['qbank']['is_default_txt'],
+                'default_txt' => $data['qbank']['default_txt'],
+                'lid' => $data['qbank']['lid'],
+                'cid' => $data['qbank']['cid'],
+                'scid' => $data['qbank']['scid'],
+                'pqid' => $data['qbank']['pqid'],
+                'no_time_served' => $data['qbank']['no_time_served'],
+                'no_time_corrected' => $data['qbank']['no_time_corrected'],
+                'no_time_incorrected' => $data['qbank']['no_time_incorrected'],
+                'no_time_unattempted' => $data['qbank']['no_time_unattempted']);
+        }
+
+        $this->db->insert(DB_PREFIX . 'qbank', $duplicate);
+        $qnid = $this->db->insert_id();
+
+        foreach ($data['option'] as $key => $val) {
+            $dataop = array(
+                'qid' => $qnid,
+                'q_option' => $val['q_option'],
+                'q_option_match' => $val['q_option_match'],
+                'score' => $val['score'],
+            );
+
+            $this->db->insert(DB_PREFIX . 'options', $dataop);
+        }
+
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
+
     //==========================================================================
     function update_question_1($qid) {
 
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_single_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
-        $this->db->update(DB_PREFIX.'qbank', $userdata);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
-        $this->db->delete(DB_PREFIX.'options');
+        $this->db->delete(DB_PREFIX . 'options');
         foreach ($this->input->post('option') as $key => $val) {
 
 
@@ -381,7 +381,7 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -393,14 +393,14 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('multiple_choice_multiple_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
-        $this->db->update(DB_PREFIX.'qbank', $userdata);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
-        $this->db->delete(DB_PREFIX.'options');
+        $this->db->delete(DB_PREFIX . 'options');
         foreach ($this->input->post('option') as $key => $val) {
             if (in_array($key, $this->input->post('score'))) {
                 $score = (1 / count($this->input->post('score')));
@@ -412,7 +412,7 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -424,14 +424,14 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('match_the_column'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
-        $this->db->update(DB_PREFIX.'qbank', $userdata);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
-        $this->db->delete(DB_PREFIX.'options');
+        $this->db->delete(DB_PREFIX . 'options');
         foreach ($this->input->post('option') as $key => $val) {
             $score = (1 / count($this->input->post('option')));
             $userdata = array(
@@ -440,7 +440,7 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -452,14 +452,14 @@ Class Qbank_model extends CI_Model {
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('short_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
-        $this->db->update(DB_PREFIX.'qbank', $userdata);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
-        $this->db->delete(DB_PREFIX.'options');
+        $this->db->delete(DB_PREFIX . 'options');
         foreach ($this->input->post('option') as $key => $val) {
             $score = 1;
             $userdata = array(
@@ -467,7 +467,7 @@ Class Qbank_model extends CI_Model {
                 'qid' => $qid,
                 'score' => $score,
             );
-            $this->db->insert(DB_PREFIX.'options', $userdata);
+            $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
 
         return true;
@@ -480,14 +480,14 @@ Class Qbank_model extends CI_Model {
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'default_txt' => $this->input->post('default_txt'),
-            'question_type' => $this->input->post('question_type'),//$this->lang->line('long_answer'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
-        $this->db->update(DB_PREFIX.'qbank', $userdata);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
-        $this->db->delete(DB_PREFIX.'options');
+        $this->db->delete(DB_PREFIX . 'options');
 
 
         return true;
@@ -496,7 +496,7 @@ Class Qbank_model extends CI_Model {
     // category function start
     function category_list() {
         $this->db->order_by('cid', 'desc');
-        $query = $this->db->get(DB_PREFIX.'category');
+        $query = $this->db->get(DB_PREFIX . 'category');
         return $query->result_array();
     }
 
@@ -507,7 +507,7 @@ Class Qbank_model extends CI_Model {
         );
 
         $this->db->where('cid', $cid);
-        if ($this->db->update(DB_PREFIX.'category', $userdata)) {
+        if ($this->db->update(DB_PREFIX . 'category', $userdata)) {
 
             return true;
         } else {
@@ -519,7 +519,7 @@ Class Qbank_model extends CI_Model {
     function remove_category($cid) {
 
         $this->db->where('cid', $cid);
-        if ($this->db->delete(DB_PREFIX.'category')) {
+        if ($this->db->delete(DB_PREFIX . 'category')) {
             return true;
         } else {
 
@@ -533,7 +533,7 @@ Class Qbank_model extends CI_Model {
             'category_name' => $this->input->post('category_name'),
         );
 
-        if ($this->db->insert(DB_PREFIX.'category', $userdata)) {
+        if ($this->db->insert(DB_PREFIX . 'category', $userdata)) {
 
             return true;
         } else {
@@ -545,7 +545,7 @@ Class Qbank_model extends CI_Model {
     // category function end
 // level function start
     function level_list() {
-        $query = $this->db->get(DB_PREFIX.'level');
+        $query = $this->db->get(DB_PREFIX . 'level');
         return $query->result_array();
     }
 
@@ -556,7 +556,7 @@ Class Qbank_model extends CI_Model {
         );
 
         $this->db->where('lid', $lid);
-        if ($this->db->update(DB_PREFIX.'level', $userdata)) {
+        if ($this->db->update(DB_PREFIX . 'level', $userdata)) {
 
             return true;
         } else {
@@ -568,7 +568,7 @@ Class Qbank_model extends CI_Model {
     function remove_level($lid) {
 
         $this->db->where('lid', $lid);
-        if ($this->db->delete(DB_PREFIX.'level')) {
+        if ($this->db->delete(DB_PREFIX . 'level')) {
             return true;
         } else {
 
@@ -582,7 +582,7 @@ Class Qbank_model extends CI_Model {
             'level_name' => $this->input->post('level_name'),
         );
 
-        if ($this->db->insert(DB_PREFIX.'level', $userdata)) {
+        if ($this->db->insert(DB_PREFIX . 'level', $userdata)) {
 
             return true;
         } else {
@@ -651,7 +651,7 @@ Class Qbank_model extends CI_Model {
                     'question_type' => $question_type
                 );
 
-                if ($this->db->insert(DB_PREFIX.'qbank', $insert_data)) {
+                if ($this->db->insert(DB_PREFIX . 'qbank', $insert_data)) {
                     $qid = $this->db->insert_id();
                     $optionkeycounter = 4;
                     if ($ques_type == "0" || $ques_type == "") {
@@ -763,43 +763,41 @@ Class Qbank_model extends CI_Model {
             }
         }
     }
-    
-    function get_cat_q($qid){
-        $query = $this->db->select('cid')->where('qid', $qid)->get(' '.DB_PREFIX.'qbank');
-        if($query->num_rows() == 1){
+
+    function get_cat_q($qid) {
+        $query = $this->db->select('cid')->where('qid', $qid)->get(' ' . DB_PREFIX . 'qbank');
+        if ($query->num_rows() == 1) {
             $tRes = $query->row();
-            return (int)$tRes->cid;
+            return (int) $tRes->cid;
         }
         return false;
     }
-    
-    
+
     //==========================================================================
-    
-    function insert_parent_q(){
+
+    function insert_parent_q() {
         $data = array(
             'title' => $this->input->post('title'),
             'cid' => $this->input->post('cid'),
             'description' => html_entity_decode($this->input->post('description'))
         );
-        $this->db->insert(DB_PREFIX.'qbank_parent', $data);
-        
+        $this->db->insert(DB_PREFIX . 'qbank_parent', $data);
+
         return TRUE;
     }
-    
-    
+
     //==========================================================================
-    function get_parent_qlist($catg_id =FALSE){
-        if($this->input->post('search')){
-            $this->db->or_where(DB_PREFIX.'qbank_parent.title', $search);
-            $this->db->or_where(DB_PREFIX.'qbank_parent.description', $search);
+    function get_parent_qlist($catg_id = FALSE) {
+        if ($this->input->post('search')) {
+            $this->db->or_where(DB_PREFIX . 'qbank_parent.title', $search);
+            $this->db->or_where(DB_PREFIX . 'qbank_parent.description', $search);
         }
-        
-        if($catg_id){
-            $this->db->where(DB_PREFIX.'qbank_parent.cid', $catg_id);
+
+        if ($catg_id) {
+            $this->db->where(DB_PREFIX . 'qbank_parent.cid', $catg_id);
         }
-        $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid = '. DB_PREFIX.'qbank_parent.cid');
-        $query = $this->db->get(DB_PREFIX.'qbank_parent');
+        $this->db->join(DB_PREFIX . 'category', DB_PREFIX . 'category.cid = ' . DB_PREFIX . 'qbank_parent.cid');
+        $query = $this->db->get(DB_PREFIX . 'qbank_parent');
         return $query->result();
     }
 

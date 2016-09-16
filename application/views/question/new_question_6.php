@@ -12,7 +12,7 @@
                         }
                         ?>	
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('search_response'); ?>
+                            <h4 class="title-typeq"> <?php echo $this->lang->line('search_response'); ?></h4>
                         </div>
                         
                          <div class="form-group">	 
@@ -48,15 +48,16 @@
                                 ?>
                             </select>
                         </div>    
-                            
-                        <div class="form-group">	 
-                            <label for="question"><?php echo $this->lang->line('question'); ?></label> 
-                            <textarea  name="question"  class="form-control"   ></textarea>
-                        </div>
                         <div class="form-group">	 
                             <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
                             <textarea  name="description"  class="form-control"></textarea>
                         </div>
+                        
+                        <div class="form-group">	 
+                            <label for="question"><?php echo $this->lang->line('question'); ?></label> 
+                            <textarea  name="question"  class="form-control"   ></textarea>
+                        </div>
+                        
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
                     </div>
                 </div>

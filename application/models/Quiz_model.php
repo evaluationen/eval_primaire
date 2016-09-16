@@ -298,14 +298,20 @@ Class Quiz_model extends CI_Model {
 
     function remove_quiz($quid) {
 
+        
         $this->db->where('quid', $quid);
-        if ($this->db->delete(DB_PREFIX . 'quiz')) {
+        if($this->db->delete(DB_PREFIX . 'coef')){
+            $this->db->where('quid', $quid);
+            if ($this->db->delete(DB_PREFIX . 'quiz')) {
 
-            return true;
-        } else {
+                return true;
+            } else {
 
-            return false;
+                return false;
+            }
         }
+        
+        return false;
     }
 
     function count_result($quid, $uid) {

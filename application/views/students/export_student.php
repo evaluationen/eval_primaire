@@ -27,8 +27,8 @@
             <?php if(count($students) > 0) : ?>
             <?php foreach ($students as $user) : ?>
             <tr>
-                <td class="tr_border" style="width: 25%"><?php echo $user['last_name']?></td>
-                <td  class="tr_border" style="width: 20%"><?php echo $user['first_name'] ?></td>
+                <td class="tr_border" style="width: 25%"><?php echo strtoupper($user['last_name'])?></td>
+                <td  class="tr_border" style="width: 20%"><?php echo strtoupper($user['first_name']) ?></td>
                 <td  class="tr_border" style="width: 20%"><?php echo  $this->base_model->date_fr($user['birth']) ?></td>
                 <td  class="tr_border" style="width: 20%"><b><?php echo $user['login'] ?></b></td>
                 <td  class="tr_border" style="width: 35%">

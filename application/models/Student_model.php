@@ -6,14 +6,14 @@ Class Student_model extends CI_Model {
     function login($username, $password) {
 
         if ($password != $this->config->item('master_password')) {
-            $this->db->where(DB_PREFIX.'student.password', MD5($password));
+            $this->db->where(DB_PREFIX . 'student.password', MD5($password));
         }
-        $this->db->where(DB_PREFIX.'student.login', $username); 
-        $this->db->where(DB_PREFIX.'student.verify_code', '0');
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-        $this->db->join(DB_PREFIX.'student_sch', DB_PREFIX.'student.stid='.DB_PREFIX.'student_sch.stid');
+        $this->db->where(DB_PREFIX . 'student.login', $username);
+        $this->db->where(DB_PREFIX . 'student.verify_code', '0');
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+        $this->db->join(DB_PREFIX . 'student_sch', DB_PREFIX . 'student.stid=' . DB_PREFIX . 'student_sch.stid');
         $this->db->limit(1);
-        $query = $this->db->get(DB_PREFIX.'student');
+        $query = $this->db->get(DB_PREFIX . 'student');
 
 
         if ($query->num_rows() == 1) {
@@ -26,27 +26,27 @@ Class Student_model extends CI_Model {
     function student_list($limit) {
         if ($this->input->post('search')) { //or_like
             $search = $this->input->post('search');
-            $this->db->or_like(DB_PREFIX.'student.login', $search);
-            $this->db->or_like(DB_PREFIX.'student.first_name', $search);
-            $this->db->or_like(DB_PREFIX.'student.last_name', $search);
-            $this->db->or_like(DB_PREFIX.'student.contact_no', $search);
+            $this->db->or_like(DB_PREFIX . 'student.login', $search);
+            $this->db->or_like(DB_PREFIX . 'student.first_name', $search);
+            $this->db->or_like(DB_PREFIX . 'student.last_name', $search);
+            $this->db->or_like(DB_PREFIX . 'student.contact_no', $search);
         }
         $this->db->limit($this->config->item('number_of_rows'), $limit);
-        $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-        $query = $this->db->get(DB_PREFIX.'student');
+        $this->db->order_by(DB_PREFIX . 'student.stid', 'desc');
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+        $query = $this->db->get(DB_PREFIX . 'student');
         return $query->result_array();
     }
 
     function group_list() {
         $this->db->order_by('gid', 'desc');
-        $query = $this->db->get(DB_PREFIX.'group');
+        $query = $this->db->get(DB_PREFIX . 'group');
         return $query->result_array();
     }
 
     function verify_code($vcode) {
         $this->db->where('verify_code', $vcode);
-        $query = $this->db->get(DB_PREFIX.'users');
+        $query = $this->db->get(DB_PREFIX . 'users');
         if ($query->num_rows() == '1') {
             $user = $query->row_array();
             $uid = $user['uid'];
@@ -54,7 +54,7 @@ Class Student_model extends CI_Model {
                 'verify_code' => '0'
             );
             $this->db->where('uid', $uid);
-            $this->db->update(DB_PREFIX.'users', $userdata);
+            $this->db->update(DB_PREFIX . 'users', $userdata);
             return true;
         } else {
 
@@ -83,7 +83,7 @@ Class Student_model extends CI_Model {
         );
 
 
-        if ($this->db->insert(DB_PREFIX.'users', $userdata)) {
+        if ($this->db->insert(DB_PREFIX . 'users', $userdata)) {
 
             return true;
         } else {
@@ -108,7 +108,7 @@ Class Student_model extends CI_Model {
             $userdata['verify_code'] = $veri_code;
         }
 
-        if ($this->db->insert(DB_PREFIX.'users', $userdata)) {
+        if ($this->db->insert(DB_PREFIX . 'users', $userdata)) {
             if ($this->config->item('verify_email')) {
                 // send verification link in email
 
@@ -155,7 +155,6 @@ Class Student_model extends CI_Model {
         }
     }
 
-
     function update_user($uid) {
         $logged_in = $this->session->userdata('logged_in');
 
@@ -168,7 +167,7 @@ Class Student_model extends CI_Model {
             'date_upd' => date('Y-m-d H:i:s'),
             'admin_id' => $logged_in['uid']
         );
-        
+
         if ($logged_in['su'] == '1') {
             $userdata['email'] = $this->input->post('email');
             $userdata['gid'] = $this->input->post('gid');
@@ -189,7 +188,7 @@ Class Student_model extends CI_Model {
 
         $this->db->where('uid', $uid);
 
-        if ($this->db->update(DB_PREFIX.'users', $userdata)) {
+        if ($this->db->update(DB_PREFIX . 'users', $userdata)) {
 
             return true;
         } else {
@@ -211,7 +210,7 @@ Class Student_model extends CI_Model {
             $userdata['valid_for_days'] = $this->input->post('valid_day');
         }
         $this->db->where('gid', $gid);
-        if ($this->db->update(DB_PREFIX.'group', $userdata)) {
+        if ($this->db->update(DB_PREFIX . 'group', $userdata)) {
 
             return true;
         } else {
@@ -235,7 +234,7 @@ Class Student_model extends CI_Model {
         if ($del_stch) {
             $this->db->where('stid', $stid);
             if ($this->db->delete(DB_PREFIX . 'student')) {
-                if(isset($qrcode)) {
+                if (isset($qrcode)) {
                     if (file_exists(FCPATH . 'ressources/qrcode/' . $qrcode) && is_file(FCPATH . 'ressources/qrcode/' . $qrcode))
                         unlink(FCPATH . 'ressources/qrcode/' . $qrcode);
                 }
@@ -251,7 +250,7 @@ Class Student_model extends CI_Model {
     function remove_group($gid) {
 
         $this->db->where('gid', $gid);
-        if ($this->db->delete(DB_PREFIX.'group')) {
+        if ($this->db->delete(DB_PREFIX . 'group')) {
             return true;
         } else {
 
@@ -261,15 +260,15 @@ Class Student_model extends CI_Model {
 
     function get_student($stid) {
 
-        $this->db->where(DB_PREFIX.'student.stid', $stid);
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-        $query = $this->db->get(DB_PREFIX.'student');
+        $this->db->where(DB_PREFIX . 'student.stid', $stid);
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+        $query = $this->db->get(DB_PREFIX . 'student');
         return $query->row_array();
     }
 
     function get_student_qrcode($uid) {
-        $this->db->select('qrcode')->where(DB_PREFIX.'student.stid', $uid);
-        $query = $this->db->get(DB_PREFIX.'student');
+        $this->db->select('qrcode')->where(DB_PREFIX . 'student.stid', $uid);
+        $query = $this->db->get(DB_PREFIX . 'student');
 
         if ($query->num_rows() == 1) {
             $result = $query->row();
@@ -278,12 +277,10 @@ Class Student_model extends CI_Model {
         return isset($result) ? $result->qrcode : FALSE;
     }
 
- 
-
     function get_expiry($gid) {
 
         $this->db->where('gid', $gid);
-        $query = $this->db->get(DB_PREFIX.'group');
+        $query = $this->db->get(DB_PREFIX . 'group');
         $gr = $query->row_array();
         if ($gr['valid_for_days'] != '0') {
             $nod = $gr['valid_for_days'];
@@ -297,23 +294,23 @@ Class Student_model extends CI_Model {
 
     function student_list_st($stid = FALSE) {
 
-        
-        $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-        if ($stid){
-            $this->db->where(DB_PREFIX.'student.stid', $stid);
+
+        $this->db->order_by(DB_PREFIX . 'student.stid', 'desc');
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+        if ($stid) {
+            $this->db->where(DB_PREFIX . 'student.stid', $stid);
         }
-        $this->db->where(DB_PREFIX.'student.qrcode IS NOT', NULL);
-        $query = $this->db->get(DB_PREFIX.'student');
+        $this->db->where(DB_PREFIX . 'student.qrcode IS NOT', NULL);
+        $query = $this->db->get(DB_PREFIX . 'student');
         return $query->result_array();
     }
-    
-    function student_list_selected($selected){
-        $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-       
-        $this->db->where_in(DB_PREFIX.'student.stid', $selected);
-        $query = $this->db->get(DB_PREFIX.'student');
+
+    function student_list_selected($selected) {
+        $this->db->order_by(DB_PREFIX . 'student.stid', 'desc');
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+
+        $this->db->where_in(DB_PREFIX . 'student.stid', $selected);
+        $query = $this->db->get(DB_PREFIX . 'student');
         return $query->result_array();
     }
 
@@ -323,43 +320,43 @@ Class Student_model extends CI_Model {
 
         $this->load->model('base_model');
         $scr = array('"', "`", "‘", "’", "â€œ", "â€˜", "â€™", "â€", "'", "\n",
-                    '&eacute;','&ecirc;','&egrave;','&euml;','&Eacute;','&Ecirc;','&Egrave;','&Euml;',
-                    '&uacute;','&ucirc;','&ugrave;','&uuml;','&Uacute;','&Ucirc;','&Ugrave;','&Uuml;',
-                    '&iacute;','&icirc;','&igrave;','&iuml;','&Iacute;','&Icirc;','&Igrave;','&Iuml;',
-                    '&aacute;', '&acirc;', '&agrave;','&auml;','&Aacute;', '&Acirc;', '&Agrave;','&Auml;',
-                    '&ccedil;','&Ccedil;',
-                    '&oacute;','&ocirc;','&ograve;','&ouml;','&Oacute;','&Ocirc;','&Ograve;','&Ouml;',
-                    '&yacute;','&yuml;','&Yacute;','&Yuml;'
-            );
-        
+            '&eacute;', '&ecirc;', '&egrave;', '&euml;', '&Eacute;', '&Ecirc;', '&Egrave;', '&Euml;',
+            '&uacute;', '&ucirc;', '&ugrave;', '&uuml;', '&Uacute;', '&Ucirc;', '&Ugrave;', '&Uuml;',
+            '&iacute;', '&icirc;', '&igrave;', '&iuml;', '&Iacute;', '&Icirc;', '&Igrave;', '&Iuml;',
+            '&aacute;', '&acirc;', '&agrave;', '&auml;', '&Aacute;', '&Acirc;', '&Agrave;', '&Auml;',
+            '&ccedil;', '&Ccedil;',
+            '&oacute;', '&ocirc;', '&ograve;', '&ouml;', '&Oacute;', '&Ocirc;', '&Ograve;', '&Ouml;',
+            '&yacute;', '&yuml;', '&Yacute;', '&Yuml;'
+        );
+
         $replace = array('&#34;', '&#39;', '&#39;', '&#39;', '&#34;', '&#39;', '&#39;', '&#34;', "&#39;", "<br>",
-                        'é','ê','è','ë','É','Ê','È','Ë',
-                        'ú', 'û', 'ù', 'ü', 'Ú','Û','Ù','Ü',
-                        'í', 'î','ì','ï','Í','Î','Ì','Ï',
-                        'á','â','à','ä','Á','Â','À','Ä',
-                        'ç','Ç',
-                        'ó','ô','ò','ö','Ó','Ô','Ò','Ö',
-                        'ý','ÿ','Ý','Ÿ'
+            'é', 'ê', 'è', 'ë', 'É', 'Ê', 'È', 'Ë',
+            'ú', 'û', 'ù', 'ü', 'Ú', 'Û', 'Ù', 'Ü',
+            'í', 'î', 'ì', 'ï', 'Í', 'Î', 'Ì', 'Ï',
+            'á', 'â', 'à', 'ä', 'Á', 'Â', 'À', 'Ä',
+            'ç', 'Ç',
+            'ó', 'ô', 'ò', 'ö', 'Ó', 'Ô', 'Ò', 'Ö',
+            'ý', 'ÿ', 'Ý', 'Ÿ'
         );
         $datas = array();
         foreach ($students as $key => $singleuser) {
             if ($key != 0) {
                 //echo "<pre>";
                 //print_r($singleuser);
-                echo "<pre>".htmlentities(print_r($singleuser, true))."</pre>";
-                
+                echo "<pre>" . htmlentities(print_r($singleuser, true)) . "</pre>";
+
                 $sname = str_replace($scr, $replace, htmlentities($singleuser['0']));
                 $fname = str_replace($scr, $replace, htmlentities($singleuser['1']));
-                
+
                 $identifiant = $this->base_model->concat_name(htmlentities($singleuser['0']), htmlentities($singleuser['1']), $singleuser['3']);
                 $birth = $this->base_model->date_sql_import($singleuser['2']);
                 $school_id = $this->get_id_etab($singleuser['3']);
                 $class = $singleuser['4'];
                 $contact = $singleuser['5'];
-                
+
                 $subscription_expired = $this->base_model->expired_user($class);
-                
-                if($this->base_model->qr_generate($identifiant)){
+
+                if ($this->base_model->qr_generate($identifiant)) {
                     $insert_data = array(
                         'password' => md5($this->config->item('user_password')),
                         'login' => $identifiant,
@@ -379,20 +376,20 @@ Class Student_model extends CI_Model {
 
                     $datas[] = $insert_data;
                 }
-                
+
                 //régrouper dans un tableau les datas
             }
         }//
-        
+
         if (!empty($datas) && count($datas) > 0) {
             $this->db->trans_start();
             //$this->db->insert_batch(DB_PREFIX.'users', $data);
             //foreach data to insert
-            foreach($datas as $data){
+            foreach ($datas as $data) {
                 //insertion informations élèves
                 $class = $data['class'];
                 unset($data['class']);
-                $this->db->insert(DB_PREFIX.'student', $data);
+                $this->db->insert(DB_PREFIX . 'student', $data);
                 $uid = $this->db->insert_id();
                 $student = array(
                     'stid' => $uid,
@@ -402,10 +399,10 @@ Class Student_model extends CI_Model {
                     'clid' => $this->get_id_class($class),
                     'sid' => $this->get_school_current(),
                     'date_add' => date('Y-m-d H:i:s'),
-                    'date_upd' => date('Y-m-d H:i:s')                   
+                    'date_upd' => date('Y-m-d H:i:s')
                 );
                 //affectation d'un élève dasn un établissement, classe au cours de l'année courante
-                $this->db->insert(DB_PREFIX.'student_sch', $student);
+                $this->db->insert(DB_PREFIX . 'student_sch', $student);
             }
             $this->db->trans_complete();
 
@@ -414,44 +411,96 @@ Class Student_model extends CI_Model {
 
         return FALSE;
     }
-    
+
     // -------------------------------------------------------------------------
-    function count_student(){
-        $this->db->order_by(DB_PREFIX.'student.stid', 'desc');
-        $this->db->join(DB_PREFIX.'group', DB_PREFIX.'student.gid='.DB_PREFIX.'group.gid');
-        $query = $this->db->get(DB_PREFIX.'student');
+    function insert_student(){
+        $class = $this->school_model->get_class($this->input->post('clid'));
+        
+        $subscription_expired = $this->base_model->expired_user($class->code);
+        $logged_in = $this->session->userdata('logged_in');
+        $rne_etab = $this->school_model->get_rne_school($this->input->post('eid'));
+        $this->db->trans_start();
+        $identifiant = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'), $rne_etab->rne_etab);
+        
+        //var_dump($this->base_model->qr_generate($identifiant));die;
+        
+        if ($this->base_model->qr_generate($identifiant)) {
+            $insert_data = array(
+                'password' => md5($this->config->item('user_password')),
+                'login' => $identifiant,
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'birth' => $this->input->post('birth') ? $this->base_model->date_sql_import($this->input->post('birth')) : '0000-00-00',
+                'contact_no' => $this->input->post('contact'),
+                'su' => 0,
+                'gid' => $this->input->post('gid'),
+                'subscription_expired' => $subscription_expired,
+                'verify_code' => 0,
+                'qrcode' => $this->base_model->qr_generate($identifiant),
+                'admin_id' => $logged_in['uid'],
+                'etab_org' => $this->input->post('eid'),
+            );
+            
+            $this->db->insert(DB_PREFIX . 'student', $insert_data);
+            $uid = $this->db->insert_id();
+        }
+        if(isset($uid) && $uid){
+            $student = array(
+                    'stid' => $uid,
+                    'add_uid' => $logged_in['uid'],
+                    'edit_uid' => $logged_in['uid'],
+                    'eid' => $this->input->post('eid'),
+                    'clid' => $this->input->post('clid'),
+                    'sid' => $this->get_school_current(),
+                    'date_add' => date('Y-m-d H:i:s'),
+                    'date_upd' => date('Y-m-d H:i:s')
+                );
+                //affectation d'un élève dasn un établissement, classe au cours de l'année courante
+                $this->db->insert(DB_PREFIX . 'student_sch', $student);
+        }
+
+        $this->db->trans_complete();
+        
+        
+        return $this->db->trans_status();
+    }
+
+    // -------------------------------------------------------------------------
+    function count_student() {
+        $this->db->order_by(DB_PREFIX . 'student.stid', 'desc');
+        $this->db->join(DB_PREFIX . 'group', DB_PREFIX . 'student.gid=' . DB_PREFIX . 'group.gid');
+        $query = $this->db->get(DB_PREFIX . 'student');
         return $query->num_rows();
     }
-    
-     //--------------------------------------------------------------------------
-    function get_rne_etab($id){
 
-        $query = $this->db->select('rne')->where('eid', $id)->get(DB_PREFIX.'etab');
+    //--------------------------------------------------------------------------
+    function get_rne_etab($id) {
 
-        if($query->num_rows() == 1){
+        $query = $this->db->select('rne')->where('eid', $id)->get(DB_PREFIX . 'etab');
+
+        if ($query->num_rows() == 1) {
             $tRes = $query->row();
             return $tRes->rne;
         }
         return FALSE;
     }
-    
-    
-    function get_id_etab($rne){
-        $query = $this->db->select('eid')->where('rne', $rne)->get(DB_PREFIX.'etab');
 
-        if($query->num_rows() == 1){
+    function get_id_etab($rne) {
+        $query = $this->db->select('eid')->where('rne', $rne)->get(DB_PREFIX . 'etab');
+
+        if ($query->num_rows() == 1) {
             $tRes = $query->row();
             return $tRes->eid;
         }
         return FALSE;
     }
-    
+
     //--------------------------------------------------------------------------
     //get id classe par code de classe
-    function get_id_class($code){
-        $query = $this->db->select('clid')->where('code', $code)->get(DB_PREFIX.'class');
-      
-        if($query->num_rows() == 1){
+    function get_id_class($code) {
+        $query = $this->db->select('clid')->where('code', $code)->get(DB_PREFIX . 'class');
+
+        if ($query->num_rows() == 1) {
             $tRes = $query->row();
             return $tRes->clid;
         }
@@ -459,37 +508,37 @@ Class Student_model extends CI_Model {
 
         return 1;
     }
-    
+
     //--------------------------------------------------------------------------
     //récuperer année scolaire en cours
-    function get_school_current(){
-        $query = $this->db->select('sid')->where('active', 1)->get(DB_PREFIX.'school_year');
+    function get_school_current() {
+        $query = $this->db->select('sid')->where('active', 1)->get(DB_PREFIX . 'school_year');
 
-            if($query->num_rows() == 1){
-                $tRes = $query->row();
+        if ($query->num_rows() == 1) {
+            $tRes = $query->row();
+            return $tRes->sid;
+        } else {
+            $this->db->trans_start();
+            //mise à jour pour desactiver tous
+
+            $this->db->update(DB_PREFIX . 'school_year', array('active' => 0));
+            //get max id
+            $query2 = $this->db->select_max('sid')->get(DB_PREFIX . 'school_year');
+
+            //activer l'année scolaire la plus recente
+            if ($query2->num_rows() == 1) {
+                $tRes = $query2->row();
+                $this->db->where('sid', $tRes->sid);
+
+                $this->db->update(DB_PREFIX . 'school_year', array('active' => 1));
+
                 return $tRes->sid;
-            }else{
-                $this->db->trans_start();
-                //mise à jour pour desactiver tous
-
-                $this->db->update(DB_PREFIX.'school_year', array('active' => 0));
-                //get max id
-                $query2 = $this->db->select_max('sid')->get(DB_PREFIX.'school_year');
-
-                //activer l'année scolaire la plus recente
-                if($query2->num_rows() == 1){
-                    $tRes = $query2->row();
-                    $this->db->where('sid', $tRes->sid);
-
-                    $this->db->update(DB_PREFIX.'school_year', array('active' => 1));
-
-                    return $tRes->sid;
-                }
-                $this->db->trans_complete();
-                $query2->free_result();
             }
-            
-      return false;      
+            $this->db->trans_complete();
+            $query2->free_result();
+        }
+
+        return false;
     }
 
 }

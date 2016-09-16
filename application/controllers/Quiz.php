@@ -100,8 +100,6 @@ class Quiz extends CI_Controller {
            
             $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
 		 /*liste coef par question suivant le quiz*/
-            echo $data['quiz']['qids'];
-                 //var_dump($data['questions']);die;
             $data['questions_coef'] = $this->quiz_model->get_coef($quid);
             
         } else {

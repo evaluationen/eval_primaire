@@ -18,6 +18,9 @@ class Student extends CI_Controller {
         parent::__construct();
         $this->load->database();
         $this->load->model('student_model');
+        $this->load->model('school_model');
+        $this->load->model('user_model');
+        $this->load->library('form_validation');
         $this->lang->load('basic', $this->config->item('language'));
         if (!$this->session->userdata('logged_in')) {
             redirect('login');
@@ -46,7 +49,26 @@ class Student extends CI_Controller {
     
     /*create nex student in database*/
     function new_student(){
+     
         
+        $data['class_list'] = $this->school_model->list_class();
+        $data['school_list'] = $this->school_model->list_school();
+        $data['group_list'] = $this->user_model->group_list();
+        $data['title'] = $this->lang->line('add_new');
+        
+        $this->form_validation->set_rules('first_name', $this->lang->line('first_name'), 'required|trim');
+        $this->form_validation->set_rules('last_name', $this->lang->line('last_name'), 'required|trim');
+        
+        if($this->form_validation->run()){
+            if($this->student_model->insert_student()){
+                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_added_successfully') . " </div>");
+                redirect('student');
+            }else{
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
+            }
+        }
+                
+        $this->load->view('students/new_student', $data);
     }
     
     /*update information the student*/

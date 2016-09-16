@@ -12,7 +12,7 @@
                         }
                         ?>	
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('short_answer'); ?>
+                            <h4 class="title-typeq"><?php echo $this->lang->line('short_answer'); ?></h4>
                         </div>
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 

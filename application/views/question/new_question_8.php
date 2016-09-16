@@ -2,7 +2,6 @@
     <h3><?php echo $title; ?></h3>
     <div class="row">
         <form method="post" action="<?php echo site_url('qbank/new_question/8/' . $nop); ?>">
-
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
@@ -12,12 +11,9 @@
                             echo $this->session->flashdata('message');
                         }
                         ?>	
-
                         <div class="form-group">	 
-
-                            <?php echo $this->lang->line('cases_syllabes'); ?>
+                            <h4 class="title-typeq"> <?php echo $this->lang->line('cases_syllabes'); ?></h4>
                         </div>
-                        
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 
                             <select class="form-control catg" name="cid">
@@ -25,7 +21,6 @@
                                 <?php
                                 foreach ($category_list as $key => $val) {
                                     ?>
-
                                     <option value="<?php echo $val['cid']; ?>"><?php echo $val['category_name']; ?></option>
                                     <?php
                                 }
@@ -63,15 +58,15 @@
                                 <option></option>
                             </select>
                         </div>
-                        
+                         <div class="form-group">	 
+                            <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
+                            <textarea  name="description"  class="form-control"></textarea>
+                        </div>
                         <div class="form-group">	 
                             <label for="question"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ></textarea>
                         </div>
-                        <div class="form-group">	 
-                            <label for="inputEmail"  ><?php echo $this->lang->line('order'); ?></label> 
-                            <textarea  name="description"  class="form-control"></textarea>
-                        </div>
+                       
                         <label style="font-variant: all-petite-caps"><?php echo $this->lang->line('options'); ?></label>
                         <?php
                         for ($i = 1; $i <= $nop; $i++) {
@@ -89,16 +84,7 @@
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
                     </div>
                 </div>
-
-
-
-
             </div>
         </form>
     </div>
-
-
-
-
-
 </div>

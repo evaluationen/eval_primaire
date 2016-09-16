@@ -38,13 +38,13 @@ if(count($group_list)==0){
 foreach($group_list as $key => $val){
 ?>
 <tr>
- <td><input type="text"   class="form-control"  value="<?php echo $val['group_name'];?>" onBlur="updategroup(this.value,'<?php echo $val['gid'];?>');" ></td>
+ <td><input type="text" <?php echo ($val['gid'] == 1) ? "readonly = true" : "" ?>  class="form-control"  value="<?php echo $val['group_name'];?>" onBlur="updategroup(this.value,'<?php echo $val['gid'];?>');" ></td>
  <td style="display: none">
- <?php echo $this->config->item('base_currency_prefix');?> <input type="text"      value="<?php echo $val['price'];?>" onBlur="updategroupprice(this.value,'<?php echo $val['gid'];?>');" >
+ <?php echo $this->config->item('base_currency_prefix');?> <input type="text" value="<?php echo $val['price'];?>" onBlur="updategroupprice(this.value,'<?php echo $val['gid'];?>');" >
   <?php echo $this->config->item('base_currency_sufix');?>  </td>
- <td><input type="text"   class="form-control"  value="<?php echo $val['valid_for_days'];?>" onBlur="updategroupvalid(this.value,'<?php echo $val['gid'];?>');" ></td>
+ <td><input type="text"  <?php echo ($val['gid'] == 1) ? "readonly = true" : "" ?> class="form-control"  value="<?php echo isset($val['valid_for_days'])  ? $val['valid_for_days']: 0;?>" onBlur="updategroupvalid(this.value,'<?php echo $val['gid'];?>');" ></td>
 <td>
-<a href="javascript:remove_entry('user/remove_group/<?php echo $val['gid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
+<?php if($val['gid'] != 1) : ?><a href="javascript:remove_entry('user/remove_group/<?php echo $val['gid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
 
 </td>
 </tr>

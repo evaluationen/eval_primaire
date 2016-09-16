@@ -122,10 +122,14 @@ if ($this->config->item('tinymce')) {
                     
 </body>
 <footer>
-        <div class=" col-lg-2"></div>
-        <div class=" col-lg-3 footer"></div>
-        <div class="col-lg-3 footer"></div>
-        <div class="col-lg-4 right footer"></div>
+    <div class="container footer">
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>&copy; 2016 </b><a title="Contact webmestre" href="mailto:nathalie.haritiniaina@ac-mayotte.fr" target="_blank">Webmestre </a>| <b style="color: slategrey">VICE RECTORAT DE MAYOTTE</b>
+                </div>
+                
+            </div>
+        </div>
 </footer>
 </html>
 

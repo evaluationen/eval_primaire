@@ -12,7 +12,7 @@
                         }
                         ?>	
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('highlight'); ?>
+                            <h4 class="title-typeq"><?php echo $this->lang->line('highlight'); ?></h4>
                         </div>
                        
                         <div class="form-group">	 
@@ -22,7 +22,6 @@
                                 <?php
                                 foreach ($category_list as $key => $val) {
                                     ?>
-
                                     <option value="<?php echo $val['cid']; ?>"><?php echo $val['category_name']; ?></option>
                                     <?php
                                 }
@@ -41,7 +40,6 @@
                                 <?php
                                 foreach ($level_list as $key => $val) {
                                     ?>
-
                                     <option value="<?php echo $val['lid']; ?>"><?php echo $val['level_name']; ?></option>
                                     <?php
                                 }
@@ -61,22 +59,10 @@
                             <label for=""><?php echo $this->lang->line('text_selection'); ?></label> 
                             <input type="text" required="" name="default_txt"  class="form-control"   />
                         </div>
-                        
-                        
                         <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
-
                     </div>
                 </div>
-
-
-
-
             </div>
         </form>
     </div>
-
-
-
-
-
 </div>

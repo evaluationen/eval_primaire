@@ -161,7 +161,8 @@ Class Base_model extends CI_Model {
     
     
     function expired_user($class){
-        switch($class){
+        
+        /*switch($class){
             case 'CP'  : $date_exp = date('d/m/Y', strtotime('+5 years'));break;
             case 'CE1' : $date_exp = date('d/m/Y', strtotime('+4 years'));break;
             case 'CE2' : $date_exp = date('d/m/Y', strtotime('+3 years'));break;
@@ -169,10 +170,17 @@ Class Base_model extends CI_Model {
             case 'CM2' : $date_exp = date('d/m/Y', strtotime('+1 years'));break;
             default :    $date_exp = date('d/m/Y', strtotime('+6 years'));break;
         }
-        
-        $date = strtotime($date_exp);
-        
-        return $date;
+        */
+         switch($class){
+            case 'CP'  : $date_exp = strtotime('+5 years');break;
+            case 'CE1' : $date_exp = strtotime('+4 years');break;
+            case 'CE2' : $date_exp = strtotime('+3 years');break;
+            case 'CM1' : $date_exp = strtotime('+2 years');break;
+            case 'CM2' : $date_exp = strtotime('+1 years');break;
+            default :    $date_exp = strtotime('+6 years');break;
+        }
+           
+        return $date_exp;
     }
     
     //==========================================================================

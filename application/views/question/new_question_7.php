@@ -12,7 +12,7 @@
                         }
                         ?>	
                         <div class="form-group">	 
-                            <?php echo $this->lang->line('table_editable'); ?>
+                            <h4 class="title-typeq"> <?php echo $this->lang->line('table_editable'); ?></h4>
                         </div>
 
                         <div class="form-group">	 
@@ -48,17 +48,17 @@
                                 ?>
                             </select>
                         </div>    
-
-                        <div class="form-group">	 
-                            <label for="question"><?php echo $this->lang->line('question'); ?></label> 
-                            <textarea  name="question"  class="form-control"></textarea>
-                        </div>
-                        <div class="form-group">	 
+                         <div class="form-group">	 
                             <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
                             <textarea  name="description"  class="form-control"></textarea>
                         </div>
                         <div class="form-group">	 
-                            <label for="description"  ><?php echo $this->lang->line('content') ;  ?><span style="font-style: italic; color: #245269"> (Laissez vide pour les zones à compléter)</span></label> 
+                            <label for="question"><?php echo $this->lang->line('question'); ?></label> 
+                            <textarea  name="question"  class="form-control"></textarea>
+                        </div>
+                       
+                        <div class="form-group">	 
+                            <label for="default_txt"  ><?php echo $this->lang->line('content') ;  ?><span style="font-style: italic; color: #245269"> (Laissez vide pour les zones à compléter)</span></label> 
                             <textarea  name="default_txt"  class="form-control table-edit">
                                 <table>
                                     <tbody>

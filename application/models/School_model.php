@@ -46,6 +46,13 @@ class School_model extends CI_Model {
             return false;
         }
     }
+    
+    
+    function get_class($clid){
+        $this->db->where('clid', $clid);
+        $query = $this->db->get(DB_PREFIX.'class');
+        return $query->row();
+    }
 
     //==========================================================================
     /* criconscription */
@@ -113,16 +120,36 @@ class School_model extends CI_Model {
         }
     }
 
-    function list_school() {
+    //==========================================================================
+    function list_school($eid = FALSE) {
 
+        $this->db->select(DB_PREFIX . 'etab.label as etab, '. DB_PREFIX . 'etab.rne as rne_etab, '.DB_PREFIX.'etab.eid , '.DB_PREFIX.'circo.*');
         $this->db->join(DB_PREFIX . 'circo', DB_PREFIX . 'circo.ciid = ' . DB_PREFIX . 'etab.ciid');
+        if($eid){
+            $this->db->where('eid', $eid);
+        }
         $query = $this->db->get(DB_PREFIX . 'etab');
+        
         return $query->result();
     }
 
     function insert_school() {
         
     }
+    
+    //==========================================================================
+     function get_rne_school($eid) {
+
+        $this->db->select(DB_PREFIX . 'etab.rne as rne_etab');
+        $this->db->join(DB_PREFIX . 'circo', DB_PREFIX . 'circo.ciid = ' . DB_PREFIX . 'etab.ciid');
+        if($eid){
+            $this->db->where('eid', $eid);
+        }
+        $query = $this->db->get(DB_PREFIX . 'etab');
+        
+        return $query->row();
+    }
+   
 
    
 
