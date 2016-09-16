@@ -125,8 +125,8 @@ function updatelevel(vall, lid) {
 
 
 function hidenop(vall) {
-
-    var arr = ['1', '2', '3', '4 ','8'];
+    
+    var arr = ['1', '2', '3', '4','8'];
     if ($.inArray(vall, arr) != -1) { // if type of the question in array
         $("#nop").css('display', 'block');
         $("#nop-long").css('display', 'none');

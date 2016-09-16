@@ -20,13 +20,13 @@ Class Quiz_model extends CI_Model {
         }
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by('quid', 'desc');
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         return $query->result_array();
     }
 
     function num_quiz() {
 
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         return $query->num_rows();
     }
 
@@ -42,10 +42,11 @@ Class Quiz_model extends CI_Model {
             'pass_percentage' => $this->input->post('pass_percentage'),
             'correct_score' => $this->input->post('correct_score'),
             'incorrect_score' => $this->input->post('incorrect_score'),
-            'ip_address' => $this->input->post('ip_address'),
+            'ip_address' => $this->input->post('ip_address') ? $this->input->post('ip_address') : '',
             'view_answer' => $this->input->post('view_answer'),
             'camera_req' => $this->input->post('camera_req'),
             'gids' => implode(',', $this->input->post('gids')),
+            'clids' => implode(',', $this->input->post('clids')),
             'question_selection' => $this->input->post('question_selection')
         );
         if ($this->input->post('gen_certificate')) {
@@ -54,7 +55,7 @@ Class Quiz_model extends CI_Model {
         if ($this->input->post('certificate_text')) {
             $userdata['certificate_text'] = $this->input->post('certificate_text');
         }
-        $this->db->insert(DB_PREFIX.'quiz', $userdata);
+        $this->db->insert(DB_PREFIX . 'quiz', $userdata);
         $quid = $this->db->insert_id();
         return $quid;
     }
@@ -76,8 +77,8 @@ Class Quiz_model extends CI_Model {
             'camera_req' => $this->input->post('camera_req'),
             'gids' => implode(',', $this->input->post('gids'))
         );
-        
-        
+
+
         if ($this->input->post('gen_certificate')) {
             $userdata['gen_certificate'] = $this->input->post('gen_certificate');
         }
@@ -86,34 +87,34 @@ Class Quiz_model extends CI_Model {
         }
 
         $this->db->where('quid', $quid);
-        $this->db->update(DB_PREFIX.'quiz', $userdata);
-        
+        $this->db->update(DB_PREFIX . 'quiz', $userdata);
+
 
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz', $userdata);
+        $query = $this->db->get(DB_PREFIX . 'quiz', $userdata);
         $quiz = $query->row_array();
-        
-        
-        /*mis à jour quiz_result ouvert*/
-        if(!empty($quiz['qids'])){
-         $r_qids = array('r_qids' => $quiz['qids']);
-          $this->db->where('quid', $quid);
-          $this->db->where('result_status', $this->lang->line('open'));
-          $this->db->update(DB_PREFIX.'result', $r_qids);
-          
-          /*mis à jour des coeficient*/
-          $qids = array_map('trim', explode(',', $quiz['qids']));
-          foreach ($qids as $qid){
-              $value = $this->input->post('coef_'.$qid) ? $this->input->post('coef_'.$qid) : 1;
-              
-              $this->update_coef($quid, $qid, $value);
-          }
+
+
+        /* mis à jour quiz_result ouvert */
+        if (!empty($quiz['qids'])) {
+            $r_qids = array('r_qids' => $quiz['qids']);
+            $this->db->where('quid', $quid);
+            $this->db->where('result_status', $this->lang->line('open'));
+            $this->db->update(DB_PREFIX . 'result', $r_qids);
+
+            /* mis à jour des coeficient */
+            $qids = array_map('trim', explode(',', $quiz['qids']));
+            foreach ($qids as $qid) {
+                $value = $this->input->post('coef_' . $qid) ? $this->input->post('coef_' . $qid) : 1;
+
+                $this->update_coef($quid, $qid, $value);
+            }
         }
-        
+
         if ($quiz['question_selection'] == '1') {
 
             $this->db->where('quid', $quid);
-            $this->db->delete(DB_PREFIX.'qcl');
+            $this->db->delete(DB_PREFIX . 'qcl');
 
             foreach ($_POST['cid'] as $ck => $val) {
                 if (isset($_POST['noq'][$ck])) {
@@ -124,7 +125,7 @@ Class Quiz_model extends CI_Model {
                             'lid' => $_POST['lid'][$ck],
                             'noq' => $_POST['noq'][$ck]
                         );
-                        $this->db->insert(DB_PREFIX.'qcl', $userdata);
+                        $this->db->insert(DB_PREFIX . 'qcl', $userdata);
                     }
                 }
             }
@@ -132,7 +133,7 @@ Class Quiz_model extends CI_Model {
                 'noq' => array_sum($_POST['noq'])
             );
             $this->db->where('quid', $quid);
-            $this->db->update(DB_PREFIX.'quiz', $userdata);
+            $this->db->update(DB_PREFIX . 'quiz', $userdata);
         }
         return $quid;
     }
@@ -143,31 +144,34 @@ Class Quiz_model extends CI_Model {
         } else {
             $qids = $qids;
         }
-        /*
-          if($cid!='0'){
+
+        /* if($cid!='0'){
           $this->db->where(DB_PREFIX.'qbank.cid',$cid);
           }
           if($lid!='0'){
           $this->db->where(DB_PREFIX.'qbank.lid',$lid);
-          }
-         */
-
-        $query = $this->db->query("select * from '.DB_PREFIX.'qbank join '.DB_PREFIX.'category on '.DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid join '.DB_PREFIX.'level on '.DB_PREFIX.'level.lid='.DB_PREFIX.'qbank.lid 
-	 where '.DB_PREFIX.'qbank.qid in ($qids) order by FIELD('.DB_PREFIX.'qbank.qid,$qids) 
-	 ");
+          } */
+        
+        
+        $this->db->join(DB_PREFIX . 'category', DB_PREFIX . 'category.cid = ' . DB_PREFIX . 'qbank.cid');
+        $this->db->join(DB_PREFIX . 'sub_category', DB_PREFIX . 'sub_category.scid = ' . DB_PREFIX . 'qbank.scid');
+        $this->db->join(DB_PREFIX . 'level', DB_PREFIX . 'level.lid = ' . DB_PREFIX . 'qbank.lid');
+        $this->db->where_in(DB_PREFIX . 'qbank.qid', explode(',', $qids));
+        $this->db->order_by('FIELD (' . DB_PREFIX . 'qbank.qid,' . $qids . ')');
+        $query = $this->db->get(DB_PREFIX . 'qbank');
         return $query->result_array();
     }
 
     function get_options($qids) {
 
 
-        $query = $this->db->query("select * from '.DB_PREFIX.'options where qid in ($qids) order by FIELD('.DB_PREFIX.'options.qid,$qids)");
+        $query = $this->db->query("select * from ".DB_PREFIX."options where qid in (".$qids.") order by FIELD(".DB_PREFIX."options.qid,$qids)");
         return $query->result_array();
     }
 
     function up_question($quid, $qid) {
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         $result = $query->row_array();
         $qids = $result['qids'];
         if ($qids == "") {
@@ -192,12 +196,12 @@ Class Quiz_model extends CI_Model {
             'qids' => $qids
         );
         $this->db->where('quid', $quid);
-        $this->db->update(DB_PREFIX.'quiz', $userdata);
+        $this->db->update(DB_PREFIX . 'quiz', $userdata);
     }
 
     function down_question($quid, $qid) {
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         $result = $query->row_array();
         $qids = $result['qids'];
         if ($qids == "") {
@@ -224,20 +228,20 @@ Class Quiz_model extends CI_Model {
             'qids' => $qids
         );
         $this->db->where('quid', $quid);
-        $this->db->update(DB_PREFIX.'quiz', $userdata);
+        $this->db->update(DB_PREFIX . 'quiz', $userdata);
     }
 
     function get_qcl($quid) {
 
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'qcl');
+        $query = $this->db->get(DB_PREFIX . 'qcl');
         return $query->result_array();
     }
 
     function remove_qid($quid, $qid) {
 
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         $quiz = $query->row_array();
         $new_qid = array();
         foreach (explode(',', $quiz['qids']) as $key => $oqid) {
@@ -252,18 +256,18 @@ Class Quiz_model extends CI_Model {
             'noq' => $noq
         );
         $this->db->where('quid', $quid);
-        $this->db->update(DB_PREFIX.'quiz', $userdata);
-        
+        $this->db->update(DB_PREFIX . 'quiz', $userdata);
+
         //supression coef question
-        $this->db->where('quid', $quid)->where('qid', $qid)->delete(DB_PREFIX.'coef');
-        
+        $this->db->where('quid', $quid)->where('qid', $qid)->delete(DB_PREFIX . 'coef');
+
         return true;
     }
 
     function add_qid($quid, $qid) {
 
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         $quiz = $query->row_array();
         $new_qid = array();
         $new_qid[] = $qid;
@@ -280,23 +284,23 @@ Class Quiz_model extends CI_Model {
             'noq' => $noq
         );
         $this->db->where('quid', $quid);
-        $this->db->update(DB_PREFIX.'quiz', $userdata);
+        $this->db->update(DB_PREFIX . 'quiz', $userdata);
         $this->update_coef($quid, $qid, 1);
-        
+
         return true;
     }
 
     function get_quiz($quid) {
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         return $query->row_array();
     }
 
     function remove_quiz($quid) {
 
         $this->db->where('quid', $quid);
-        if ($this->db->delete(DB_PREFIX.'quiz')) {
-            
+        if ($this->db->delete(DB_PREFIX . 'quiz')) {
+
             return true;
         } else {
 
@@ -309,7 +313,7 @@ Class Quiz_model extends CI_Model {
         $this->db->where('quid', $quid);
         $this->db->where('uid', $uid);
         $this->db->where('result_status !=', $this->lang->line('open'));
-        $query = $this->db->get(DB_PREFIX.'result');
+        $query = $this->db->get(DB_PREFIX . 'result');
 
         return $query->num_rows();
     }
@@ -318,7 +322,7 @@ Class Quiz_model extends CI_Model {
 
         // get quiz info
         $this->db->where('quid', $quid);
-        $query = $this->db->get(DB_PREFIX.'quiz');
+        $query = $this->db->get(DB_PREFIX . 'quiz');
         $quiz = $query->row_array();
 
         if ($quiz['question_selection'] == '0') {
@@ -343,7 +347,7 @@ Class Quiz_model extends CI_Model {
         } else {
             // randomaly select qids
             $this->db->where('quid', $quid);
-            $query = $this->db->get(DB_PREFIX.'qcl');
+            $query = $this->db->get(DB_PREFIX . 'qcl');
             $qcl = $query->result_array();
             $qids = array();
             $categories = array();
@@ -386,13 +390,13 @@ Class Quiz_model extends CI_Model {
             $photoname = $this->session->userdata('photoname');
             $userdata['photo'] = $photoname;
         }
-        $this->db->insert(DB_PREFIX.'result', $userdata);
+        $this->db->insert(DB_PREFIX . 'result', $userdata);
         $rid = $this->db->insert_id();
         return $rid;
     }
 
     function open_result($quid, $uid) {
-        
+
         $result_open = $this->lang->line('open');
         $query = $this->db->query("select * from '.DB_PREFIX.'result  where '.DB_PREFIX.'result.result_status='$result_open'   and '.DB_PREFIX.'result.quid='$quid' and '.DB_PREFIX.'result.uid='$uid'");
 
@@ -462,7 +466,7 @@ Class Quiz_model extends CI_Model {
             $userdata['result_status'] = $qr;
         }
         $this->db->where('rid', $rid);
-        $this->db->update(DB_PREFIX.'result', $userdata);
+        $this->db->update(DB_PREFIX . 'result', $userdata);
 
         // question performance
         $qp = $r_qids[$qno];
@@ -525,7 +529,7 @@ Class Quiz_model extends CI_Model {
             $userdata['result_status'] = $qr;
         }
         $this->db->where('rid', $rid);
-        $this->db->update(DB_PREFIX.'result', $userdata);
+        $this->db->update(DB_PREFIX . 'result', $userdata);
 
 
         foreach ($qids_perf as $qp => $qpval) {
@@ -581,20 +585,20 @@ Class Quiz_model extends CI_Model {
             $message = str_replace('[percentage_obtained]', $qrr['percentage_obtained'], $message);
             $message = str_replace('[current_date]', date('Y-m-d H:i:s', time()), $message);
             $message = str_replace('[result_status]', $qrr['result_status'], $message);
-            
-            
-            /*envoi mail au responsable du quiz*/
-            
-            if($qrr['gen_certificate'] == 1){
-                
+
+
+            /* envoi mail au responsable du quiz */
+
+            if ($qrr['gen_certificate'] == 1) {
+
                 $mail = $this->user_model->get_mail_default('CONF_MAIL_QUIZ');
-            
-                $url_certificat = '<a class="btn" href="'.base_url('result/generate_certificate/'.$rid).'">'. $this->lang->line('down_here_certificat') .' </a>';
-                $message = str_replace('[result_certificat]', $url_certificat , $message);
-                if(isset($mail->email))
+
+                $url_certificat = '<a class="btn" href="' . base_url('result/generate_certificate/' . $rid) . '">' . $this->lang->line('down_here_certificat') . ' </a>';
+                $message = str_replace('[result_certificat]', $url_certificat, $message);
+                if (isset($mail->email))
                     $this->base_model->send_mail($mail->email, $subject, $message);
-            }else{
-                $message = str_replace('[result_certificat]', '' , $message);
+            }else {
+                $message = str_replace('[result_certificat]', '', $message);
             }
 
             $this->email->to($toemail);
@@ -630,7 +634,7 @@ Class Quiz_model extends CI_Model {
 
         // remove existing answers
         $this->db->where('rid', $rid);
-        $this->db->delete(DB_PREFIX.'answers');
+        $this->db->delete(DB_PREFIX . 'answers');
 
         foreach ($_POST['answer'] as $ak => $answer) {
 
@@ -659,7 +663,7 @@ Class Quiz_model extends CI_Model {
                         'q_option' => $ansval,
                         'score_u' => $options[$ansval]
                     );
-                    $this->db->insert(DB_PREFIX.'answers', $userdata);
+                    $this->db->insert(DB_PREFIX . 'answers', $userdata);
                     $attempted = 1;
                 }
                 if ($attempted == 1) {
@@ -703,7 +707,7 @@ Class Quiz_model extends CI_Model {
                             'q_option' => $ansval,
                             'score_u' => $marks
                         );
-                        $this->db->insert(DB_PREFIX.'answers', $userdata);
+                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
                     }
                 }
                 if ($attempted == 1) {
@@ -731,7 +735,7 @@ Class Quiz_model extends CI_Model {
                             'q_option' => $ansval,
                             'score_u' => 0
                         );
-                        $this->db->insert(DB_PREFIX.'answers', $userdata);
+                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
                         $attempted = 1;
                     }
                 }
@@ -771,7 +775,7 @@ Class Quiz_model extends CI_Model {
                             'q_option' => $ansval,
                             'score_u' => $mc
                         );
-                        $this->db->insert(DB_PREFIX.'answers', $userdata);
+                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
                         $attempted = 1;
                     }
                 }
@@ -792,7 +796,7 @@ Class Quiz_model extends CI_Model {
             'individual_time' => $_POST['individual_time'],
         );
         $this->db->where('rid', $rid);
-        $this->db->update(DB_PREFIX.'result', $userdata);
+        $this->db->update(DB_PREFIX . 'result', $userdata);
 
         return true;
     }
@@ -804,7 +808,7 @@ Class Quiz_model extends CI_Model {
             'individual_time' => $_POST['individual_time'],
         );
         $this->db->where('rid', $rid);
-        $this->db->update(DB_PREFIX.'result', $userdata);
+        $this->db->update(DB_PREFIX . 'result', $userdata);
 
         return true;
     }
@@ -813,7 +817,7 @@ Class Quiz_model extends CI_Model {
 
     function quiz_default($gid) {
         $where = "FIND_IN_SET('" . $gid . "', gids)";
-        $query = $this->db->select('quid')->where($where)->get(DB_PREFIX.'quiz');
+        $query = $this->db->select('quid')->where($where)->get(DB_PREFIX . 'quiz');
 
         if ($query->num_rows() > 0) {
             $res = $query->row();
@@ -822,75 +826,71 @@ Class Quiz_model extends CI_Model {
 
         return isset($quid) ? $quid : FALSE;
     }
-    
-    /* get coef questions by quiz*/
-    function get_coef($quiz_id){
-        
-        $query = $this->db->select('qids')->where('quid', $quiz_id)->get(DB_PREFIX.'quiz');
+
+    /* get coef questions by quiz */
+
+    function get_coef($quiz_id) {
+
+        $query = $this->db->select('qids')->where('quid', $quiz_id)->get(DB_PREFIX . 'quiz');
         $data = array();
-        if($query->num_rows() == 1){
-            $result  = $query->row();
+        if ($query->num_rows() == 1) {
+            $result = $query->row();
             $qids = array_map('trim', explode(',', $result->qids));
             $query->free_result();
-            
-            foreach($qids as $qid){
-                 $this->db->where(DB_PREFIX.'coef.qid', $qid)->where(DB_PREFIX.'coef.quid',$quiz_id);
-                 $this->db->join(DB_PREFIX.'qbank', DB_PREFIX.'qbank.qid = '.DB_PREFIX.'coef.qid');
-                 $this->db->join(DB_PREFIX.'quiz', DB_PREFIX.'quiz.quid = '.DB_PREFIX.'coef.quid');
-                 $query_coef = $this->db->get(DB_PREFIX.'coef');
-                 
-                 if($query_coef->num_rows() == 1){
-                     $coef = $query_coef->row();
-                     $data[$coef->qid] =  (Object)array('qid' => $coef->qid , 'coef' => $coef->coef);
-                 }else{
-                     //coef : par defaut 1 s'il n'est pas spécifié
-                     $upd_coef = $this->update_coef($quiz_id,$qid,1);
-                     if($upd_coef){
-                         $data[$qid] = (Object)array('qid' => $qid , 'coef' => 1);
-                     }
-                 }
+
+            foreach ($qids as $qid) {
+                $this->db->where(DB_PREFIX . 'coef.qid', $qid)->where(DB_PREFIX . 'coef.quid', $quiz_id);
+                $this->db->join(DB_PREFIX . 'qbank', DB_PREFIX . 'qbank.qid = ' . DB_PREFIX . 'coef.qid');
+                $this->db->join(DB_PREFIX . 'quiz', DB_PREFIX . 'quiz.quid = ' . DB_PREFIX . 'coef.quid');
+                $query_coef = $this->db->get(DB_PREFIX . 'coef');
+
+                if ($query_coef->num_rows() == 1) {
+                    $coef = $query_coef->row();
+                    $data[$coef->qid] = (Object) array('qid' => $coef->qid, 'coef' => $coef->coef);
+                } else {
+                    //coef : par defaut 1 s'il n'est pas spécifié
+                    $upd_coef = $this->update_coef($quiz_id, $qid, 1);
+                    if ($upd_coef) {
+                        $data[$qid] = (Object) array('qid' => $qid, 'coef' => 1);
+                    }
+                }
             }
-            
-           $query_coef->free_result();
-           
-            if(count($data) > 0 ){
+
+            $query_coef->free_result();
+
+            if (count($data) > 0) {
                 return $data;
             }
         }
         return false;
     }
-    
-    
-    
-    function update_coef($quid, $qid, $value){
-       
-        $query =  $this->db->where('quid', $quid)->where('qid' , $qid)->get(DB_PREFIX.'coef');
-       
-        if($query->num_rows() == 1){
+
+    function update_coef($quid, $qid, $value) {
+
+        $query = $this->db->where('quid', $quid)->where('qid', $qid)->get(DB_PREFIX . 'coef');
+
+        if ($query->num_rows() == 1) {
             $query->free_result();
             $userdata = array('coef' => $value);
-            $this->db->where('quid', $quid)->where('qid' , $qid);
-            $this->db->update(DB_PREFIX.'coef', $userdata);
-            
-        }else{
+            $this->db->where('quid', $quid)->where('qid', $qid);
+            $this->db->update(DB_PREFIX . 'coef', $userdata);
+        } else {
             //delete
             $this->db->trans_start();
-            $this->db->where('quid', $quid)->where('qid' , $qid);
-            
+            $this->db->where('quid', $quid)->where('qid', $qid);
+
             //data insert
             $data = array(
                 'quid' => $quid,
                 'qid' => $qid,
                 'coef' => $value
-                    
             );
-            if ($this->db->delete(DB_PREFIX.'coef')) {
-                $this->db->insert(DB_PREFIX.'coef', $data);
+            if ($this->db->delete(DB_PREFIX . 'coef')) {
+                $this->db->insert(DB_PREFIX . 'coef', $data);
             }
             $this->db->trans_complete();
-            
+
             return $this->db->trans_status();
-            
         }
         return false;
     }

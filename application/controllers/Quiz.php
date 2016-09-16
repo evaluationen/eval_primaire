@@ -9,6 +9,7 @@ class Quiz extends CI_Controller {
         $this->load->database();
         $this->load->model("quiz_model");
         $this->load->model("user_model");
+        $this->load->model("school_model");
         $this->lang->load('basic', $this->config->item('language'));
         // redirect if not loggedin
         if (!$this->session->userdata('logged_in')) {
@@ -53,13 +54,26 @@ class Quiz extends CI_Controller {
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('quiz');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
+        $class_list = $this->school_model->list_class();
+        $data['class_list'] = array();
+        foreach ($class_list as $row) {
+            if (!array_key_exists($row->cyid, $data['class_list']))
+                $data['class_list'][$row->cyid] = array('label' => $row->cycle_name, 'class' => array());
+
+            $data['class_list'][$row->cyid]['class'][] = array(
+                'clid' => $row->clid,
+                'code' => $row->code,
+                
+            );
+        }
+      
         $this->load->view('header', $data);
         $this->load->view('new_quiz', $data);
         $this->load->view('footer', $data);
     }
 
     public function edit_quiz($quid) {
-
+        //$this->output->enable_profiler(true);
         $logged_in = $this->session->userdata('logged_in');
         if ($logged_in['su'] != '1') {
             exit($this->lang->line('permission_denied'));
@@ -67,17 +81,36 @@ class Quiz extends CI_Controller {
         $data['title'] = $this->lang->line('edit') . ' ' . $this->lang->line('quiz');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
+        $class_list = $this->school_model->list_class();
+        $data['class_list'] = array();
+        foreach ($class_list as $row) {
+            if (!array_key_exists($row->cyid, $data['class_list']))
+                $data['class_list'][$row->cyid] = array('label' => $row->cycle_name, 'class' => array());
+
+            $data['class_list'][$row->cyid]['class'][] = array(
+                'clid' => $row->clid,
+                'code' => $row->code,
+                
+            );
+        }
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        
+        
         if ($data['quiz']['question_selection'] == '0') {
+           
             $data['questions'] = $this->quiz_model->get_questions($data['quiz']['qids']);
-			/*liste coef par question suivant le quiz*/
+		 /*liste coef par question suivant le quiz*/
+            echo $data['quiz']['qids'];
+                 //var_dump($data['questions']);die;
             $data['questions_coef'] = $this->quiz_model->get_coef($quid);
+            
         } else {
             $this->load->model("qbank_model");
             $data['qcl'] = $this->quiz_model->get_qcl($data['quiz']['quid']);
 
             $data['category_list'] = $this->qbank_model->category_list();
             $data['level_list'] = $this->qbank_model->level_list();
+             
         }
         $this->load->view('header', $data);
         $this->load->view('edit_quiz', $data);

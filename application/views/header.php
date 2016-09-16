@@ -5,11 +5,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link href="<?php echo base_url('ressources/images/favicon.png'); ?>" type="image/png" rel="icon">
         <title> </title>
         <!-- bootstrap css -->
         <link href="<?php echo base_url('ressources/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
-
+        
         <!-- custom css -->
         <link href="<?php echo base_url('ressources/css/style.css'); ?>" rel="stylesheet">
         <link href="<?php echo base_url('ressources/css/datepicker.css'); ?>" rel="stylesheet">
@@ -127,11 +127,11 @@
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->lang->line('quiz'); ?> <span class="caret"></span></a>
                                         <ul class="dropdown-menu">
                                             
-                                            <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new') . ' ' . $this->lang->line('by_level') . ' / Cycle'; ?></a></li>
-                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('quiz'); ?> <?php echo $this->lang->line('list'). ' ' . $this->lang->line('by_level'); ?></a></li>
-                                            <li><a>-----------------------------------</a></li>
+                                            <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new'); ?></a></li>
+                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('quiz'); ?> <?php echo $this->lang->line('list'); ?></a></li>
+                                            <!--li><a>-----------------------------------</a></li>
                                             <li><a href="<?php echo site_url('quiz/add_new'); ?>"><?php echo $this->lang->line('add_new'). ' ' . $this->lang->line('by_sequence'); ?></a></li>
-                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('list'). ' ' . $this->lang->line('by_sequence'); ?></a></li>
+                                            <li><a href="<?php echo site_url('quiz'); ?>"><?php echo $this->lang->line('list'). ' ' . $this->lang->line('by_sequence'); ?></a></li-->
                                         </ul>
                                     </li>
 

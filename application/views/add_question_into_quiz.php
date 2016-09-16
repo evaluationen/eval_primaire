@@ -70,6 +70,7 @@
  <th><?php echo $this->lang->line('question');?></th>
 <th><?php echo $this->lang->line('question_type');?></th>
 <th><?php echo $this->lang->line('category_name');?> / <?php echo $this->lang->line('level_name');?></th>
+<th><?php echo $this->lang->line('sub_category');?></th>
 <th><?php echo $this->lang->line('percent_corrected');?></th>
 <th><?php echo $this->lang->line('action');?> </th>
 </tr>
@@ -83,6 +84,7 @@ if(count($result)==0){
 	
 	<?php
 }
+$type_q = $this->base_model->question_type();
 foreach($result as $key => $val){
 ?>
 <tr>
@@ -100,9 +102,9 @@ foreach($result as $key => $val){
  
  
  </td>
-<td><?php echo $val['question_type'];?></td>
+<td><?php echo $type_q[$val['question_type']];?></td>
 <td><?php echo $val['category_name'];?> / <span style="font-size:12px;"><?php echo $val['level_name'];?></span></td>
- 
+<td><?php echo $val['sub_catg_name']; ?></td> 
 <td><?php if($val['no_time_served']!='0'){ $perc=($val['no_time_corrected']/$val['no_time_served'])*100; 
 ?>
 
