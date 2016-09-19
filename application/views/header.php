@@ -9,17 +9,12 @@
         <title> </title>
         <!-- bootstrap css -->
         <link href="<?php echo base_url('ressources/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
-        
         <!-- custom css -->
         <link href="<?php echo base_url('ressources/css/style.css'); ?>" rel="stylesheet">
         <link href="<?php echo base_url('ressources/css/datepicker.css'); ?>" rel="stylesheet">
 
         <script>
-
             var base_url = "<?php echo base_url(); ?>";
-
-
-
         </script>
 
         <!-- jquery -->
@@ -43,11 +38,8 @@
                 $('.datepicker').datepicker({'format': 'dd/mm/yyyy'});
             });
         </script>
-
-
     </head>
     <body >
-
         <?php
         if ($this->session->userdata('logged_in')) {
             if ($this->uri->segment(2) != 'attempt') {
@@ -146,20 +138,20 @@
                                         <ul class="dropdown-menu">
 
                                             <li><a href="<?php echo site_url('user/group_list'); ?>"><?php echo $this->lang->line('group_list'); ?></a></li>
-                                            <li><a href="<?php echo site_url('qbank/category_list'); ?>"><?php echo $this->lang->line('category_list'); ?></a></li>
-                                            <li><a href="<?php echo site_url('category/sub_category_list');?>"><?php echo $this->lang->line('sub_category_list')?></a></li>
-                                            <li><a href="<?php echo site_url('qbank/level_list'); ?>"><?php echo $this->lang->line('level_list'); ?></a></li>
-                                            <hr style="margin-bottom: 4px">
-                                            
-                                            <li><a href="<?php echo site_url('school/circo'); ?>"><?php echo $this->lang->line('circo_list'); ?></a></li>
-                                            <li><a href="<?php echo site_url('school/etab_list'); ?>"><?php echo $this->lang->line('etab_list'); ?></a></li>
-                                            <li><a href="<?php echo site_url('school/cycle'); ?>"><?php echo $this->lang->line('cycle_list'); ?></a></li>
-                                            <li><a href="<?php echo site_url('school/class_list'); ?>"><?php echo $this->lang->line('class_list'); ?></a></li>
-                                            
-                                            <hr style="margin-bottom: 4px">
- 					    <li><a href="<?php echo site_url('user/config_mail'); ?>"><?php echo $this->lang->line('custom_mail_result'); ?></a></li>
-                                            <li><a href="<?php echo site_url('dashboard/config'); ?>"><?php echo $this->lang->line('config'); ?></a></li>
-                                            <li><a href="<?php echo site_url('dashboard/css'); ?>"><?php echo $this->lang->line('custom_css'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('qbank/category_list'); ?>"><?php echo $this->lang->line('category_list'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('category/sub_category_list'); ?>"><?php echo $this->lang->line('sub_category_list') ?></a></li>
+                                                        <li><a href="<?php echo site_url('qbank/level_list'); ?>"><?php echo $this->lang->line('level_list'); ?></a></li>
+                                                        <hr style="margin-bottom: 4px">
+
+                                                        <li><a href="<?php echo site_url('school/circo'); ?>"><?php echo $this->lang->line('circo_list'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('school/etab_list'); ?>"><?php echo $this->lang->line('etab_list'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('school/cycle'); ?>"><?php echo $this->lang->line('cycle_list'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('school/class_list'); ?>"><?php echo $this->lang->line('class_list'); ?></a></li>
+
+                                                        <hr style="margin-bottom: 4px">
+                                                        <li><a href="<?php echo site_url('user/config_mail'); ?>"><?php echo $this->lang->line('custom_mail_result'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('dashboard/config'); ?>"><?php echo $this->lang->line('config'); ?></a></li>
+                                                        <li><a href="<?php echo site_url('dashboard/css'); ?>"><?php echo $this->lang->line('custom_css'); ?></a></li>
 
 
                                         </ul>

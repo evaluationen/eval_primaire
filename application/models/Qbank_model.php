@@ -195,7 +195,11 @@ Class Qbank_model extends CI_Model {
     }
 
     function insert_question_5($extra = FALSE) {
-
+        if ($this->input->post('is_check-parent')) {
+            $pqid = $this->input->post('pqid');
+        } else {
+            $pqid = '';
+        }
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
@@ -203,6 +207,7 @@ Class Qbank_model extends CI_Model {
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
+            'pqid' => $pqid,
             'is_default_txt' => (isset($extra['is_default_txt']) && !empty($extra['is_default_txt'])) ? $extra['is_default_txt'] : 0,
             'default_txt' => (isset($extra['default_txt']) && !empty($extra['default_txt'])) ? $extra['default_txt'] : '',
         );
@@ -356,12 +361,19 @@ Class Qbank_model extends CI_Model {
 
     //==========================================================================
     function update_question_1($qid) {
-
+        
+        if ($this->input->post('is_check-parent')) {
+            $pqid = $this->input->post('pqid');
+        } else {
+            $pqid = '';
+        }
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_single_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $pqid,
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
@@ -389,12 +401,18 @@ Class Qbank_model extends CI_Model {
 
     function update_question_2($qid) {
 
-
+         if ($this->input->post('is_check-parent')) {
+            $pqid = $this->input->post('pqid');
+        } else {
+            $pqid = '';
+        }
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'), //$this->lang->line('multiple_choice_multiple_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $pqid,
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
@@ -426,6 +444,7 @@ Class Qbank_model extends CI_Model {
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'), //$this->lang->line('match_the_column'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
@@ -454,6 +473,7 @@ Class Qbank_model extends CI_Model {
             'description' => $this->input->post('description'),
             'question_type' => $this->input->post('question_type'), //$this->lang->line('short_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
@@ -472,23 +492,30 @@ Class Qbank_model extends CI_Model {
 
         return true;
     }
+    
+    //long text, search/response, table etditable, Surligner les mots 
 
     function update_question_5($qid) {
-
-
+         if ($this->input->post('is_check-parent')) {
+            $pqid = $this->input->post('pqid');
+        } else {
+            $pqid = '';
+        }
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
             'default_txt' => $this->input->post('default_txt'),
             'question_type' => $this->input->post('question_type'), //$this->lang->line('long_answer'),
             'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'pqid' => $pqid,
             'lid' => $this->input->post('lid')
         );
         $this->db->where('qid', $qid);
         $this->db->update(DB_PREFIX . 'qbank', $userdata);
+        
         $this->db->where('qid', $qid);
         $this->db->delete(DB_PREFIX . 'options');
-
 
         return true;
     }
@@ -789,8 +816,8 @@ Class Qbank_model extends CI_Model {
     //==========================================================================
     function get_parent_qlist($catg_id = FALSE) {
         if ($this->input->post('search')) {
-            $this->db->or_where(DB_PREFIX . 'qbank_parent.title', $search);
-            $this->db->or_where(DB_PREFIX . 'qbank_parent.description', $search);
+            $this->db->or_where(DB_PREFIX . 'qbank_parent.title', $this->input->post('search'));
+            $this->db->or_where(DB_PREFIX . 'qbank_parent.description', $this->input->post('search'));
         }
 
         if ($catg_id) {

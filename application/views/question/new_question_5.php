@@ -47,6 +47,19 @@
                                 ?>
                             </select>
                         </div>
+                        <!-- begin form question-->
+                         
+                        <div class="form-group pquestion">
+                            <label><?php echo $this->lang->line('attach_group_question');?></label><!--Rattaché à un sujet-->
+                            <input type="checkbox" id="check-object" name="is_check-parent">
+                        </div>
+                        <!-- liste des sujets -->
+                        <div class="form-group">
+                            <select name="pqid" class="object-list form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                        
                         <div class="form-group">	 
                             <label for="description"  ><?php echo $this->lang->line('order'); ?></label> 
                             <textarea  name="description"  class="form-control"></textarea>

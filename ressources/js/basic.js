@@ -125,8 +125,8 @@ function updatelevel(vall, lid) {
 
 
 function hidenop(vall) {
-    
-    var arr = ['1', '2', '3', '4','8'];
+
+    var arr = ['1', '2', '3', '4', '8'];
     if ($.inArray(vall, arr) != -1) { // if type of the question in array
         $("#nop").css('display', 'block');
         $("#nop-long").css('display', 'none');
@@ -487,34 +487,34 @@ function save_answer(qn) {
 
 
 //==============================================================================
-    
-    function submit_qeditable(){
-          
-        
-        var editor = tinymce.get('default_txt'); // use your own editor id here - equals the id of your textarea
-        var content = editor.getContent();
-        
-        content = content.replace(/<td>&nbsp;<\/td>/g,'<td contenteditable="true"></td>');
-        editor.setContent(content);
 
-        var str = $("form").serialize();
-        
-        $.ajax({
-            type : "POST",
-            data : str,
-            url : base_url + "qbank/new_question/7/",
-            sucess : function (data){
-                alert('insert ok');
-            },
-            error : function(error){
-                
-            }
-        });
-        
-    
-    }
-    
- 
+function submit_qeditable() {
+
+
+    var editor = tinymce.get('default_txt'); // use your own editor id here - equals the id of your textarea
+    var content = editor.getContent();
+
+    content = content.replace(/<td>&nbsp;<\/td>/g, '<td contenteditable="true"></td>');
+    editor.setContent(content);
+
+    var str = $("form").serialize();
+
+    $.ajax({
+        type: "POST",
+        data: str,
+        url: base_url + "qbank/new_question/7/",
+        sucess: function (data) {
+            alert('insert ok');
+        },
+        error: function (error) {
+
+        }
+    });
+
+
+}
+
+
 //==============================================================================
 
 function setIndividual_time(cqn) {//cqn='0' not supported by chrome
@@ -663,18 +663,18 @@ function group_question() {
     }
 
     var datas = 'catg_id=' + $('.catg').val();
-       if ($('.catg').val() != "-1") {
-            $.ajax({
-                type: "POST",
-                url: base_url + "qbank/ajax_group_question/",
-                data: datas,
-                cache: false,
-                success: function (html)
-                {
-                    $(".object-list").html(html);
-                }
-            });
-       }
+    if ($('.catg').val() != "-1") {
+        $.ajax({
+            type: "POST",
+            url: base_url + "qbank/ajax_group_question/",
+            data: datas,
+            cache: false,
+            success: function (html)
+            {
+                $(".object-list").html(html);
+            }
+        });
+    }
 }
 
 
@@ -807,7 +807,9 @@ $(document).ready(function () {
 
     if ($('#check-object').is(":checked")) {
         $('.object-list').css('display', 'block');
-        group_question();
+        if (!$('#edit-q').val()) {
+            group_question();
+        }
     } else {
         $('.object-list').css('display', 'none');
 
@@ -844,11 +846,11 @@ $(document).ready(function () {
 
     });
 
-    group_question();
-    
-    
-    
-  
+    if (!$('#edit-q').val()) {
+        group_question();
+    }
+
+
 
 });
 // end - quiz attempt functions 

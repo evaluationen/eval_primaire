@@ -76,7 +76,7 @@ foreach($result as $key => $val){
     
 ?>
 <tr>
-<td><?php if ($val['stid'] != 1) : ?> <input type="checkbox" name="check_user[]" class="select_user" value="<?php echo $val['stid'];?>"/><?php endif; ?></td>   
+<td><input type="checkbox" name="check_user[]" class="select_user" value="<?php echo $val['stid'];?>"/></td>   
 <td><?php echo $val['login'];?></td>
 <td><?php echo $val['last_name'];?></td>
 <td><?php echo $val['first_name'];?></td>
@@ -90,7 +90,7 @@ foreach($result as $key => $val){
 </td>
 <td>
 <a href="<?php echo site_url('student/edit/'.$val['stid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/edit.png');?>"></a>
-<?php if ($val['stid'] != 1) : ?> <a href="javascript:remove_entry('student/remove_student/<?php echo $val['stid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a><?php endif; ?>
+<a href="javascript:remove_entry('student/remove_student/<?php echo $val['stid'];?>');"><img class="no-marg" src="<?php echo base_url('ressources/images/cross.png');?>"></a>
 <?php if(file_exists(FCPATH.'ressources/qrcode/'.$val['qrcode']) && is_file(FCPATH.'ressources/qrcode/'.$val['qrcode'])) : ?><a title="<?php echo $this->lang->line('print_user_qr')?>" href="<?php echo site_url('student/export_student/'.$val['stid']);?>"><img class="no-marg" src="<?php echo base_url('ressources/images/pdf.png');?>"></a><?php endif; ?>
 </td>
 </tr>

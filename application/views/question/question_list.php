@@ -140,7 +140,7 @@ $qn = isset($val['question_type'])  ?  $val['question_type'] : 1;
 
 ?>
     <a href="<?php echo site_url('qbank/duplicate/'.$val['qid']);?>"><img src="<?php echo base_url('ressources/images/duplicate.png');?>" title="Dupliquer la question" alt="Dupliquer la question"></a>
-<a href="<?php echo site_url('qbank/edit_question_'.$qn.'/'.$val['qid']);?>"><img src="<?php echo base_url('ressources/images/edit.png');?>"></a>
+<a href="<?php echo site_url('qbank/edit_question/'.$qn.'/'.$val['qid']);?>"><img src="<?php echo base_url('ressources/images/edit.png');?>"></a>
 <a href="javascript:remove_entry('qbank/remove_question/<?php echo $val['qid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a>
 
 

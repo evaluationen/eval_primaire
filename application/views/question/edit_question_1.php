@@ -1,7 +1,8 @@
 <div class="container">
-    <h3><?php echo $title; ?></h3>
+    <h3><?php echo $title;?></h3>
     <div class="row">
-        <form method="post" action="<?php echo site_url('qbank/edit_question_1/' . $question['qid']); ?>">
+        <form method="post" action="<?php echo site_url('qbank/edit_question/1/' . $question['qid']); ?>">
+            <input type="hidden" value="update" name="action"/>
             <div class="col-md-8">
                 <br> 
                 <div class="login-panel panel panel-default">
@@ -17,11 +18,10 @@
                         </div>
                         <div class="form-group">	 
                             <label><?php echo $this->lang->line('select_category'); ?></label> 
-                            <select class="form-control" name="cid">
+                            <select class="form-control catg" name="cid">
                                 <?php
                                 foreach ($category_list as $key => $val) {
                                     ?>
-
                                     <option value="<?php echo $val['cid']; ?>"  <?php if ($question['cid'] == $val['cid']) {
                                     echo 'selected';
                                 } ?> ><?php echo $val['category_name']; ?></option>
@@ -34,12 +34,12 @@
                             <label><?php echo $this->lang->line('select_sub_category'); ?></label> 
                             <select class="form-control" name="scid">
                                 <?php
-                                foreach ($category_list as $key => $val) {
+                                foreach ($sub_category_list as $key => $val) {
                                     ?>
 
-                                    <option value="<?php echo $val['cid']; ?>"  <?php if ($question['cid'] == $val['cid']) {
+                                    <option value="<?php echo $val->scid; ?>"  <?php if ($question['scid'] == $val->scid) {
                                     echo 'selected';
-                                } ?> ><?php echo $val['category_name']; ?></option>
+                                } ?> ><?php echo $val->sub_catg_name; ?></option>
                                     <?php
                                 }
                                 ?>
@@ -51,22 +51,39 @@
                                 <?php
                                 foreach ($level_list as $key => $val) {
                                     ?>
-                                    <option value="<?php echo $val['lid']; ?>" <?php if ($question['lid'] == $val['lid']) {
-                                    echo 'selected';
-                                } ?> ><?php echo $val['level_name']; ?></option>
+                                    <option value="<?php echo $val['lid']; ?>" <?php if ($question['lid'] == $val['lid']) {echo 'selected';} ?> ><?php echo $val['level_name']; ?></option>
     <?php
 }
 ?>
                             </select>
                         </div>
+                        
+                        <!-- begin form question-->
+                        <div class="form-group pquestion">
+                            <label><?php echo $this->lang->line('attach_group_question');?></label><!--Rattaché à un sujet-->
+                            <input <?php  if($value->pqid == 1){echo 'checked';} ?> type="checkbox" id="check-object" name="is_check-parent">
+                        </div>
+                        <!-- liste des sujets -->
+                        <input type="hidden" id="edit-q" value="1"/>
+                        <div class="form-group">
+                            <select name="pqid" class="object-list form-control">
+                                <?php if($category_parent) : ?>
+                                <?php foreach ($category_parent as $key => $value) : ?>
+                                <option value="<?php echo $value->pqid; ?>" <?php if ($question['pqid'] == $value->pqid) {echo 'selected';} ?>><?php echo $value->title?></option>
+                                <?php endforeach;?>
+                                <?php endif;?>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">	 
+                            <label for="inputEmail"  ><?php echo $this->lang->line('order'); ?></label> 
+                            <textarea  name="description"  class="form-control"><?php echo $question['description']; ?></textarea>
+                        </div>
                         <div class="form-group">	 
                             <label for="inputEmail"  ><?php echo $this->lang->line('question'); ?></label> 
                             <textarea  name="question"  class="form-control"   ><?php echo $question['question']; ?></textarea>
                         </div>
-                        <div class="form-group">	 
-                            <label for="inputEmail"  ><?php echo $this->lang->line('description'); ?></label> 
-                            <textarea  name="description"  class="form-control"><?php echo $question['description']; ?></textarea>
-                        </div>
+                        
 <?php
 foreach ($options as $key => $val) {
     ?>
