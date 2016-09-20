@@ -151,8 +151,8 @@ Class Quiz_model extends CI_Model {
           if($lid!='0'){
           $this->db->where(DB_PREFIX.'qbank.lid',$lid);
           } */
-        
-        
+
+
         $this->db->join(DB_PREFIX . 'category', DB_PREFIX . 'category.cid = ' . DB_PREFIX . 'qbank.cid');
         $this->db->join(DB_PREFIX . 'sub_category', DB_PREFIX . 'sub_category.scid = ' . DB_PREFIX . 'qbank.scid');
         $this->db->join(DB_PREFIX . 'level', DB_PREFIX . 'level.lid = ' . DB_PREFIX . 'qbank.lid');
@@ -165,7 +165,7 @@ Class Quiz_model extends CI_Model {
     function get_options($qids) {
 
 
-        $query = $this->db->query("select * from ".DB_PREFIX."options where qid in (".$qids.") order by FIELD(".DB_PREFIX."options.qid,$qids)");
+        $query = $this->db->query("select * from " . DB_PREFIX . "options where qid in (" . $qids . ") order by FIELD(" . DB_PREFIX . "options.qid,$qids)");
         return $query->result_array();
     }
 
@@ -298,9 +298,9 @@ Class Quiz_model extends CI_Model {
 
     function remove_quiz($quid) {
 
-        
+
         $this->db->where('quid', $quid);
-        if($this->db->delete(DB_PREFIX . 'coef')){
+        if ($this->db->delete(DB_PREFIX . 'coef')) {
             $this->db->where('quid', $quid);
             if ($this->db->delete(DB_PREFIX . 'quiz')) {
 
@@ -310,14 +310,19 @@ Class Quiz_model extends CI_Model {
                 return false;
             }
         }
-        
+
         return false;
     }
 
-    function count_result($quid, $uid) {
+    function count_result($quid, $uid, $isadmin = false) {
 
         $this->db->where('quid', $quid);
-        $this->db->where('uid', $uid);
+        if ($isadmin) {
+            $this->db->where('uid', $uid);
+        } else {
+            $this->db->where('ssid', $uid);
+        }
+
         $this->db->where('result_status !=', $this->lang->line('open'));
         $query = $this->db->get(DB_PREFIX . 'result');
 
@@ -342,7 +347,7 @@ Class Quiz_model extends CI_Model {
             $i = 0;
             $wqids = implode(',', $qids);
 
-            $query = $this->db->query("select * from '.DB_PREFIX.'qbank join '.DB_PREFIX.'category on '.DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid where qid in ($wqids) ORDER BY FIELD(qid,$wqids)  ");
+            $query = $this->db->query("select * from " . DB_PREFIX . "qbank join " . DB_PREFIX . "category on " . DB_PREFIX . "category.cid=" . DB_PREFIX . "qbank.cid where qid in (" . $wqids . ") ORDER BY FIELD(qid," . $wqids . ")  ");
             $questions = $query->result_array();
             foreach ($questions as $qk => $question) {
                 if (!in_array($question['category_name'], $categories)) {
@@ -365,7 +370,7 @@ Class Quiz_model extends CI_Model {
                 $noq = $val['noq'];
 
                 $i = 0;
-                $query = $this->db->query("select * from '.DB_PREFIX.'qbank join '.DB_PREFIX.'category on '.DB_PREFIX.'category.cid='.DB_PREFIX.'qbank.cid where '.DB_PREFIX.'qbank.cid='$cid' and lid='$lid' ORDER BY RAND() limit $noq ");
+                $query = $this->db->query("select * from " . DB_PREFIX . "qbank join " . DB_PREFIX . "category on " . DB_PREFIX . "category.cid=" . DB_PREFIX . "qbank.cid where " . DB_PREFIX . "qbank.cid=" . $cid . " and lid=" . $lid . " ORDER BY RAND() limit " . $noq);
                 $questions = $query->result_array();
                 foreach ($questions as $qk => $question) {
                     $qids[] = $question['qid'];
@@ -382,7 +387,8 @@ Class Quiz_model extends CI_Model {
         }
         $userdata = array(
             'quid' => $quid,
-            'uid' => $uid,
+            'ssid' => '', // identifiants des élèves suivant l'année scolaire
+            'uid' => $uid, //identifiants des élèves ou admin
             'r_qids' => implode(',', $qids),
             'categories' => implode(',', $categories),
             'category_range' => implode(',', $category_range),
@@ -404,7 +410,7 @@ Class Quiz_model extends CI_Model {
     function open_result($quid, $uid) {
 
         $result_open = $this->lang->line('open');
-        $query = $this->db->query("select * from '.DB_PREFIX.'result  where '.DB_PREFIX.'result.result_status='$result_open'   and '.DB_PREFIX.'result.quid='$quid' and '.DB_PREFIX.'result.uid='$uid'");
+        $query = $this->db->query("select * from " . DB_PREFIX . "result  where " . DB_PREFIX . "result.result_status='" . $result_open . "'  and " . DB_PREFIX . "result.quid=" . $quid . " and " . DB_PREFIX . "result.uid=" . $uid);
 
         if ($query->num_rows() >= 1) {
             $result = $query->row_array();
@@ -418,22 +424,22 @@ Class Quiz_model extends CI_Model {
     function quiz_result($rid) {
 
 
-        $query = $this->db->query("select * from '.DB_PREFIX.'result join '.DB_PREFIX.'quiz on '.DB_PREFIX.'result.quid='.DB_PREFIX.'quiz.quid where '.DB_PREFIX.'result.rid='$rid' ");
+        $query = $this->db->query("select * from " . DB_PREFIX . "result join " . DB_PREFIX . "quiz on " . DB_PREFIX . "result.quid=" . DB_PREFIX . "quiz.quid where " . DB_PREFIX . "result.rid=" . $rid);
         return $query->row_array();
     }
 
     function saved_answers($rid) {
 
 
-        $query = $this->db->query("select * from '.DB_PREFIX.'answers  where '.DB_PREFIX.'answers.rid='$rid' ");
+        $query = $this->db->query("select * from " . DB_PREFIX . "answers  where " . DB_PREFIX . "answers.rid=" . $rid);
         return $query->result_array();
     }
 
     function assign_score($rid, $qno, $score) {
         $qp_score = $score;
-        $query = $this->db->query("select * from '.DB_PREFIX.'result join '.DB_PREFIX.'quiz on '.DB_PREFIX.'result.quid='.DB_PREFIX.'quiz.quid where '.DB_PREFIX.'result.rid='$rid' ");
+        $query = $this->db->query("select * from " . DB_PREFIX . "result join " . DB_PREFIX . "quiz on " . DB_PREFIX . "result.quid=" . DB_PREFIX . "quiz.quid where " . DB_PREFIX . "result.rid=" . $rid);
         $quiz = $query->row_array();
-        $score_ind = explode(',', $quiz['score_individual']);
+        $score_ind = explode(",", $quiz['score_individual']);
         $score_ind[$qno] = $score;
         $r_qids = explode(',', $quiz['r_qids']);
         $correct_score = $quiz['correct_score'];
@@ -482,7 +488,7 @@ Class Quiz_model extends CI_Model {
         } else if ($$qp_score == '2') {
             $crin = ", no_time_incorrected=(no_time_incorrected +1)";
         }
-        $query_qp = "update '.DB_PREFIX.'qbank set  $crin  where qid='$qp'  ";
+        $query_qp = "update " . DB_PREFIX . "qbank set  $crin  where qid=" . $qp;
         $this->db->query($query_qp);
     }
 
@@ -490,7 +496,7 @@ Class Quiz_model extends CI_Model {
         $logged_in = $this->session->userdata('logged_in');
         $email = $logged_in['email'];
         $rid = $this->session->userdata('rid');
-        $query = $this->db->query("select * from '.DB_PREFIX.'result join '.DB_PREFIX.'quiz on '.DB_PREFIX.'result.quid='.DB_PREFIX.'quiz.quid where '.DB_PREFIX.'result.rid='$rid' ");
+        $query = $this->db->query("select * from " . DB_PREFIX . "result join " . DB_PREFIX . "quiz on " . DB_PREFIX . "result.quid=" . DB_PREFIX . "quiz.quid where " . DB_PREFIX . "result.rid=" . $rid);
         $quiz = $query->row_array();
         $score_ind = explode(',', $quiz['score_individual']);
         $r_qids = explode(',', $quiz['r_qids']);
@@ -547,13 +553,13 @@ Class Quiz_model extends CI_Model {
             } else if ($qpval == '2') {
                 $crin = ", no_time_incorrected=(no_time_incorrected +1)";
             }
-            $query_qp = "update '.DB_PREFIX.'qbank set no_time_served=(no_time_served +1)  $crin  where qid='$qp'  ";
+            $query_qp = "update " . DB_PREFIX . "qbank set no_time_served=(no_time_served +1)  $crin  where qid=" . $qp;
             $this->db->query($query_qp);
         }
 
         if ($this->config->item('allow_result_email')) {
             $this->load->library('email');
-            $query = $this->db->query("select '.DB_PREFIX.'result.*,'.DB_PREFIX.'users.*,'.DB_PREFIX.'quiz.* from '.DB_PREFIX.'result, '.DB_PREFIX.'users, '.DB_PREFIX.'quiz where '.DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid and '.DB_PREFIX.'quiz.quid='.DB_PREFIX.'result.quid and '.DB_PREFIX.'result.rid='$rid'");
+            $query = $this->db->query("select " . DB_PREFIX . "result.*," . DB_PREFIX . "users.*," . DB_PREFIX . "quiz.* from " . DB_PREFIX . "result, " . DB_PREFIX . "users, " . DB_PREFIX . "quiz where " . DB_PREFIX . "users.uid=" . DB_PREFIX . "result.uid and " . DB_PREFIX . "quiz.quid=" . DB_PREFIX . "result.quid and " . DB_PREFIX . "result.rid=" . $rid);
             $qrr = $query->row_array();
             if ($this->config->item('protocol') == "smtp") {
                 $config['protocol'] = 'smtp';
@@ -629,7 +635,7 @@ Class Quiz_model extends CI_Model {
 
             return "Something wrong";
         }
-        $query = $this->db->query("select * from '.DB_PREFIX.'result join '.DB_PREFIX.'quiz on '.DB_PREFIX.'result.quid='.DB_PREFIX.'quiz.quid where '.DB_PREFIX.'result.rid='$rid' ");
+        $query = $this->db->query("select * from " . DB_PREFIX . "result join " . DB_PREFIX . "quiz on " . DB_PREFIX . "result.quid=" . DB_PREFIX . "quiz.quid where " . DB_PREFIX . "result.rid=" . $rid);
         $quiz = $query->row_array();
         $correct_score = $quiz['correct_score'];
         $incorrect_score = $quiz['incorrect_score'];
@@ -686,7 +692,7 @@ Class Quiz_model extends CI_Model {
             if ($_POST['question_type'][$ak] == '3') {
 
                 $qid = $qids[$ak];
-                $query = $this->db->query(" select * from '.DB_PREFIX.'options where qid='$qid' ");
+                $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
                 $options_data = $query->row_array();
                 $options_data = explode(',', $options_data['q_option']);
                 $noptions = array();
@@ -756,7 +762,7 @@ Class Quiz_model extends CI_Model {
             // match
             if ($_POST['question_type'][$ak] == '5') {
                 $qid = $qids[$ak];
-                $query = $this->db->query(" select * from '.DB_PREFIX.'options where qid='$qid' ");
+                $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
                 $options_data = $query->result_array();
                 $noptions = array();
                 foreach ($options_data as $op => $option) {

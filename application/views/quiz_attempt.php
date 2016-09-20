@@ -7,7 +7,6 @@
 
 </style>
 
-
 <script>
 
     var Timer;
@@ -77,13 +76,11 @@
 <div class="container" >
 
     <div class="col-md-8"><!-- style="float:right;width:150px; margin-right:10px;"-->
-
         <?php echo $this->lang->line('time_left') ?>: <span id='timer' >
             <script type="text/javascript">window.onload = CreateTimer("timer", <?php echo $seconds; ?>);</script>
         </span>
         <div class="save_answer_signal" id="save_answer_signal2"></div>
         <div class="save_answer_signal" id="save_answer_signal1"></div>
-
     </div>
     <div style="float:left;width:70%;padding:10px 20px 10px 20px; -webkit-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
          -moz-box-shadow: 0px 0px 10px 2px rgba(0,0,0,0.75);
@@ -227,10 +224,10 @@
                                         ?>
 
                                         <div class="op"><?php echo @$abc[$i]; ?> <input type="checkbox" name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk . '-' . $i; ?>"   value="<?php echo $option['oid']; ?>"  <?php
-                                                                        if (in_array($option['oid'], $save_ans)) {
-                                                                            echo 'checked';
-                                                                        }
-                                        ?> > <?php echo $option['q_option']; ?> </div>
+                                            if (in_array($option['oid'], $save_ans)) {
+                                                echo 'checked';
+                                            }
+                                            ?> > <?php echo $option['q_option']; ?> </div>
 
 
                                         <?php
@@ -252,7 +249,7 @@
                                 }
                                 ?>
                                 <input type="hidden"  name="question_type[]"  id="q_type<?php echo $qk; ?>" value="3" >
-        <?php ?>
+                                <?php ?>
 
                                 <div class="op"> 
                                     <b><?php echo $this->lang->line('answer'); ?> </b>
@@ -279,12 +276,12 @@
                                 }
                                 ?>
                                 <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="4">
-        <?php ?>
+                                <?php ?>
 
                                 <div class="op"> 
                                     <b><?php echo $this->lang->line('answer'); ?> <br></b>
-        <?php echo $this->lang->line('word_counts'); ?> <span id="char_count<?php echo $qk; ?>">0</span>
-        <?php ?>
+                                    <?php echo $this->lang->line('word_counts'); ?> <span id="char_count<?php echo $qk; ?>">0</span>
+                                    <?php ?>
                                     <script>
                                         $(document).ready(function () {
                                             val_txt = $('#answer_value<?php echo $qk; ?>').val();
@@ -339,7 +336,7 @@
                                         foreach ($match_1 as $mk1 => $mval) {
                                             ?>
                                             <tr><td>
-            <?php echo $abc[$mk1]; ?>  <?php echo $mval; ?> 
+                                                    <?php echo $abc[$mk1]; ?>  <?php echo $mval; ?> 
                                                 </td><td>
 
                                                     <select name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk . '-' . $mk1; ?>"  >
@@ -348,56 +345,130 @@
                                                         foreach ($match_2 as $mk2 => $mval2) {
                                                             ?>
                                                             <option value="<?php echo $mval . '___' . $mval2; ?>"  <?php
-                                                                    $m1 = $mval . '___' . $mval2;
-                                                                    if (in_array($m1, $save_ans)) {
-                                                                        echo 'selected';
-                                                                    }
-                                                                    ?> ><?php echo $mval2; ?></option>
-                <?php
-            }
-            ?>
+                                                            $m1 = $mval . '___' . $mval2;
+                                                            if (in_array($m1, $save_ans)) {
+                                                                echo 'selected';
+                                                            }
+                                                            ?> ><?php echo $mval2; ?></option>
+                                                                    <?php
+                                                                }
+                                                                ?>
                                                     </select>
 
                                                 </td>
                                             </tr>
 
 
-                                    <?php
-                                }
-                                ?>
+                                            <?php
+                                        }
+                                        ?>
                                     </table>
                                 </div>
-        <?php
-    }
-    ?>                      <?php  if ($question['question_type'] == 6) : ?>
-                                <?php        foreach ($saved_answers as $svk => $saved_answer) : ?>
-                                 
-                                    <?php if ($question['qid'] == $saved_answer['qid']) : ?>
-                                        <?php $save_ans = $saved_answer['q_option']; ?>
-                                         <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
-
+                                <?php
+                            }
+                            ?>
+                            <?php if ($question['question_type'] == 6) : ?>
+                                 <?php foreach ($saved_answers as $svk => $saved_answer) {
+                                    if ($question['qid'] == $saved_answer['qid']) {
+                                        $save_ans = $saved_answer['q_option'];
+                                    }
+                                }
+                                ?>
+                                <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="4">
+                                <?php ?>
+                                <div>
                                 <div class="op"> 
                                     <b><?php echo $this->lang->line('search'); ?> <br></b>
-                                          <textarea  name="field_search[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                    <?php echo $this->lang->line('word_counts'); ?> <span id="char_count<?php echo $qk; ?>">0</span>
+                                    <?php ?>
+                                    
+                                    <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 250px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php //echo $save_ans; ?></textarea>
                                 </div>
-                                         
+                                
                                 <div class="op"> 
                                     <b><?php echo $this->lang->line('response'); ?> <br></b>
-                                          <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
-                                </div>         
-                                    <?php endif;?>
+                                    <?php echo $this->lang->line('word_counts'); ?> <span id="char_count<?php echo $qk; ?>">0</span>
+                                    <?php ?>
+                                    
+                                    <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:50%; min-width: 300px; min-height: 100px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php //echo $save_ans; ?></textarea>
+                                </div>
+                                 
+                                </div>
                                 
-                                <?php endforeach;?>
-                            <?php  endif; ?>    
+                            <?php endif; ?> 
+                                        
+                            <!-- question_type = 7 -->
+                            <?php if ($question['question_type'] == 7) : ?>
+                                <?php foreach ($saved_answers as $svk => $saved_answer) : ?>
+
+                                    <?php if ($question['qid'] == $saved_answer['qid']) : ?>
+                                        <?php $save_ans = $saved_answer['q_option']; ?>
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('search'); ?> <br></b>
+                                            <textarea  name="field_search[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('response'); ?> <br></b>
+                                            <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>         
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            <?php endif; ?> 
+                                        
+                            <!-- question_type = 8 -->
+                            <?php if ($question['question_type'] == 8) : ?>
+                                <?php foreach ($saved_answers as $svk => $saved_answer) : ?>
+
+                                    <?php if ($question['qid'] == $saved_answer['qid']) : ?>
+                                        <?php $save_ans = $saved_answer['q_option']; ?>
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('search'); ?> <br></b>
+                                            <textarea  name="field_search[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('response'); ?> <br></b>
+                                            <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>         
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            <?php endif; ?> 
+                                        
+                                        
+                          <!-- question_type = 9 -->
+                            <?php if ($question['question_type'] == 9) : ?>
+                                <?php foreach ($saved_answers as $svk => $saved_answer) : ?>
+
+                                    <?php if ($question['qid'] == $saved_answer['qid']) : ?>
+                                        <?php $save_ans = $saved_answer['q_option']; ?>
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('search'); ?> <br></b>
+                                            <textarea  name="field_search[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>
+
+                                        <div class="op"> 
+                                            <b><?php echo $this->lang->line('response'); ?> <br></b>
+                                            <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                        </div>         
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            <?php endif; ?>               
 
                         </div> 
                     </div>
-
-
-
-    <?php
-}
-?>
+                    <?php
+                }
+                ?>
             </form>
         </div>
     </div>
@@ -406,11 +477,9 @@
 
 
 <div class="footer_buttons">
-    <!--button class="btn btn-warning"   onClick="javascript:review_later();" style="margin-top:2px;" ><?php //echo $this->lang->line('review_later');  ?></button-->
-
-    <!--button class="btn btn-info"  onClick="javascript:clear_response();"  style="margin-top:2px;"  ><?php //echo $this->lang->line('clear');  ?></button-->
-
-    <button class="btn btn-success"  id="backbtn" style="visibility:hidden;" onClick="javascript:show_back_question();"  style="margin-top:2px;" ><?php echo $this->lang->line('back'); ?></button>
+    <!--button class="btn btn-warning"   onClick="javascript:review_later();" style="margin-top:2px;" ><?php //echo $this->lang->line('review_later');    ?></button-->
+    <!--button class="btn btn-info"  onClick="javascript:clear_response();"  style="margin-top:2px;"  ><?php //echo $this->lang->line('clear');    ?></button-->
+    <button class="btn btn-primary"  id="backbtn" style="visibility:hidden;" onClick="javascript:show_back_question();"  style="margin-top:2px;" ><?php echo $this->lang->line('back'); ?></button>
 
     <button class="btn btn-success" id="nextbtn" onClick="javascript:show_next_question();" style="margin-top:2px;" ><?php echo $this->lang->line('save_next'); ?></button>
 

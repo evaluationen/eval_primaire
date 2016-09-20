@@ -283,6 +283,7 @@ $lang['title'] = "Titre";
 $lang['order'] = "Consigne";
 
 $lang['search_response'] = "Recherches / Réponse";
+$lang['response'] = "Réponse";
 $lang['table_editable'] = "Tableau éditable";
 $lang['content'] = "Contenu";
 $lang['text_selection'] = "Texte à sélectionner";

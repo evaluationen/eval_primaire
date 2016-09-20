@@ -61,7 +61,7 @@
                         <!-- begin form question-->
                         <div class="form-group pquestion">
                             <label><?php echo $this->lang->line('attach_group_question');?></label><!--Rattaché à un sujet-->
-                            <input <?php  if($question['pqid'] == 1){echo 'checked';} ?> type="checkbox" id="check-object" name="is_check-parent">
+                            <input <?php  if(isset($question['pqid']) && $question['pqid']){echo 'checked';} ?> type="checkbox" id="check-object" name="is_check-parent">
                         </div>
                         <!-- liste des sujets -->
                         <input type="hidden" id="edit-q" value="1"/>

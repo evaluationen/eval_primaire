@@ -94,11 +94,11 @@ CREATE TABLE `eval_coef` (
   KEY `FK_eval_coef` (`qid`),
   KEY `FK_eval_coef_quiz` (`quid`),
   CONSTRAINT `FK_eval_coef_quiz` FOREIGN KEY (`quid`) REFERENCES `eval_quiz` (`quid`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `eval_coef` */
 
-insert  into `eval_coef`(`coid`,`quid`,`qid`,`coef`) values (7,4,0,1),(8,4,33,1),(9,4,28,1),(10,4,25,1);
+insert  into `eval_coef`(`coid`,`quid`,`qid`,`coef`) values (11,1,0,1),(12,1,12,1),(13,1,11,1),(14,1,10,1),(15,1,9,1),(16,1,8,1),(17,1,7,1),(18,1,3,1),(19,1,2,1),(20,1,1,1);
 
 /*Table structure for table `eval_competency` */
 
@@ -206,11 +206,11 @@ CREATE TABLE `eval_options` (
   PRIMARY KEY (`oid`),
   KEY `FK_eval_options` (`qid`),
   CONSTRAINT `FK_eval_options` FOREIGN KEY (`qid`) REFERENCES `eval_qbank` (`qid`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_options` */
 
-insert  into `eval_options`(`oid`,`qid`,`q_option`,`q_option_match`,`score`) values (37,24,'<p>aaa</p>',NULL,1),(38,24,'<p>ggg</p>',NULL,0),(39,25,'<p>s</p>',NULL,0.5),(40,25,'<p>s</p>',NULL,0),(41,25,'<p>s</p>',NULL,0.5),(42,25,'<p>s</p>',NULL,0),(43,26,'A','B',0.25),(44,26,'C','D',0.25),(45,26,'E','F',0.25),(46,26,'G','H',0.25),(51,28,'C',NULL,0.5),(52,28,'12',NULL,0.5),(53,33,'',NULL,0.5),(54,33,'',NULL,0.5);
+insert  into `eval_options`(`oid`,`qid`,`q_option`,`q_option_match`,`score`) values (1,1,'<p>Parce que sa m&egrave;re &eacute;tait gentille avec lui.</p>',NULL,0),(2,1,'<p>Parce qu\'il jouait, dessinait et inventait des histoire &agrave; Grodoudou.</p>',NULL,1),(3,1,'<p>Parce qu\'il parlait tout seul.</p>',NULL,0),(10,2,'<p>Le petit gar&ccedil;on</p>',NULL,0),(11,2,'<p>Un chien en peluche</p>',NULL,1),(12,2,'<p>Un ours brun</p>',NULL,0),(22,5,'',NULL,0.333333),(23,5,'',NULL,0.333333),(24,5,'',NULL,0.333333),(28,6,'',NULL,0),(29,6,'',NULL,0),(30,6,'',NULL,1),(33,7,'120',NULL,1),(34,10,'6600','Sil mille six cents',0.2),(35,10,'606','Six cent six',0.2),(36,10,'6006','Six mille six',0.2),(37,10,'660','Six cent soixante',0.2),(38,10,'6060','Six mille soixante',0.2),(39,11,'2743',NULL,0.2),(40,11,'578',NULL,0.2),(41,11,'1296',NULL,0.2),(42,11,'708',NULL,0.2),(43,11,'3017',NULL,0.2),(48,13,'<p>ff</p>',NULL,0),(49,13,'<p>ee</p>',NULL,0),(50,13,'<p>ee</p>',NULL,0),(51,13,'<p>yy</p>',NULL,1);
 
 /*Table structure for table `eval_qbank` */
 
@@ -239,11 +239,11 @@ CREATE TABLE `eval_qbank` (
   CONSTRAINT `FK_eval_qbank_categ` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`),
   CONSTRAINT `FK_eval_qbank_level` FOREIGN KEY (`lid`) REFERENCES `eval_level` (`lid`),
   CONSTRAINT `FK_eval_qbank_subcat` FOREIGN KEY (`scid`) REFERENCES `eval_sub_category` (`scid`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_qbank` */
 
-insert  into `eval_qbank`(`qid`,`question_type`,`question`,`description`,`is_default_txt`,`default_txt`,`lid`,`cid`,`scid`,`pqid`,`no_time_served`,`no_time_corrected`,`no_time_incorrected`,`no_time_unattempted`) values (24,1,'<p>question</p>','<p>consigne</p>',0,'',2,2,5,1,0,0,0,0),(25,2,'<p>ssssss</p>','<p>sssss</p>',0,'',1,2,5,1,0,0,0,0),(26,3,'<p>s</p>','<p>s</p>',0,'',3,3,6,NULL,0,0,0,0),(28,4,'<p>kestion</p>','<p>tyty</p>',0,'',1,2,5,NULL,0,0,0,0),(29,5,'<p>TEXTE QUESTION</p>','<p>RESPONSE LIBRE</p>',0,'',3,3,6,NULL,0,0,0,0),(30,5,'<p>GGGGGGGGGGGG</p>','<p>GG</p>',1,'<p>TEXTE PAR DEFAUT DANS LE CHAMP REPONSE</p>',3,2,5,NULL,0,0,0,0),(31,6,'<p>PROBLEMES</p>','<p>EFFECTUEZ LES OPERATIONS</p>',0,'',2,3,6,NULL,0,0,0,0),(32,7,'<p>COMPLETER LE TABLEAU</p>','<p>TABLEAU A COMPLETER</p>',1,'<table style=\"width: 491px; height: 194px;\">\r\n<tbody>\r\n<tr style=\"height: 15px;\">\r\n<th style=\"height: 15px; width: 122.517px;\">JUSTE AVANT</th>\r\n<th style=\"height: 15px; width: 218.7px;\">LE NOMBRE</th>\r\n<th style=\"height: 15px; width: 127.783px;\">JUSTE APRES</th>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">&nbsp;315</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">860</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">1235</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">2001</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">5400</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 21px;\">\r\n<td style=\"height: 21px; width: 122.517px;\">&nbsp;</td>\r\n<td style=\"height: 21px; width: 218.7px; text-align: center;\">1000</td>\r\n<td style=\"height: 21px; width: 127.783px;\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>',4,3,6,NULL,0,0,0,0),(33,8,'<p>question</p>\r\n<p>[a]</p>','<p>consigne</p>',0,'',1,2,5,2,0,0,0,0);
+insert  into `eval_qbank`(`qid`,`question_type`,`question`,`description`,`is_default_txt`,`default_txt`,`lid`,`cid`,`scid`,`pqid`,`no_time_served`,`no_time_corrected`,`no_time_incorrected`,`no_time_unattempted`) values (1,1,'<p>Le petit gar&ccedil;on a &eacute;t&eacute; content jusqu\'&agrave; l\'&acirc;ge de 3 ans?</p>','<p>coche la bonne r&eacute;ponse</p>',0,'',3,2,2,1,0,0,0,0),(2,1,'<p>Qui est Grodoudou</p>','<p>coche la bonne r&eacute;ponse</p>',0,'',3,2,2,1,0,0,0,0),(3,5,'<p>Le petit gar&ccedil;on hait l\'&eacute;cole. Explique avec tes propres mots.</p>','<p>Dissertation</p>',0,'',3,2,2,1,0,0,0,0),(5,8,'<p><em>Coche les cases des syllabes qui contiennent le son indiqu&eacute; (</em><em>les mots sont dict&eacute;s.)</em></p>\r\n<p><em>[a]</em></p>\r\n<p><em><img src=\"../../../ressources/upload/media/p20ananas.jpg?1474290681067\" alt=\"\" width=\"80\" height=\"82\" /></em></p>','<p>Je suis capable de rep&eacute;rer la place d&rsquo;un phon&egrave;me dans un mot</p>',0,'',1,2,2,0,0,0,0,0),(6,8,'<p><em>Coche les cases des syllabes qui contiennent le son indiqu&eacute; (</em><em>les mots sont dict&eacute;s.)</em></p>\r\n<p><em>[a]</em></p>\r\n<p><em><img src=\"../../../ressources/upload/media/p13choco.jpg?1474291071155\" alt=\"\" width=\"123\" height=\"79\" /><br /></em></p>','<p>Je suis capable de rep&eacute;rer la place d&rsquo;un phon&egrave;me dans un mot</p>',0,'',1,2,2,0,0,0,0,0),(7,4,'<p><img src=\"../../../ressources/upload/media/p5trombone.jpg?1474291611513\" alt=\"\" width=\"501\" height=\"191\" /></p>\r\n<p><span style=\"text-decoration: underline;\">Calcule le nombre total de trombones re&ccedil;us.</span></p>','<p>L\'&eacute;cole du far&eacute; a re&ccedil;u 12 bo&icirc;tes de trombones. Voici le nombre qu\'il y a dans chaque boite.</p>',0,'',3,3,3,NULL,0,0,0,0),(8,7,'<p>Compl&egrave;te le tableau</p>','<p>REMPLIR LES CASES VIDE</p>',1,'<table style=\"width: 508px;\">\r\n<tbody>\r\n<tr style=\"height: 15px;\">\r\n<th style=\"width: 155px; height: 15px;\">JUSTE AVANT</th>\r\n<th style=\"width: 202px; height: 15px;\">LE NOMBRE</th>\r\n<th style=\"width: 129px; height: 15px;\">JUSTE APRES</th>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">&nbsp;315</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">860</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">1235</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">2001</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">5400</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 202px; height: 26px; text-align: center;\">1000</td>\r\n<td style=\"width: 129px; height: 26px;\">&nbsp;</td>\r\n</tr>\r\n</tbody>\r\n</table>',3,3,3,NULL,0,0,0,0),(9,7,'<p>Compl&egrave;te la s&eacute;rie avec les nombres suivants :</p>\r\n<p><strong>4725 - 4173 - 4576</strong></p>','<p>REMPLIR LES CASES VIDE</p>',1,'<table style=\"width: 508px;\">\r\n<tbody>\r\n<tr style=\"height: 26px;\">\r\n<td style=\"width: 155px; height: 26px;\">&nbsp;</td>\r\n<td style=\"width: 138px; height: 26px; text-align: center;\">4237</td>\r\n<td style=\"width: 138px; height: 26px; text-align: center;\">&nbsp;</td>\r\n<td style=\"width: 138px; height: 26px; text-align: center;\">4584</td>\r\n<td style=\"width: 138px; height: 26px; text-align: center;\">&nbsp;</td>\r\n<td style=\"width: 193px; height: 26px; text-align: center;\">5183</td>\r\n</tr>\r\n</tbody>\r\n</table>\r\n<p>&nbsp;</p>',3,3,3,0,0,0,0,0),(10,3,'<p>Relie</p>','<p>relie</p>',0,'',3,3,4,NULL,0,0,0,0),(11,4,'<p>Ecris les nombres dict&eacute;s en chiffres</p>\r\n<p><strong>(2743 -578 - 1296 -708 -3017)</strong></p>','',0,'',3,3,4,NULL,0,0,0,0),(12,6,'<p>1. Les &eacute;l&egrave;ves jouent aux billes. Ce matin, ils ont d&eacute;cid&eacute; de les mettre ensemble et en ont compt&eacute; 76.</p>\r\n<p>A la fin de la r&eacute;cr&eacute;ation, apr&egrave;s avoir jou&eacute;, ils en comptent 124.</p>\r\n<p>Combien de billes ont-ils gagn&eacute; pendant la r&eacute;cr&eacute;ation?</p>\r\n<p>Ecris tes calculs dans le premier cadre et ta r&eacute;ponse dans le deuxi&egrave;me cadre.</p>','',0,'',3,3,5,0,0,0,0,0),(13,1,'<p>regarde mieux</p>','<p>regarde</p>',0,'',1,2,2,0,0,0,0,0);
 
 /*Table structure for table `eval_qbank_parent` */
 
@@ -261,7 +261,7 @@ CREATE TABLE `eval_qbank_parent` (
 
 /*Data for the table `eval_qbank_parent` */
 
-insert  into `eval_qbank_parent`(`pqid`,`cid`,`title`,`description`) values (1,2,'35 kilos d’espoir de Anna GAVALDA chez Bayard Jeunesse','<p>Je hais l&rsquo;&eacute;cole. Je la hais plus que tout au monde. Et m&ecirc;me plus que &ccedil;a encore&hellip; Elle me pourrit la vie.</p>\r\n<p>Jusqu&rsquo;&agrave; l&rsquo;&acirc;ge de trois ans, je peux dire que j&rsquo;ai &eacute;t&eacute; heureux. Je ne m&rsquo;en souviens plus vraiment, mais, &agrave; mon avis, &ccedil;a allait. Je jouais, je regardais ma cassette de <em>Petit Ours Brun</em> dix fois de suite, je dessinais et j&rsquo;inventais des milliards d&rsquo;aventures &agrave; Grodoudou, mon chien en peluche que j&rsquo;adorais. Ma m&egrave;re m&rsquo;a racont&eacute; que je restais des heures enti&egrave;res dans ma chambre &agrave; jacasser et &agrave; parler tout seul. J&rsquo;en conclus donc que j&rsquo;&eacute;tais heureux.</p>\r\n<p>A cette &eacute;poque de ma vie, j&rsquo;aimais tout le monde, et je croyais que tout le monde s&rsquo;aimait. Et puis, quand j&rsquo;ai eu trois ans et cinq mois, patatras&nbsp;! L&rsquo;&eacute;cole.</p>\r\n<p>Il para&icirc;t que, le matin, j&rsquo;y suis all&eacute; tr&egrave;s content. Mes parents avaient d&ucirc; me bassiner avec &ccedil;a pendant toutes les vacances&nbsp;: &laquo;&nbsp;Tu as de la chance mon ch&eacute;ri, tu vas aller &agrave; l&rsquo;&eacute;cole&hellip;&nbsp;&raquo; &laquo;&nbsp;Regarde ce beau cartable tout neuf&nbsp;! C&rsquo;est pour aller dans ta belle &eacute;cole&nbsp;!&nbsp;&raquo; Et gnagnagna&hellip; Il para&icirc;t que je n&rsquo;ai pas pleur&eacute;. (Je suis curieux, je pense que j&rsquo;avais envie de voir ce qu&rsquo;ils avaient comme jouets et comme Lego) il para&icirc;t que je suis revenu enchant&eacute; &agrave; l&rsquo;heure du d&eacute;jeuner, que j&rsquo;ai bien mang&eacute; et que je suis retourn&eacute; dans ma chambre raconter ma merveilleuse matin&eacute;e &agrave; Grodoudou.</p>\r\n<p>Eh bien, si j&rsquo;avais su, je les aurais savour&eacute;es, ces derni&egrave;res minutes de bonheur, parce que c&rsquo;est tout de suite apr&egrave;s que ma vie a d&eacute;raill&eacute;.</p>\r\n<ul>\r\n<li>On y retourne, a dit ma m&egrave;re.</li>\r\n<li>O&ugrave; &ccedil;a&nbsp;?</li>\r\n<li>Eh bien&hellip; A l&rsquo;&eacute;cole&nbsp;!</li>\r\n<li></li>\r\n<li>Non quoi&nbsp;?</li>\r\n<li>Je n&rsquo;irai plus.</li>\r\n<li>Ah bon&hellip; Et pourquoi&nbsp;?</li>\r\n<li>Parce que &ccedil;a y est, j&rsquo;ai vu comment c&rsquo;&eacute;tait, et &ccedil;a ne m&rsquo;int&eacute;resse pas. J&rsquo;ai plein de trucs &agrave; faire dans ma chambre. J&rsquo;ai dit &agrave; Grodoudou que j&rsquo;allais lui construire une machine sp&eacute;ciale pour l&rsquo;aider &agrave; retrouver tous les os qu&rsquo;il a enterr&eacute;s sous mon lit, alors je n&rsquo;ai plus le temps d&rsquo;y aller.</li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n<p>Ma m&egrave;re s&rsquo;est agenouill&eacute;e, et j&rsquo;ai secou&eacute; la t&ecirc;te. Elle a insist&eacute;, et je me suis mis &agrave; pleurer. Elle m&rsquo;a soulev&eacute;, et je me suis mis &agrave; hurler. Et elle m&rsquo;a donn&eacute; une claque.</p>\r\n<p>C&rsquo;&eacute;tait la premi&egrave;re de ma vie. Voil&agrave;. C&rsquo;&eacute;tait &ccedil;a, l&rsquo;&eacute;cole. C&rsquo;&eacute;tait le d&eacute;but du cauchemar.</p>'),(2,2,'test','<p>Je hais l’école. Je la hais plus que tout au monde. Et même plus que ça encore… Elle me pourrit la vie.</p>\r\n<p>Jusqu’à l’âge de trois ans, je peux dire que j’ai été heureux. Je ne m’en souviens plus vraiment, mais, à mon avis, ça allait. Je jouais, je regardais ma cassette de <em>Petit Ours Brun</em> dix fois de suite, je dessinais et j’inventais des milliards d’aventures à Grodoudou, mon chien en peluche que j’adorais. Ma mère m’a raconté que je restais des heures entières dans ma chambre à jacasser et à parler tout seul. J’en conclus donc que j’étais heureux.</p>\r\n<p>A cette époque de ma vie, j’aimais tout le monde, et je croyais que tout le monde s’aimait. Et puis, quand j’ai eu trois ans et cinq mois, patatras ! L’école.</p>\r\n<p>Il paraît que, le matin, j’y suis allé très content. Mes parents avaient dû me bassiner avec ça pendant toutes les vacances : « Tu as de la chance mon chéri, tu vas aller à l’école… » « Regarde ce beau cartable tout neuf ! C’est pour aller dans ta belle école ! » Et gnagnagna… Il paraît que je n’ai pas pleuré. (Je suis curieux, je pense que j’avais envie de voir ce qu’ils avaient comme jouets et comme Lego) il paraît que je suis revenu enchanté à l’heure du déjeuner, que j’ai bien mangé et que je suis retourné dans ma chambre raconter ma merveilleuse matinée à Grodoudou.</p>\r\n<p>Eh bien, si j’avais su, je les aurais savourées, ces dernières minutes de bonheur, parce que c’est tout de suite après que ma vie a déraillé.</p>\r\n<ul>\r\n<li>On y retourne, a dit ma mère.</li>\r\n<li>Où ça ?</li>\r\n<li>Eh bien… A l’école !</li>\r\n<li></li>\r\n<li>Non quoi ?</li>\r\n<li>Je n’irai plus.</li>\r\n<li>Ah bon… Et pourquoi ?</li>\r\n<li>Parce que ça y est, j’ai vu comment c’était, et ça ne m’intéresse pas. J’ai plein de trucs à faire dans ma chambre. J’ai dit à Grodoudou que j’allais lui construire une machine spéciale pour l’aider à retrouver tous les os qu’il a enterrés sous mon lit, alors je n’ai plus le temps d’y aller.</li>\r\n</ul>\r\n<p> </p>\r\n<p>Ma mère s’est agenouillée, et j’ai secoué la tête. Elle a insisté, et je me suis mis à pleurer. Elle m’a soulevé, et je me suis mis à hurler. Et elle m’a donné une claque.</p>\r\n<p>C’était la première de ma vie. Voilà. C’était ça, l’école. C’était le début du cauchemar.</p>');
+insert  into `eval_qbank_parent`(`pqid`,`cid`,`title`,`description`) values (1,2,'35 kilos d\'espoir de Anna GAVALDA chez Bayard Jeunesse','<p>Je hais l&rsquo;&eacute;cole. Je la hais plus que tout au monde. Et m&ecirc;me plus que &ccedil;a encore&hellip; Elle me pourrit la vie.</p>\r\n<p>Jusqu&rsquo;&agrave; l&rsquo;&acirc;ge de trois ans, je peux dire que j&rsquo;ai &eacute;t&eacute; heureux. Je ne m&rsquo;en souviens plus vraiment, mais, &agrave; mon avis, &ccedil;a allait. Je jouais, je regardais ma cassette de <em>Petit Ours Brun</em> dix fois de suite, je dessinais et j&rsquo;inventais des milliards d&rsquo;aventures &agrave; Grodoudou, mon chien en peluche que j&rsquo;adorais. Ma m&egrave;re m&rsquo;a racont&eacute; que je restais des heures enti&egrave;res dans ma chambre &agrave; jacasser et &agrave; parler tout seul. J&rsquo;en conclus donc que j&rsquo;&eacute;tais heureux.</p>\r\n<p>A cette &eacute;poque de ma vie, j&rsquo;aimais tout le monde, et je croyais que tout le monde s&rsquo;aimait. Et puis, quand j&rsquo;ai eu trois ans et cinq mois, patatras&nbsp;! L&rsquo;&eacute;cole.</p>\r\n<p>Il para&icirc;t que, le matin, j&rsquo;y suis all&eacute; tr&egrave;s content. Mes parents avaient d&ucirc; me bassiner avec &ccedil;a pendant toutes les vacances&nbsp;: &laquo;&nbsp;Tu as de la chance mon ch&eacute;ri, tu vas aller &agrave; l&rsquo;&eacute;cole&hellip;&nbsp;&raquo; &laquo;&nbsp;Regarde ce beau cartable tout neuf&nbsp;! C&rsquo;est pour aller dans ta belle &eacute;cole&nbsp;!&nbsp;&raquo; Et gnagnagna&hellip; Il para&icirc;t que je n&rsquo;ai pas pleur&eacute;. (Je suis curieux, je pense que j&rsquo;avais envie de voir ce qu&rsquo;ils avaient comme jouets et comme Lego) il para&icirc;t que je suis revenu enchant&eacute; &agrave; l&rsquo;heure du d&eacute;jeuner, que j&rsquo;ai bien mang&eacute; et que je suis retourn&eacute; dans ma chambre raconter ma merveilleuse matin&eacute;e &agrave; Grodoudou.</p>\r\n<p>Eh bien, si j&rsquo;avais su, je les aurais savour&eacute;es, ces derni&egrave;res minutes de bonheur, parce que c&rsquo;est tout de suite apr&egrave;s que ma vie a d&eacute;raill&eacute;.</p>\r\n<ul>\r\n<li>On y retourne, a dit ma m&egrave;re.</li>\r\n<li>O&ugrave; &ccedil;a&nbsp;?</li>\r\n<li>Eh bien&hellip; A l&rsquo;&eacute;cole&nbsp;!</li>\r\n<li></li>\r\n<li>Non quoi&nbsp;?</li>\r\n<li>Je n&rsquo;irai plus.</li>\r\n<li>Ah bon&hellip; Et pourquoi&nbsp;?</li>\r\n<li>Parce que &ccedil;a y est, j&rsquo;ai vu comment c&rsquo;&eacute;tait, et &ccedil;a ne m&rsquo;int&eacute;resse pas. J&rsquo;ai plein de trucs &agrave; faire dans ma chambre. J&rsquo;ai dit &agrave; Grodoudou que j&rsquo;allais lui construire une machine sp&eacute;ciale pour l&rsquo;aider &agrave; retrouver tous les os qu&rsquo;il a enterr&eacute;s sous mon lit, alors je n&rsquo;ai plus le temps d&rsquo;y aller.</li>\r\n</ul>\r\n<p>&nbsp;</p>\r\n<p>Ma m&egrave;re s&rsquo;est agenouill&eacute;e, et j&rsquo;ai secou&eacute; la t&ecirc;te. Elle a insist&eacute;, et je me suis mis &agrave; pleurer. Elle m&rsquo;a soulev&eacute;, et je me suis mis &agrave; hurler. Et elle m&rsquo;a donn&eacute; une claque.</p>\r\n<p>C&rsquo;&eacute;tait la premi&egrave;re de ma vie. Voil&agrave;. C&rsquo;&eacute;tait &ccedil;a, l&rsquo;&eacute;cole. C&rsquo;&eacute;tait le d&eacute;but du cauchemar.</p>'),(2,3,'test','<p>test</p>');
 
 /*Table structure for table `eval_qcl` */
 
@@ -310,11 +310,11 @@ CREATE TABLE `eval_quiz` (
   `gen_certificate` int(11) NOT NULL DEFAULT '0',
   `certificate_text` text,
   PRIMARY KEY (`quid`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_quiz` */
 
-insert  into `eval_quiz`(`quid`,`quiz_name`,`description`,`start_date`,`end_date`,`gids`,`clids`,`qids`,`noq`,`correct_score`,`incorrect_score`,`ip_address`,`duration`,`maximum_attempts`,`pass_percentage`,`view_answer`,`camera_req`,`question_selection`,`gen_certificate`,`certificate_text`) values (4,'Evaluation niveau 1','<p>evaluation test</p>',1474029208,1505565208,'2','4,5','28,25,33',3,1,0,'',15,10,50,1,0,0,0,NULL);
+insert  into `eval_quiz`(`quid`,`quiz_name`,`description`,`start_date`,`end_date`,`gids`,`clids`,`qids`,`noq`,`correct_score`,`incorrect_score`,`ip_address`,`duration`,`maximum_attempts`,`pass_percentage`,`view_answer`,`camera_req`,`question_selection`,`gen_certificate`,`certificate_text`) values (1,'1ère évaluation niveau 3','',1474293388,1505829388,'2,1','5','12,1,2,3,7,8,9,10,11',9,1,0,'',10000000,10,50,1,0,0,0,NULL);
 
 /*Table structure for table `eval_result` */
 
@@ -324,6 +324,7 @@ CREATE TABLE `eval_result` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `quid` int(11) NOT NULL,
   `ssid` int(11) NOT NULL,
+  `uid` int(11) DEFAULT NULL,
   `result_status` varchar(100) NOT NULL DEFAULT 'Open',
   `start_time` int(11) NOT NULL,
   `end_time` int(11) NOT NULL,
@@ -339,11 +340,12 @@ CREATE TABLE `eval_result` (
   `photo` varchar(100) NOT NULL,
   `manual_valuation` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`rid`),
-  KEY `FK_eval_result` (`ssid`),
-  CONSTRAINT `FK_eval_result` FOREIGN KEY (`ssid`) REFERENCES `eval_student_sch` (`ssid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_eval_result` (`ssid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_result` */
+
+insert  into `eval_result`(`rid`,`quid`,`ssid`,`uid`,`result_status`,`start_time`,`end_time`,`categories`,`category_range`,`r_qids`,`individual_time`,`total_time`,`score_obtained`,`percentage_obtained`,`attempted_ip`,`score_individual`,`photo`,`manual_valuation`) values (1,1,0,1,'Open',1474377121,0,'FRANCAIS,MATHS','9,9','12,1,2,3,7,8,9,10,11','0,23,1,9,3,2,16,3,7',0,0,0,'127.0.0.1','0,0,0,0,0,0,0,0,0','',0);
 
 /*Table structure for table `eval_school_year` */
 
@@ -384,11 +386,11 @@ CREATE TABLE `eval_student` (
   KEY `FK_eval_users_etab_origine` (`etab_org`),
   KEY `FK_eval_users_group` (`gid`),
   CONSTRAINT `FK_eval_student_groupe` FOREIGN KEY (`gid`) REFERENCES `eval_group` (`gid`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_student` */
 
-insert  into `eval_student`(`stid`,`login`,`password`,`first_name`,`last_name`,`birth`,`contact_no`,`su`,`gid`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`) values (7,'fgustavo1-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','FLEINK','GUSTAVO','2006-05-23','0639000000',0,2,1591660800,0,'fgustavo1-022v3d3af89ecd8ec827c0fac894364d5a93.png',1,1),(10,'nharitiniaina-186y','9dae835fe02c6dc5b5470a0ca2e7f7b0','nathalie','haritiniaina','2011-01-09',NULL,0,2,1568633608,0,'nharitiniaina-186yb612bef12f58d3e94a4f25ab0c69da19.png',1,6);
+insert  into `eval_student`(`stid`,`login`,`password`,`first_name`,`last_name`,`birth`,`contact_no`,`su`,`gid`,`subscription_expired`,`verify_code`,`qrcode`,`admin_id`,`etab_org`) values (1,'cjean-marie-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','CORVA','JEAN MARIE','2009-12-01','0639000000',0,2,1632033560,0,'cjean-marie-022v28a21c4ee50cdcdd3acbae8f6ec8fd01.png',1,1),(2,'fgustavo-022v','9dae835fe02c6dc5b5470a0ca2e7f7b0','FLEINK','GUSTAVO','2006-05-23','0639000000',0,2,1600497560,0,'fgustavo-022v8be9fc6b8853b1a463d3d55ea73d4771.png',1,1),(3,'snew-024x','9dae835fe02c6dc5b5470a0ca2e7f7b0','student','new','2010-03-02',NULL,0,2,1568875249,0,'snew-024xe6bdca5c17dbb4854e3683b2ea3a1a80.png',1,4);
 
 /*Table structure for table `eval_student_sch` */
 
@@ -417,11 +419,11 @@ CREATE TABLE `eval_student_sch` (
   CONSTRAINT `FK_eval_student_sch_edit` FOREIGN KEY (`edit_uid`) REFERENCES `eval_users` (`uid`),
   CONSTRAINT `FK_eval_student_sch_etab` FOREIGN KEY (`eid`) REFERENCES `eval_etab` (`eid`),
   CONSTRAINT `FK_eval_student_sch_school_year` FOREIGN KEY (`sid`) REFERENCES `eval_school_year` (`sid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `eval_student_sch` */
 
-insert  into `eval_student_sch`(`ssid`,`stid`,`add_uid`,`edit_uid`,`eid`,`clid`,`sid`,`date_add`,`date_upd`) values (4,7,1,1,1,5,1,'2016-09-06 13:53:55','2016-09-06 13:53:55'),(7,10,1,1,6,6,1,'2016-09-16 17:03:31','2016-09-16 17:03:31');
+insert  into `eval_student_sch`(`ssid`,`stid`,`add_uid`,`edit_uid`,`eid`,`clid`,`sid`,`date_add`,`date_upd`) values (1,1,1,1,1,4,1,'2016-09-19 06:39:21','2016-09-19 06:39:21'),(2,2,1,1,1,5,1,'2016-09-19 06:39:21','2016-09-19 06:39:21'),(3,3,1,1,4,6,1,'2016-09-19 12:10:49','2016-09-19 12:10:49');
 
 /*Table structure for table `eval_sub_category` */
 
@@ -434,11 +436,11 @@ CREATE TABLE `eval_sub_category` (
   PRIMARY KEY (`scid`),
   KEY `FK_eval_sub_category_sub` (`cid`),
   CONSTRAINT `FK_eval_sub_category_sub` FOREIGN KEY (`cid`) REFERENCES `eval_category` (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `eval_sub_category` */
 
-insert  into `eval_sub_category`(`scid`,`sub_catg_name`,`cid`) values (5,'LECTURE',2),(6,'NOMBRES ET CALCULS',3);
+insert  into `eval_sub_category`(`scid`,`sub_catg_name`,`cid`) values (1,'LO1 : Ecouter pour comprendre un message oral, un propos, un discours, un texte lu',2),(2,'LEC1 : Comprendre un texte littéraire et l\'interpréter',2),(3,'N1 : Comprendre et utiliser des nombre entiers pour dénombrer, ordonner, repérer, comparer.',3),(4,'N2 : Nommer, lire, écrire, représenter des nombres entiers',3),(5,'N3 : Résoudre des problèmes en utilisant des nombres entiers et le calcul',3),(6,'N4 : Calculer avec des nombres entiers',3),(7,'EC1 : Ecrire à la main de manière fluide',2),(8,'EC2 : Produire des écrits variés',2),(9,'OL1 : Comprendre le fonctionnement de la langue',2);
 
 /*Table structure for table `eval_users` */
 
@@ -468,7 +470,7 @@ CREATE TABLE `eval_users` (
 
 /*Data for the table `eval_users` */
 
-insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`contact_no`,`gid`,`verify_code`,`su`,`admin_id`,`eid`,`date_add`,`date_upd`) values (1,'admin','21232f297a57a5a743894a0e4a801fc3','','Nathalie','HARITINIAINA','0269618838',1,0,1,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
+insert  into `eval_users`(`uid`,`login`,`password`,`email`,`first_name`,`last_name`,`contact_no`,`gid`,`verify_code`,`su`,`admin_id`,`eid`,`date_add`,`date_upd`) values (1,'admin','0cb7d8734ea65086bb4a65489eeb1d89','','Nathalie','HARITINIAINA','0269618838',1,0,1,1,1,'2016-07-22 00:00:00','2016-07-22 00:00:00');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

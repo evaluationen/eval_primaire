@@ -49,7 +49,11 @@
                         <td>  <?php echo $val->title; ?></td>
                         <td><?php echo substr(strip_tags($val->description), 0, 20); ?></td>
                         <td><?php echo $val->category_name; ?></td>
-                        <td></td>
+                        <td>
+                            <a href="<?php echo site_url('qbank/group_question_edit/'. $val->pqid); ?>"><img src="<?php echo base_url('ressources/images/edit.png'); ?>"></a>
+                            <a href="javascript:remove_entry('qbank/remove_pquestion/<?php echo $val->pqid; ?>');"><img src="<?php echo base_url('ressources/images/cross.png'); ?>"></a>
+                            
+                        </td>
                     </tr>
 
                     <?php

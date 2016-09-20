@@ -70,6 +70,25 @@ Class Qbank_model extends CI_Model {
             return false;
         }
     }
+    
+    function remove_pquestion($pqid) {
+
+        $this->db->where('pqid', $pqid);
+        $query = $this->db->get(DB_PREFIX.'qbank');
+        
+        if($query->num_rows() == 0){
+            $this->db->where('pqid', $pqid);
+            if ($this->db->delete(DB_PREFIX . 'qbank_parent')) {
+                return true;
+            } 
+        }else{
+            return false;
+        }
+        
+        return false;
+        
+    }
+
 
     function insert_question_1() {
 
@@ -827,7 +846,41 @@ Class Qbank_model extends CI_Model {
         $query = $this->db->get(DB_PREFIX . 'qbank_parent');
         return $query->result();
     }
+    
+    
+    //==========================================================================
+    function get_parent_question($pqid){
+        
+        if($pqid){
+            $this->db->where('pqid', $pqid);
+            $this->db->join(DB_PREFIX.'category', DB_PREFIX.'category.cid = '. DB_PREFIX.'qbank_parent.cid');
+            $query = $this->db->get(DB_PREFIX.'qbank_parent');
+            
+            return $query->row();
+            
+        }
+        
+        return FALSE;
+    }
+    
+    //==========================================================================
+    
+    function update_pquestion($pqid){
+        
+        $data = array(
+            'title' => $this->input->post('title'),
+            'cid' => $this->input->post('cid'),
+            'description' => $this->input->post('description')
+        );
+
+        $this->db->where('pqid', $pqid);
+        if ($this->db->update(DB_PREFIX . 'qbank_parent', $data)) {
+            return true;
+        } else {
+            return false;
+        }
+    
+    }
 
 }
 
-?>

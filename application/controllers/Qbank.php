@@ -57,6 +57,25 @@ class Qbank extends CI_Controller {
         }
         redirect('qbank');
     }
+    
+    
+    //==========================================================================
+    public function remove_pquestion($pqid){
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] != '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+
+        if ($this->qbank_model->remove_pquestion($pqid)) {
+            $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
+        } else {
+            $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_remove') . " <br> Merci de vérifier si le groupe n'est pas encore rattaché à une question. </div>");
+        }
+        redirect('qbank/group_question');
+    }
+
+
+    //==========================================================================
 
     function pre_question_list($limit = '0', $cid = '0', $lid = '0') {
         $cid = $this->input->post('cid');
@@ -457,6 +476,28 @@ class Qbank extends CI_Controller {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_add_data') . " </div>");
         }
         redirect('qbank/group_question');
+    }
+    
+    //==========================================================================
+    function group_question_edit($pqid){
+        $logged_in = $this->session->userdata('logged_in');
+        if ($logged_in['su'] != '1') {
+            exit($this->lang->line('permission_denied'));
+        }
+        $data['title'] = $this->lang->line('edit');
+        $data['category_list'] = $this->qbank_model->category_list();
+        $data['pquestion'] = $this->qbank_model->get_parent_question($pqid);
+        
+        if($this->input->post('action') == 'update'){
+            if($this->qbank_model->update_pquestion($pqid)){
+                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_updated_successfully') . " </div>");
+                redirect('qbank/group_question');
+            }else {
+                $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_update_data') . " </div>");
+            }
+        }
+        
+        $this->load->view('question/question_pedit', $data);
     }
 
     //==========================================================================
