@@ -23,15 +23,15 @@ CREATE TABLE `eval_answers` (
   `aid` int(11) NOT NULL AUTO_INCREMENT,
   `qid` int(11) NOT NULL,
   `q_option` text NOT NULL,
-  `ssid` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `ssid` int(11) DEFAULT NULL,
   `score_u` float NOT NULL DEFAULT '0',
   `rid` int(11) NOT NULL,
   PRIMARY KEY (`aid`),
   KEY `FK_eval_answers` (`ssid`),
   KEY `FK_eval_answers_qbank` (`qid`),
-  CONSTRAINT `FK_eval_answers` FOREIGN KEY (`ssid`) REFERENCES `eval_student_sch` (`ssid`),
   CONSTRAINT `FK_eval_answers_qbank` FOREIGN KEY (`qid`) REFERENCES `eval_qbank` (`qid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `eval_answers` */
 
@@ -345,7 +345,7 @@ CREATE TABLE `eval_result` (
 
 /*Data for the table `eval_result` */
 
-insert  into `eval_result`(`rid`,`quid`,`ssid`,`uid`,`result_status`,`start_time`,`end_time`,`categories`,`category_range`,`r_qids`,`individual_time`,`total_time`,`score_obtained`,`percentage_obtained`,`attempted_ip`,`score_individual`,`photo`,`manual_valuation`) values (1,1,0,1,'Open',1474377121,0,'FRANCAIS,MATHS','9,9','12,1,2,3,7,8,9,10,11','0,100,1,9,3,2,16,3,7',0,0,0,'127.0.0.1','0,0,0,0,0,0,0,0,0','',0);
+insert  into `eval_result`(`rid`,`quid`,`ssid`,`uid`,`result_status`,`start_time`,`end_time`,`categories`,`category_range`,`r_qids`,`individual_time`,`total_time`,`score_obtained`,`percentage_obtained`,`attempted_ip`,`score_individual`,`photo`,`manual_valuation`) values (1,1,0,1,'Open',1474377121,0,'FRANCAIS,MATHS','9,9','12,1,2,3,7,8,9,10,11','0,221,1,9,3,2,16,3,7',0,0,0,'127.0.0.1','0,0,0,0,0,0,0,0,0','',0);
 
 /*Table structure for table `eval_school_year` */
 

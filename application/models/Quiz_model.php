@@ -630,7 +630,14 @@ Class Quiz_model extends CI_Model {
         $rid = $_POST['rid'];
         $srid = $this->session->userdata('rid');
         $logged_in = $this->session->userdata('logged_in');
+        if($logged_in['su'] == 1){
+            $ssid = '';
+        }else{
+            $ssid = $logged_in['ssid'];
+        }
+        
         $uid = $logged_in['uid'];
+        
         if ($srid != $rid) {
 
             return "Something wrong";
@@ -649,11 +656,8 @@ Class Quiz_model extends CI_Model {
         $this->db->delete(DB_PREFIX . 'answers');
 
         foreach ($_POST['answer'] as $ak => $answer) {
-
+            
             // multiple choice single answer
-            echo '<pre>';
-            print_r($_POST['question_type']);
-            var_dump($answer);die;
             if ($_POST['question_type'][$ak] == '1' || $_POST['question_type'][$ak] == '2') {
 
                 $qid = $qids[$ak];
@@ -674,6 +678,7 @@ Class Quiz_model extends CI_Model {
                     $userdata = array(
                         'rid' => $rid,
                         'qid' => $qid,
+                        'ssid' => $ssid,
                         'uid' => $uid,
                         'q_option' => $ansval,
                         'score_u' => $options[$ansval]
@@ -718,6 +723,7 @@ Class Quiz_model extends CI_Model {
                         $userdata = array(
                             'rid' => $rid,
                             'qid' => $qid,
+                            'ssid' => $ssid,
                             'uid' => $uid,
                             'q_option' => $ansval,
                             'score_u' => $marks
@@ -746,6 +752,7 @@ Class Quiz_model extends CI_Model {
                         $userdata = array(
                             'rid' => $rid,
                             'qid' => $qid,
+                            'ssid' => $ssid,
                             'uid' => $uid,
                             'q_option' => $ansval,
                             'score_u' => 0
@@ -786,6 +793,7 @@ Class Quiz_model extends CI_Model {
                         $userdata = array(
                             'rid' => $rid,
                             'qid' => $qid,
+                            'ssid' => $ssid,
                             'uid' => $uid,
                             'q_option' => $ansval,
                             'score_u' => $mc
@@ -804,7 +812,58 @@ Class Quiz_model extends CI_Model {
                     $correct_incorrect[$ak] = 0;
                 }
             }
+            
+            //==================================================================
+            //question n°06 || search and result
+            //==================================================================
+            // long answer
+            if ($_POST['question_type'][$ak] == '6') {
+                $attempted = 0;
+                $marks = 0;
+                $qid = $qids[$ak];
+                
+                /*foreach ($answer as $sk => $ansval) {
+                    var_dump($ansval);die('question_6');
+                    if ($ansval != '') {
+                        $userdata = array(
+                            'rid' => $rid,
+                            'qid' => $qid,
+                            'ssid' => $ssid,
+                            'uid' => $uid, // uid for student or of admin
+                            'q_option' => $ansval,
+                            'score_u' => 0
+                        );
+                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                        $attempted = 1;
+                    }
+                }*/
+             
+                
+                $data_resp = array('search' => isset($answer[0]) ? $answer[0] : '', 'response' => $answer[1] ? $answer[1] : '');
+                
+                
+                if(($data_resp)) {
+                        $userdata = array(
+                            'rid' => $rid,
+                            'qid' => $qid,
+                            'ssid' => $ssid,
+                            'uid' => $uid, // uid for student or of admin
+                            'q_option' => json_encode($data_resp),
+                            'score_u' => 0
+                        );
+                        
+                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                        $attempted = 1;
+                }
+                
+                if ($attempted == 1) {
+                    $correct_incorrect[$ak] = 3;
+                } else {
+                    $correct_incorrect[$ak] = 0;
+                }
+            }
         }
+        
 
         $userdata = array(
             'score_individual' => implode(',', $correct_incorrect),
