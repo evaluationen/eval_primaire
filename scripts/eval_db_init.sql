@@ -345,7 +345,7 @@ CREATE TABLE `eval_result` (
 
 /*Data for the table `eval_result` */
 
-insert  into `eval_result`(`rid`,`quid`,`ssid`,`uid`,`result_status`,`start_time`,`end_time`,`categories`,`category_range`,`r_qids`,`individual_time`,`total_time`,`score_obtained`,`percentage_obtained`,`attempted_ip`,`score_individual`,`photo`,`manual_valuation`) values (1,1,0,1,'Open',1474377121,0,'FRANCAIS,MATHS','9,9','12,1,2,3,7,8,9,10,11','0,23,1,9,3,2,16,3,7',0,0,0,'127.0.0.1','0,0,0,0,0,0,0,0,0','',0);
+insert  into `eval_result`(`rid`,`quid`,`ssid`,`uid`,`result_status`,`start_time`,`end_time`,`categories`,`category_range`,`r_qids`,`individual_time`,`total_time`,`score_obtained`,`percentage_obtained`,`attempted_ip`,`score_individual`,`photo`,`manual_valuation`) values (1,1,0,1,'Open',1474377121,0,'FRANCAIS,MATHS','9,9','12,1,2,3,7,8,9,10,11','0,100,1,9,3,2,16,3,7',0,0,0,'127.0.0.1','0,0,0,0,0,0,0,0,0','',0);
 
 /*Table structure for table `eval_school_year` */
 

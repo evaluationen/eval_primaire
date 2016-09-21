@@ -651,10 +651,13 @@ Class Quiz_model extends CI_Model {
         foreach ($_POST['answer'] as $ak => $answer) {
 
             // multiple choice single answer
+            echo '<pre>';
+            print_r($_POST['question_type']);
+            var_dump($answer);die;
             if ($_POST['question_type'][$ak] == '1' || $_POST['question_type'][$ak] == '2') {
 
                 $qid = $qids[$ak];
-                $query = $this->db->query(" select * from '.DB_PREFIX.'options where qid='$qid' ");
+                $query = $this->db->query(" select * from ".DB_PREFIX."options where qid=".$qid);
                 $options_data = $query->result_array();
                 $options = array();
                 foreach ($options_data as $ok => $option) {

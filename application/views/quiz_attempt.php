@@ -374,7 +374,7 @@
                                     }
                                 }
                                 ?>
-                                <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="4">
+                                <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
                                 <?php ?>
                                 <div>
                                 <div class="op"> 
@@ -403,11 +403,11 @@
 
                                     <?php if ($question['qid'] == $saved_answer['qid']) : ?>
                                         <?php $save_ans = $saved_answer['q_option']; ?>
-                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="7">
 
                                         <div class="op"> 
                                             <b><?php echo $this->lang->line('search'); ?> <br></b>
-                                            <textarea  name="field_search[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
+                                            <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo $save_ans; ?></textarea>
                                         </div>
 
                                         <div class="op"> 
@@ -425,7 +425,7 @@
 
                                     <?php if ($question['qid'] == $saved_answer['qid']) : ?>
                                         <?php $save_ans = $saved_answer['q_option']; ?>
-                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="8">
 
                                         <div class="op"> 
                                             <b><?php echo $this->lang->line('search'); ?> <br></b>
@@ -448,7 +448,7 @@
 
                                     <?php if ($question['qid'] == $saved_answer['qid']) : ?>
                                         <?php $save_ans = $saved_answer['q_option']; ?>
-                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
+                                        <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="9">
 
                                         <div class="op"> 
                                             <b><?php echo $this->lang->line('search'); ?> <br></b>
