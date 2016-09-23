@@ -402,6 +402,8 @@ Class Quiz_model extends CI_Model {
             $photoname = $this->session->userdata('photoname');
             $userdata['photo'] = $photoname;
         }
+
+
         $this->db->insert(DB_PREFIX . 'result', $userdata);
         $rid = $this->db->insert_id();
         return $rid;
@@ -544,6 +546,7 @@ Class Quiz_model extends CI_Model {
         $this->db->update(DB_PREFIX . 'result', $userdata);
 
 
+
         foreach ($qids_perf as $qp => $qpval) {
             $crin = "";
             if ($qpval == '0') {
@@ -630,14 +633,14 @@ Class Quiz_model extends CI_Model {
         $rid = $_POST['rid'];
         $srid = $this->session->userdata('rid');
         $logged_in = $this->session->userdata('logged_in');
-        if($logged_in['su'] == 1){
+        if ($logged_in['su'] == 1) {
             $ssid = '';
-        }else{
+        } else {
             $ssid = $logged_in['ssid'];
         }
-        
+
         $uid = $logged_in['uid'];
-        
+
         if ($srid != $rid) {
 
             return "Something wrong";
@@ -654,195 +657,179 @@ Class Quiz_model extends CI_Model {
         // remove existing answers
         $this->db->where('rid', $rid);
         $this->db->delete(DB_PREFIX . 'answers');
-
+        
         foreach ($_POST['answer'] as $ak => $answer) {
             
             // multiple choice single answer
-            if ($_POST['question_type'][$ak] == '1' || $_POST['question_type'][$ak] == '2') {
+            if (isset($_POST['question_type'][$ak])) {
+                if ($_POST['question_type'][$ak] == '1' || $_POST['question_type'][$ak] == '2' || $_POST['question_type'][$ak] == '8') {
 
-                $qid = $qids[$ak];
-                $query = $this->db->query(" select * from ".DB_PREFIX."options where qid=".$qid);
-                $options_data = $query->result_array();
-                $options = array();
-                foreach ($options_data as $ok => $option) {
-                    $options[$option['oid']] = $option['score'];
-                }
-                $attempted = 0;
-                $marks = 0;
-                foreach ($answer as $sk => $ansval) {
-                    if ($options[$ansval] <= 0) {
-                        $marks+=-1;
-                    } else {
-                        $marks+=$options[$ansval];
+                    $qid = $qids[$ak];
+                    $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
+                    $options_data = $query->result_array();
+                    $options = array();
+                    foreach ($options_data as $ok => $option) {
+                        $options[$option['oid']] = $option['score'];
                     }
-                    $userdata = array(
-                        'rid' => $rid,
-                        'qid' => $qid,
-                        'ssid' => $ssid,
-                        'uid' => $uid,
-                        'q_option' => $ansval,
-                        'score_u' => $options[$ansval]
-                    );
-                    $this->db->insert(DB_PREFIX . 'answers', $userdata);
-                    $attempted = 1;
-                }
-                if ($attempted == 1) {
-                    if ($marks == 1) {
-                        $correct_incorrect[$ak] = 1;
-                    } else {
-                        $correct_incorrect[$ak] = 2;
-                    }
-                } else {
-                    $correct_incorrect[$ak] = 0;
-                }
-            }
-            // short answer
-            if ($_POST['question_type'][$ak] == '3') {
-
-                $qid = $qids[$ak];
-                $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
-                $options_data = $query->row_array();
-                $options_data = explode(',', $options_data['q_option']);
-                $noptions = array();
-                foreach ($options_data as $op) {
-                    $noptions[] = strtoupper(trim($op));
-                }
-
-                $attempted = 0;
-                $marks = 0;
-                foreach ($answer as $sk => $ansval) {
-                    if ($ansval != '') {
-                        if (in_array(strtoupper(trim($ansval)), $noptions)) {
-                            $marks = 1;
+                    $attempted = 0;
+                    $marks = 0;
+                    
+                    foreach ($answer as $sk => $ansval) {
+                        if ($options[$ansval] <= 0) {
+                            $marks+=-1;
                         } else {
-                            $marks = 0;
+                            $marks+=$options[$ansval];
                         }
-
-                        $attempted = 1;
-
                         $userdata = array(
                             'rid' => $rid,
                             'qid' => $qid,
                             'ssid' => $ssid,
                             'uid' => $uid,
                             'q_option' => $ansval,
-                            'score_u' => $marks
-                        );
-                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
-                    }
-                }
-                if ($attempted == 1) {
-                    if ($marks == 1) {
-                        $correct_incorrect[$ak] = 1;
-                    } else {
-                        $correct_incorrect[$ak] = 2;
-                    }
-                } else {
-                    $correct_incorrect[$ak] = 0;
-                }
-            }
-
-            // long answer
-            if ($_POST['question_type'][$ak] == '4') {
-                $attempted = 0;
-                $marks = 0;
-                $qid = $qids[$ak];
-                foreach ($answer as $sk => $ansval) {
-                    if ($ansval != '') {
-                        $userdata = array(
-                            'rid' => $rid,
-                            'qid' => $qid,
-                            'ssid' => $ssid,
-                            'uid' => $uid,
-                            'q_option' => $ansval,
-                            'score_u' => 0
+                            'score_u' => $options[$ansval]
                         );
                         $this->db->insert(DB_PREFIX . 'answers', $userdata);
                         $attempted = 1;
                     }
-                }
-                if ($attempted == 1) {
-
-                    $correct_incorrect[$ak] = 3;
-                } else {
-                    $correct_incorrect[$ak] = 0;
-                }
-            }
-
-            // match
-            if ($_POST['question_type'][$ak] == '5') {
-                $qid = $qids[$ak];
-                $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
-                $options_data = $query->result_array();
-                $noptions = array();
-                foreach ($options_data as $op => $option) {
-                    $noptions[] = $option['q_option'] . '___' . $option['q_option_match'];
-                }
-                $marks = 0;
-                $attempted = 0;
-                foreach ($answer as $sk => $ansval) {
-                    if ($ansval != '0') {
-                        $mc = 0;
-                        if (in_array($ansval, $noptions)) {
-                            $marks+=1 / count($options_data);
-                            $mc = 1 / count($options_data);
+                    if ($attempted == 1) {
+                        if ($marks == 1) {
+                            $correct_incorrect[$ak] = 1;
                         } else {
-                            $marks+=0;
+                            $correct_incorrect[$ak] = 2;
+                        }
+                    } else {
+                        $correct_incorrect[$ak] = 0;
+                    }
+                }
+                // short answer
+                if ($_POST['question_type'][$ak] == '3') {
+
+                    $qid = $qids[$ak];
+                    $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
+                    $options_data = $query->row_array();
+                    $options_data = explode(',', $options_data['q_option']);
+                    $noptions = array();
+                    foreach ($options_data as $op) {
+                        $noptions[] = strtoupper(trim($op));
+                    }
+
+                    $attempted = 0;
+                    $marks = 0;
+                    foreach ($answer as $sk => $ansval) {
+                        if ($ansval != '') {
+                            if (in_array(strtoupper(trim($ansval)), $noptions)) {
+                                $marks = 1;
+                            } else {
+                                $marks = 0;
+                            }
+
+                            $attempted = 1;
+
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => $marks
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                        }
+                    }
+                    if ($attempted == 1) {
+                        if ($marks == 1) {
+                            $correct_incorrect[$ak] = 1;
+                        } else {
+                            $correct_incorrect[$ak] = 2;
+                        }
+                    } else {
+                        $correct_incorrect[$ak] = 0;
+                    }
+                }
+
+                // long answer
+                if ($_POST['question_type'][$ak] === '4') {
+                    $attempted = 0;
+                    $marks = 0;
+                    $qid = $qids[$ak];
+                    foreach ($answer as $sk => $ansval) {
+                        if ($ansval != '') {
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => 0
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                            $attempted = 1;
+                        }
+                    }
+                    if ($attempted == 1) {
+
+                        $correct_incorrect[$ak] = 3;
+                    } else {
+                        $correct_incorrect[$ak] = 0;
+                    }
+                }
+
+                // match
+                if ($_POST['question_type'][$ak] == '5') {
+                    $qid = $qids[$ak];
+                    $query = $this->db->query(" select * from " . DB_PREFIX . "options where qid=" . $qid);
+                    $options_data = $query->result_array();
+                    $noptions = array();
+                    foreach ($options_data as $op => $option) {
+                        $noptions[] = $option['q_option'] . '___' . $option['q_option_match'];
+                    }
+                    $marks = 0;
+                    $attempted = 0;
+                    foreach ($answer as $sk => $ansval) {
+                        if ($ansval != '0') {
                             $mc = 0;
+                            if (in_array($ansval, $noptions)) {
+                                $marks+=1 / count($options_data);
+                                $mc = 1 / count($options_data);
+                            } else {
+                                $marks+=0;
+                                $mc = 0;
+                            }
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => $mc
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                            $attempted = 1;
                         }
-                        $userdata = array(
-                            'rid' => $rid,
-                            'qid' => $qid,
-                            'ssid' => $ssid,
-                            'uid' => $uid,
-                            'q_option' => $ansval,
-                            'score_u' => $mc
-                        );
-                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
-                        $attempted = 1;
                     }
-                }
-                if ($attempted == 1) {
-                    if ($marks == 1) {
-                        $correct_incorrect[$ak] = 1;
+                    if ($attempted == 1) {
+                        if ($marks == 1) {
+                            $correct_incorrect[$ak] = 1;
+                        } else {
+                            $correct_incorrect[$ak] = 2;
+                        }
                     } else {
-                        $correct_incorrect[$ak] = 2;
+                        $correct_incorrect[$ak] = 0;
                     }
-                } else {
-                    $correct_incorrect[$ak] = 0;
                 }
-            }
-            
-            //==================================================================
-            //question n°06 || search and result
-            //==================================================================
-            // long answer
-            if ($_POST['question_type'][$ak] == '6') {
-                $attempted = 0;
-                $marks = 0;
-                $qid = $qids[$ak];
-                
-                /*foreach ($answer as $sk => $ansval) {
-                    var_dump($ansval);die('question_6');
-                    if ($ansval != '') {
-                        $userdata = array(
-                            'rid' => $rid,
-                            'qid' => $qid,
-                            'ssid' => $ssid,
-                            'uid' => $uid, // uid for student or of admin
-                            'q_option' => $ansval,
-                            'score_u' => 0
-                        );
-                        $this->db->insert(DB_PREFIX . 'answers', $userdata);
-                        $attempted = 1;
-                    }
-                }*/
-             
-                
-                $data_resp = array('search' => isset($answer[0]) ? $answer[0] : '', 'response' => $answer[1] ? $answer[1] : '');
-                
-                
-                if(($data_resp)) {
+
+                //==================================================================
+                //question n°06 || search and result
+                //==================================================================
+                // long answer
+                if ($_POST['question_type'][$ak] == '6') {
+                    $attempted = 0;
+                    $marks = 0;
+                    $qid = $qids[$ak];
+
+                    $data_resp = array('search' => isset($answer[0]) ? $answer[0] : '', 'response' => isset($answer[1]) ? $answer[1] : '');
+
+                    if (($data_resp)) {
                         $userdata = array(
                             'rid' => $rid,
                             'qid' => $qid,
@@ -851,16 +838,82 @@ Class Quiz_model extends CI_Model {
                             'q_option' => json_encode($data_resp),
                             'score_u' => 0
                         );
-                        
+
                         $this->db->insert(DB_PREFIX . 'answers', $userdata);
                         $attempted = 1;
+                    }
+
+                    if ($attempted == 1) {
+                        $correct_incorrect[$ak] = 3;
+                    } else {
+                        $correct_incorrect[$ak] = 0;
+                    }
                 }
-                
+
+
+                //==============================================================
+                //question n°:07 table editable
+                //==============================================================
+
+                if ($_POST['question_type'][$ak] == '7') {
+                    $attempted = 0;
+                    $marks = 0;
+                    $qid = $qids[$ak];
+
+                    foreach ($answer as $sk => $ansval) {
+                        if ($ansval != '') {
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => 0
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                            $attempted = 1;
+                        }
+                    }
+
+                    if ($attempted == 1) {
+                        $correct_incorrect[$ak] = 3;
+                    } else {
+                        $correct_incorrect[$ak] = 0;
+                    }
+                }
+
+                //==============================================================
+                //question n°:09 soulignement des mots
+                //==============================================================
+
+                if ($_POST['question_type'][$ak] == '9') {
+                    $attempted = 0;
+                    $marks = 0;
+                    $qid = $qids[$ak];
+
+                    foreach ($answer as $sk => $ansval) {
+                        if ($ansval != '') {
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => 0
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                            $attempted = 1;
+                        }
+                    }
+                    $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                    $attempted = 1;
+
                 if ($attempted == 1) {
                     $correct_incorrect[$ak] = 3;
-                } else {
+                }else{
                     $correct_incorrect[$ak] = 0;
                 }
+              }
             }
         }
         

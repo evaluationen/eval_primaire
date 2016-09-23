@@ -54,19 +54,21 @@ Separated they live in Bookmarksgrove right at the coast of the Semantics, a lar
 
 
 </div>
+
+<input type="button" class="btn-init" value="réinitialiser"/>
 ======================================================
-<h1>Reorder the words</h1>
+<!--h1>Reorder the words</h1>
 <div class="drag_drop_src">
 <b class="src" id="src_1">test</b><b class="src" id="src_2">test2</b>
 </div>
 <div>
 <br>
-<---------------------------------------------------------->
+
 Answered
 <br>
 </div>
 <div class="drag_drop_ans wrapper">
-</div>
+</div-->
     
     
 ======================================================
@@ -194,6 +196,16 @@ Answered
 			
 		});
     });
+	
+	
+	$('.btn-init').on('click', function(e){
+		//alert('ici');
+		//$('#test').removeClass('tt');
+		alert($('#test').text());
+		//$("#test span").remove();
+		$('#test').html($('#test').text());
+		
+	});
     
     
     //-----drag and drop tactile

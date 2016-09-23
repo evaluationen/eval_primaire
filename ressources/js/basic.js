@@ -310,6 +310,7 @@ function show_back_question() {
     }
     change_color(lqn);
     setIndividual_time(lqn);
+    
     save_answer(lqn);
 
     // last qn
@@ -447,6 +448,12 @@ function review_later() {
 
 function save_answer(qn) {
 
+       content_ans = $("#answer_edit_div" + qn).html();
+       if(content_ans){
+           $('#answer_value'+qn).val(content_ans);
+       }
+       
+    
     // signal 1
     $('#save_answer_signal1').css('backgroundColor', '#00ff00');
     setTimeout(function () {
@@ -493,11 +500,13 @@ function submit_qeditable() {
 
     var editor = tinymce.get('default_txt'); // use your own editor id here - equals the id of your textarea
     var content = editor.getContent();
-
-    content = content.replace(/<td>&nbsp;<\/td>/g, '<td contenteditable="true"></td>');
+    
+    content = content.replace(/contenteditable="true"/ig, '');
+    content = content.replace(/>&nbsp;<\/td>/ig, ' contenteditable="true"></td>');
+    
     editor.setContent(content);
 
-    var str = $("form").serialize();
+   /* var str = $("form").serialize();
 
     $.ajax({
         type: "POST",
@@ -509,10 +518,11 @@ function submit_qeditable() {
         error: function (error) {
 
         }
-    });
-
+    });*/
 
 }
+
+//==============================================================================
 
 
 //==============================================================================
@@ -697,7 +707,7 @@ $(document).ready(function () {
 
     //suppression des utilisateurs selectionnés
 
-    $("#delete_selected").confirm({
+    /*$("#delete_selected").confirm({
         title: "Suppression des élèves sélectionnés",
         text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
         confirm: function (button) {
@@ -726,7 +736,7 @@ $(document).ready(function () {
         },
         confirmButton: "Oui",
         cancelButton: "Non"
-    });
+    });*/
 
 
 

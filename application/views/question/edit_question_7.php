@@ -79,7 +79,7 @@
 
 
 
-                        <button class="btn btn-default" type="submit"><?php echo $this->lang->line('submit'); ?></button>
+                        <button class="btn btn-default" onclick="javascript:submit_qeditable();" type="submit"><?php echo $this->lang->line('submit'); ?></button>
                     </div>
                 </div>
             </div>

@@ -54,6 +54,11 @@ img{
 
 }
 
+.op.syllab{
+    min-width: 60px;
+    text-align: center;
+}
+
 .question_div{
 
     display:none;

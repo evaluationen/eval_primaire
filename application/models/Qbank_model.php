@@ -329,7 +329,8 @@ Class Qbank_model extends CI_Model {
             'is_default_txt' => 1,
             'default_txt' => $this->input->post('default_txt'),
         );
-
+        
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         return true;
     }
 

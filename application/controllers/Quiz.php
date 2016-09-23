@@ -358,6 +358,7 @@ class Quiz extends CI_Controller {
         }
         // get result and quiz info and validate time period
         $data['quiz'] = $this->quiz_model->quiz_result($rid);
+        //var_dump($data['quiz']);
         $data['saved_answers'] = $this->quiz_model->saved_answers($rid);
 
         // end date/time
