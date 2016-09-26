@@ -35,6 +35,8 @@
         <script src="<?php echo base_url('ressources/js/jquery-ui-1.11.4/external/jquery/jquery.js') ?>"></script>
         <script src="<?php echo base_url('ressources/js/jquery-ui-1.11.4/jquery-ui.min.js') ?>"></script>
         <script src="<?php echo base_url('ressources/js/jquery-ui-touch-punch/jquery.ui.touch-punch.js') ?>"></script>
+        <script src="<?php echo base_url('ressources/js/jquery.sortable.js') ?>"></script>
+        <script src="<?php echo base_url('ressources/js/jquery.sortable.min.js') ?>"></script>
         <script>
             $(document).ready(function () {
                 $('.datepicker').datepicker({'format': 'dd/mm/yyyy'});

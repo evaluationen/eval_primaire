@@ -8,6 +8,10 @@
         border: 2px solid #0033DD;
     }
 
+     .tt{
+    color:red;
+    background : #ffff00;    
+  }
 
 </style>
 
@@ -350,10 +354,34 @@
                                         <?php
                                         shuffle($match_1);
                                         shuffle($match_2);
-                                        echo '<pre>';
+                                        /*echo '<pre>';
                                         print_r($match_1);
-                                        print_r($match_2);
+                                        print_r($match_2);*/
+                                        ?>
+                                        <div class="block1">
+                                            <label> Questions</label>
+                                            <ul id="list0" class="border-block">
+                                            <?php foreach ($match_1 as $mk1 => $mval) : ?>
+                                                            <li><?php echo $mval?> </li>
+                                            <?php  endforeach; ?>
+                                            </ul>
+                                        </div>
+                                       
+                                        <div class="block2"> 
+                                            <label> Réponses associées</label>
+                                            <ul id="list1" class="lists border-block"></ul>
+                                        </div>
                                         
+                                        <label> Réponses possibles</label>
+                                        <ul id="list2" class="lists border-block">
+                                            <?php foreach($match_2 as $mk2 => $mval2) : ?>
+                                            <li><?php echo $mval2?><input type="hidden" name=""</li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <?php
+                                       /* foreach ($match2 as $mk2 => $mval2){
+                                            
+                                        }
                                         foreach ($match_1 as $mk1 => $mval) {
                                             ?>
                                             <tr><td>
@@ -379,9 +407,9 @@
                                                 </td>
                                             </tr>
 
-
-                                            <?php
-                                        }
+                                            
+                                            <?php 
+                                        }*/
                                         ?>
                                     </table>
                                 </div>
@@ -506,13 +534,15 @@
                                     }
                                 }
                                 ?>
-<!--                               <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="9">
+                              <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="9">
                                 <div class="txt_highlight" >       
                                     <div id="answer_highlight<?php echo $qk; ?>" class="answer_hedit"><?php echo $save_ans; ?></div>
                                     <textarea s  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px; display: none"><?php echo $save_ans; ?></textarea>
                                 </div>
                                
-                            <input type="button" onclick="/*disableselect()*/" value="reinitialiser la sélection" class="btn cancel"/>-->
+                              <div style="margin-top: 2%">
+                                  <input type="button" onclick="btn_init(<?php echo $qk; ?>)" value="reinitialiser la sélection" class="btn btn-danger"/>
+                              </div>
                             <?php endif; ?>               
 
                         </div> 
@@ -564,7 +594,6 @@ for ($ct = 0; $ct < $quiz['noq']; $ct++) {
     setInterval(setIndividual_time, 30000);
 
 </script>
-
 
 
 

@@ -259,3 +259,57 @@ td {padding-top:15px !important; padding-bottom:15px !important;}
     font-weight: bold; 
     color: teal;
 }
+
+
+/*css drag and drop*/
+.block1,
+.block2{
+    display:            inline-block;//inline-block;
+    opacity:            0.6;
+    color:              white;
+    vertical-align:     top;
+}
+
+.block1 > label , .block2 > label{
+    color: seagreen;
+    padding-bottom: 5%;
+}
+.border-block{
+    border: 2px solid #000000;
+    min-width:              300px;
+    min-height:             200px;
+    margin-right: 20px;
+    padding : 0;
+
+}
+
+
+.lists{
+    min-height: 200px;
+    min-width: 300px;
+
+}
+
+#list0 > li{
+    background: blue none repeat scroll 0 0;
+}
+
+#list1 > li{
+    background: green none repeat scroll 0 0;
+    cursor : move;
+}
+#list2 > li{
+    background: red none repeat scroll 0 0;
+    cursor : move;
+}
+
+#list2 > li, #list1 > li, #list0 > li{
+
+    border-radius: 5px;
+    margin-top: 9px;
+    min-height: 40px;
+    padding : 0;
+    list-style : none;
+
+}
+

@@ -310,7 +310,7 @@ function show_back_question() {
     }
     change_color(lqn);
     setIndividual_time(lqn);
-    
+
     save_answer(lqn);
 
     // last qn
@@ -448,12 +448,18 @@ function review_later() {
 
 function save_answer(qn) {
 
-       content_ans = $("#answer_edit_div" + qn).html();
-       if(content_ans){
-           $('#answer_value'+qn).val(content_ans);
-       }
-       
+    content_ans = $("#answer_edit_div" + qn).html();
+    if (content_ans) {
+        $('#answer_value' + qn).val(content_ans);
+    }
     
+    //datas souligner
+    content_line = $("#answer_highlight"+qn).html();
+    if(content_line){
+        $('#answer_value' + qn).val(content_line);
+    }
+
+
     // signal 1
     $('#save_answer_signal1').css('backgroundColor', '#00ff00');
     setTimeout(function () {
@@ -500,25 +506,25 @@ function submit_qeditable() {
 
     var editor = tinymce.get('default_txt'); // use your own editor id here - equals the id of your textarea
     var content = editor.getContent();
-    
+
     content = content.replace(/contenteditable="true"/ig, '');
     content = content.replace(/>&nbsp;<\/td>/ig, ' contenteditable="true"></td>');
-    
+
     editor.setContent(content);
 
-   /* var str = $("form").serialize();
-
-    $.ajax({
-        type: "POST",
-        data: str,
-        url: base_url + "qbank/new_question/7/",
-        sucess: function (data) {
-            alert('insert ok');
-        },
-        error: function (error) {
-
-        }
-    });*/
+    /* var str = $("form").serialize();
+     
+     $.ajax({
+     type: "POST",
+     data: str,
+     url: base_url + "qbank/new_question/7/",
+     sucess: function (data) {
+     alert('insert ok');
+     },
+     error: function (error) {
+     
+     }
+     });*/
 
 }
 
@@ -687,6 +693,11 @@ function group_question() {
     }
 }
 
+//réitialiser la sélection
+function btn_init(qn) {
+    $('#answer_highlight' + qn).html($('#answer_highlight' + qn).text());
+}
+
 
 $(document).ready(function () {
 
@@ -708,35 +719,35 @@ $(document).ready(function () {
     //suppression des utilisateurs selectionnés
 
     /*$("#delete_selected").confirm({
-        title: "Suppression des élèves sélectionnés",
-        text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
-        confirm: function (button) {
-            button.fadeOut(2000).fadeIn(2000);
-            var myCheckboxes = new Array();
-            $("input:checked").each(function () {
-                myCheckboxes.push($(this).val());
-            });
-
-            $.ajax({
-                type: "POST",
-                url: base_url + "student/operation/del",
-                data: 'check_user=' + myCheckboxes,
-                asynchronous: true,
-                //cache: false,
-                //beforeSend: function(){},
-                success: function (data) {
-                    window.location = base_url + 'student';
-
-                }
-            });
-        },
-        cancel: function (button) {
-            button.fadeOut(2000).fadeIn(2000);
-            //alert("You aborted the operation.");
-        },
-        confirmButton: "Oui",
-        cancelButton: "Non"
-    });*/
+     title: "Suppression des élèves sélectionnés",
+     text: "Vous voulez vraiment les supprimer? Cette suppression est irreversible",
+     confirm: function (button) {
+     button.fadeOut(2000).fadeIn(2000);
+     var myCheckboxes = new Array();
+     $("input:checked").each(function () {
+     myCheckboxes.push($(this).val());
+     });
+     
+     $.ajax({
+     type: "POST",
+     url: base_url + "student/operation/del",
+     data: 'check_user=' + myCheckboxes,
+     asynchronous: true,
+     //cache: false,
+     //beforeSend: function(){},
+     success: function (data) {
+     window.location = base_url + 'student';
+     
+     }
+     });
+     },
+     cancel: function (button) {
+     button.fadeOut(2000).fadeIn(2000);
+     //alert("You aborted the operation.");
+     },
+     confirmButton: "Oui",
+     cancelButton: "Non"
+     });*/
 
 
 
@@ -860,6 +871,54 @@ $(document).ready(function () {
         group_question();
     }
 
+
+    //==========================================================================
+    $('.answer_hedit').each(function (e) {
+        var id_d = $(this).attr(('id'));
+
+        $('#' + id_d).on('click', function (e) {//$('#test').bind('mouseup', function(e){
+            e.preventDefault();
+
+            if (window.getSelection) {
+                // not IE case
+                var selObj = window.getSelection();
+                var selRange = selObj.getRangeAt(0);
+
+                var newElement = document.createElement("span");
+                var documentFragment = selRange.extractContents();
+                newElement.appendChild(documentFragment);
+                selRange.insertNode(newElement);
+                $('span').addClass('tt');
+                selObj.removeAllRanges();
+            } else if (document.selection && document.selection.createRange && document.selection.type != "None") {
+                // IE case
+                var range = document.selection.createRange();
+                var selectedText = range.htmlText;
+                var newText = '<span>' + selectedText + '</span>';
+                $('b').addClass('tt');
+                document.selection.createRange().pasteHTML(newText);
+            }
+
+            $('.tt').each(function () {
+                $(this).bind('mouseup', function () {
+                    var txt = $(this).html();
+                });
+
+            });
+        });
+    });
+
+//==============================================================================
+  $(function () {
+        $("#list2, #list1").sortable({
+            connectWith: ".lists",
+            cursor: "move"
+        }).disableSelection();
+    });
+
+    $.fn.disableSelection = function () {
+    }
+    
 
 
 });
