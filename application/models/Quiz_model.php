@@ -785,9 +785,15 @@ Class Quiz_model extends CI_Model {
                     }
                     $marks = 0;
                     $attempted = 0;
+                     if(isset($_POST['options'][$ak])){
+                       $opt =  $_POST['options'][$ak];            
+                    }
                     foreach ($answer as $sk => $ansval) {
                         if ($ansval != '0') {
                             $mc = 0;
+                            //$ansval à reformuler
+                               
+                            //fin
                             if (in_array($ansval, $noptions)) {
                                 $marks+=1 / count($options_data);
                                 $mc = 1 / count($options_data);
@@ -800,7 +806,7 @@ Class Quiz_model extends CI_Model {
                                 'qid' => $qid,
                                 'ssid' => $ssid,
                                 'uid' => $uid,
-                                'q_option' => $ansval,
+                                'q_option' => $opt[$sk].'___'.$ansval,
                                 'score_u' => $mc
                             );
                             $this->db->insert(DB_PREFIX . 'answers', $userdata);

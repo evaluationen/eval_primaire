@@ -277,13 +277,12 @@ $lang['class'] = "Classe";
 $lang['students'] = "Elèves";
 $lang['student_list'] = "Liste des élèves";
 
-$lang['group_question'] = "Groupe des questions";
-$lang['attach_group_question'] = "Rattacher à une groupe";
+$lang['group_question'] = "Documents pour les questions";
+$lang['attach_group_question'] = "Rattacher à un document";
 $lang['title'] = "Titre";
 $lang['order'] = "Consigne";
 
 $lang['search_response'] = "Recherches / Réponse";
-$lang['response'] = "Réponse";
 $lang['table_editable'] = "Tableau éditable";
 $lang['content'] = "Contenu";
 $lang['text_selection'] = "Texte à sélectionner";

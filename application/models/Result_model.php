@@ -23,12 +23,7 @@ Class Result_model extends CI_Model {
         }
         
         // à revoir
-        if ($logged_in['su'] == '0') {
-
-            //$this->db->where(DB_PREFIX.'result.uid', $uid);
-            //$this->db->where(DB_PREFIX.'student_sch.uid', $uid);
-
-        }
+        
 
         // à revoir aussi
         if ($status != '0') {
@@ -40,9 +35,13 @@ Class Result_model extends CI_Model {
 
         $this->db->limit($this->config->item('number_of_rows'), $limit);
         $this->db->order_by('rid', 'desc');
-        //$this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
-        $this->db->join(DB_PREFIX.'student_sch', DB_PREFIX.'result.ssid='.DB_PREFIX.'student_sch.ssid');//ajouté recemment
-        $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'student_sch.uid');
+         if ($logged_in['su'] == '0') {
+             $this->db->join(DB_PREFIX.'student', DB_PREFIX.'result.uid='.DB_PREFIX.'student.stid');//ajouté recemment
+         }else{
+             $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
+         }
+       
+         
         $this->db->join(DB_PREFIX.'quiz', DB_PREFIX.'quiz.quid='.DB_PREFIX.'result.quid');
         
         $query = $this->db->get(DB_PREFIX.'result');
@@ -102,7 +101,12 @@ Class Result_model extends CI_Model {
             $this->db->where(DB_PREFIX.'result.uid', $uid);
         }
         $this->db->where(DB_PREFIX.'result.rid', $rid);
-        $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
+        //$this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
+         if ($logged_in['su'] == '0') {
+             $this->db->join(DB_PREFIX.'student', DB_PREFIX.'result.uid='.DB_PREFIX.'student.stid');//ajouté recemment
+         }else{
+             $this->db->join(DB_PREFIX.'users', DB_PREFIX.'users.uid='.DB_PREFIX.'result.uid');
+         }
         $this->db->join(DB_PREFIX.'group', DB_PREFIX.'group.gid='.DB_PREFIX.'users.gid');
         $this->db->join(DB_PREFIX.'quiz', DB_PREFIX.'quiz.quid='.DB_PREFIX.'result.quid');
         $query = $this->db->get(DB_PREFIX.'result');
@@ -123,18 +127,18 @@ Class Result_model extends CI_Model {
         $logged_in = $this->session->userdata('logged_in');
         $gid = $logged_in['gid'];
         $res = array();
-        $this->db->where("'.DB_PREFIX.'result.quid", $quid);
-        $this->db->group_by("'.DB_PREFIX.'result.uid");
-        $this->db->order_by("'.DB_PREFIX.'result.score_obtained", 'DESC');
+        $this->db->where(DB_PREFIX.'result.quid', $quid);
+        $this->db->group_by(DB_PREFIX.'result.uid');
+        $this->db->order_by(DB_PREFIX.'result.score_obtained', 'DESC');
         $query = $this->db->get(DB_PREFIX.'result');
         $res[0] = $query->num_rows();
 
 
-        $this->db->where("'.DB_PREFIX.'result.quid", $quid);
-        $this->db->where("'.DB_PREFIX.'result.uid !=", $uid);
-        $this->db->where("'.DB_PREFIX.'result.score_obtained <=", $score);
-        $this->db->group_by("'.DB_PREFIX.'result.uid");
-        $this->db->order_by("'.DB_PREFIX.'result.score_obtained", 'DESC');
+        $this->db->where(DB_PREFIX.'result.quid', $quid);
+        $this->db->where(DB_PREFIX.'result.uid !=', $uid);
+        $this->db->where(DB_PREFIX.'result.score_obtained <=', $score);
+        $this->db->group_by(DB_PREFIX.'result.uid');
+        $this->db->order_by(DB_PREFIX.'result.score_obtained', 'DESC');
         $querys = $this->db->get(DB_PREFIX.'result');
         $res[1] = $querys->num_rows();
 
