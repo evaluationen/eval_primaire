@@ -287,3 +287,6 @@ $lang['table_editable'] = "Tableau éditable";
 $lang['content'] = "Contenu";
 $lang['text_selection'] = "Texte à sélectionner";
 $lang['select_class'] = "Sélectionner une classe";
+$lang['text_lacunaire'] = "Texte lacunaire";
+$lang['options_list'] = "Liste des options";
+$lang['is_list_answer'] = "Définir les réponses possibles";

@@ -153,6 +153,8 @@ class Qbank extends CI_Controller {
                     break;
                 case '9': $insert = $this->qbank_model->insert_question_9();
                     break;
+                case '10': $insert = $this->qbank_model->insert_question_10();
+                    break;
                 default : break;
             }
             if ($insert) {
@@ -211,7 +213,9 @@ class Qbank extends CI_Controller {
                         break;
                     case '8': $update = $this->qbank_model->update_question_2($qid);
                         break;
-                    case '9': $update = $this->qbank_model->update_question_2($qid);
+                    case '9': $update = $this->qbank_model->update_question_5($qid);
+                        break;
+                    case '10': $update = $this->qbank_model->update_question_10($qid);
                         break;
                     default : break;
 

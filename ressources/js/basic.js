@@ -452,10 +452,10 @@ function save_answer(qn) {
     if (content_ans) {
         $('#answer_value' + qn).val(content_ans);
     }
-    
+
     //datas souligner
-    content_line = $("#answer_highlight"+qn).html();
-    if(content_line){
+    content_line = $("#answer_highlight" + qn).html();
+    if (content_line) {
         $('#answer_value' + qn).val(content_line);
     }
 
@@ -698,6 +698,14 @@ function btn_init(qn) {
     $('#answer_highlight' + qn).html($('#answer_highlight' + qn).text());
 }
 
+//fucntion check lsit default
+function check_list_ans(){
+    if ($("#is_list_ans").is(":checked")) {
+            $('#default_list').css('display', 'block');
+        } else {
+            $('#default_list').css('display', 'none');
+    }
+}
 
 $(document).ready(function () {
 
@@ -909,7 +917,7 @@ $(document).ready(function () {
     });
 
 //==============================================================================
-  $(function () {
+    $(function () {
         $("#list2, #list1").sortable({
             connectWith: ".lists",
             cursor: "move"
@@ -918,8 +926,12 @@ $(document).ready(function () {
 
     $.fn.disableSelection = function () {
     }
-    
 
+//==============================================================================
+    check_list_ans();
+    $('#is_list_ans').click(function () {
+        check_list_ans();
+    });
 
 });
 // end - quiz attempt functions 

@@ -333,6 +333,24 @@ Class Qbank_model extends CI_Model {
         $this->db->insert(DB_PREFIX . 'qbank', $userdata);
         return true;
     }
+    
+    
+    //==========================================================================
+    function insert_question_10(){
+       
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'question_type' => $this->input->post('question_type'), //surligner
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid'),
+            'is_default_txt' => ($this->input->post('is_default_txt') && !empty($this->input->post('default_txt'))) ? $this->input->post('is_default_txt') : 0,
+            'default_txt' => $this->input->post('default_txt'),
+        );
+        $this->db->insert(DB_PREFIX . 'qbank', $userdata);
+        return true;
+    }
 
     //==========================================================================
     //==========================================================================
@@ -439,6 +457,7 @@ Class Qbank_model extends CI_Model {
         $this->db->update(DB_PREFIX . 'qbank', $userdata);
         $this->db->where('qid', $qid);
         $this->db->delete(DB_PREFIX . 'options');
+        if($this->input->post('option')){
         foreach ($this->input->post('option') as $key => $val) {
             if (in_array($key, $this->input->post('score'))) {
                 $score = (1 / count($this->input->post('score')));
@@ -452,7 +471,7 @@ Class Qbank_model extends CI_Model {
             );
             $this->db->insert(DB_PREFIX . 'options', $userdata);
         }
-
+        }
         return true;
     }
 
@@ -531,6 +550,8 @@ Class Qbank_model extends CI_Model {
             'pqid' => $pqid,
             'lid' => $this->input->post('lid')
         );
+        
+        
         $this->db->where('qid', $qid);
         $this->db->update(DB_PREFIX . 'qbank', $userdata);
         
@@ -539,6 +560,28 @@ Class Qbank_model extends CI_Model {
 
         return true;
     }
+    
+    //texte lacunaire
+     function update_question_10($qid) {
+        
+        $userdata = array(
+            'question' => $this->input->post('question'),
+            'description' => $this->input->post('description'),
+            'is_default_txt' => ($this->input->post('is_default_txt') && !empty($this->input->post('default_txt'))) ? $this->input->post('is_default_txt') : 0,
+            'default_txt' => $this->input->post('default_txt'),
+            'question_type' => $this->input->post('question_type'), //$this->lang->line('long_answer'),
+            'cid' => $this->input->post('cid'),
+            'scid' => $this->input->post('scid'),
+            'lid' => $this->input->post('lid')
+        );
+        
+        
+        $this->db->where('qid', $qid);
+        $this->db->update(DB_PREFIX . 'qbank', $userdata);
+        
+        return true;
+    }
+    
 
     // category function start
     function category_list() {

@@ -911,14 +911,40 @@ Class Quiz_model extends CI_Model {
                             $attempted = 1;
                         }
                     }
-                    $this->db->insert(DB_PREFIX . 'answers', $userdata);
-                    $attempted = 1;
+                  
 
                 if ($attempted == 1) {
                     $correct_incorrect[$ak] = 3;
                 }else{
                     $correct_incorrect[$ak] = 0;
                 }
+              }
+              
+              if ($_POST['question_type'][$ak] == '10') {
+                  $attempted = 0;
+                    $marks = 0;
+                    $qid = $qids[$ak];
+
+                    foreach($answer as $sk => $ansval) {
+                        if ($ansval != '') {
+                            $userdata = array(
+                                'rid' => $rid,
+                                'qid' => $qid,
+                                'ssid' => $ssid,
+                                'uid' => $uid,
+                                'q_option' => $ansval,
+                                'score_u' => 0
+                            );
+                            $this->db->insert(DB_PREFIX . 'answers', $userdata);
+                            $attempted = 1;
+                        }
+                    }
+
+                    if ($attempted == 1) {
+                        $correct_incorrect[$ak] = 3;
+                    }else{
+                        $correct_incorrect[$ak] = 0;
+                    }
               }
             }
         }

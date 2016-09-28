@@ -196,6 +196,7 @@ Class Base_model extends CI_Model {
             '7' => $this->lang->line('table_editable'),
             '8' => $this->lang->line('cases_syllabes'),
             '9' => $this->lang->line('highlight'), // souligner
+            '10' => $this->lang->line('text_lacunaire'),
             //'8' => $this->lang->line('reorganize'),
             //'9' => $this->lang->line('split_word'),
         );

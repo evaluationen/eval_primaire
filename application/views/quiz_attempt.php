@@ -176,7 +176,54 @@
                             <?php if ($title) : ?>    
                                 <b style="font-size:20px;color:red;"><?php echo $this->lang->line('question'); ?> <?php echo $qk + 1; ?>)</b><br>
                             <?php endif; ?>
-                            <?php echo str_replace('../../../', '../../', $question['question']); ?>
+                                <?php if($question['question_type'] == 10) :?>
+                                
+                                <?php 
+                                
+                                    foreach ($saved_answers as $svk => $saved_answer) {
+                                    if ($question['qid'] == $saved_answer['qid']) {
+                                        $save_ans[] = $saved_answer['q_option'];
+                                        }
+                                    }
+                                    
+                                    //var_dump($save_ans);
+                                    //die;
+                                    if($question['is_default_txt'] == 1){
+                                  
+                                    
+                                    //liste deroulante 
+                                    $replace = "<select name='answer[". $qk."][]'>";
+                                        if(!empty(trim($question['default_txt']))){
+
+                                        $list = explode(';', $question['default_txt']);
+                                        foreach($list as $key => $l){
+                                            
+                                                 $replace .= "<option value='".$l."'";
+                                                 $replace .= ">".$l."</option>" ;
+                                            }
+                                        }
+                                    $replace .= "</select>";
+                                }else{
+                                    //champ libre
+                                    $replace = "<input type='text' name='answer[". $qk."][]'/>";
+                                }
+                                    
+                                /*if(is_array($save_ans)){
+                                        
+                                    }else{
+                                        $question['question'] = str_replace('{rep}', $replace, $question['question']);
+                                    }*/
+                                    $count_var = substr_count($question['question'], '{rep');
+                                    for($i = 1; $i <= $count_var; $i++){
+                                        
+                                        $question['question'] = str_replace('{rep'.$i.'}', $replace, $question['question']);
+                                    }
+                                    //$question['question'] = preg_replace('[^{rep$}]', $replace, $question['question']);
+                                ?>
+                                    
+                                <?php endif; ?>
+                                
+                                <?php echo str_replace('../../../', '../../', $question['question']); ?>
 
                         </div>
                         <div class="option_container" >
@@ -548,7 +595,32 @@
                                 <div style="margin-top: 2%">
                                     <input type="button" onclick="btn_init(<?php echo $qk; ?>)" value="reinitialiser la sélection" class="btn btn-danger"/>
                                 </div>
-                    <?php endif; ?>               
+                            <?php endif; ?>  
+                                
+                           <!-- question_type = 10 texte lacunaire-->     
+                           <!-- question_type = 9  souligner -->
+                            <?php if ($question['question_type'] == 10) : ?>
+                                <?php
+                                
+                                /*$save_ans = "";
+                                if (isset($question['is_default_txt']) && $question['is_default_txt']) {
+                                    $save_ans .= $question['default_txt'];
+                                }*/
+                                
+                                /*foreach ($saved_answers as $svk => $saved_answer) {
+                                    if ($question['qid'] == $saved_answer['qid']) {
+                                        $save_ans = $saved_answer['q_option'];
+                                    }
+                                }*/
+                                ?>
+                                <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="10">
+                                
+                                
+                                <div>       
+                                    
+                                </div>
+                                
+                            <?php endif; ?>    
 
                         </div> 
                     </div>
