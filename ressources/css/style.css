@@ -37,7 +37,8 @@ img{
     margin-top:30px;
     padding:4px;
     height:35%;
-    overflow-y:scroll;
+    //overflow-y:scroll;
+    overflow: auto;
 
 }
 .op{

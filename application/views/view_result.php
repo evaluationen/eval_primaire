@@ -579,6 +579,41 @@
 
                                             <?php }
                                             ?>
+                                            
+                                            <!-- question n°:10 -->
+                                            <?php
+                                            if ($question['question_type'] == 10) {
+                                            $save_ans = "";
+                                            foreach ($saved_answers as $svk => $saved_answer) {
+                                            if ($question['qid'] == $saved_answer['qid']) {
+                                            $save_ans = $saved_answer['q_option'];
+                                            }
+                                            }
+                                            ?>
+                                            <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="10">
+                                            <?php
+                                            ?>
+
+                                            <div class="op" style="float: none;"> 
+                                                <?php echo $this->lang->line('answer'); ?> <br>
+                                                <?php echo $save_ans; ?>
+                                            </div>
+                                            <?php
+                                            if ($logged_in['su'] == '1') {
+                                            if ($ind_score[$qk] == '3') {
+                                            ?>
+                                            <div id="assign_score<?php echo $qk; ?>">
+                                                <?php echo $this->lang->line('evaluate'); ?>	
+                                                <a href="javascript:assign_score('<?php echo $result['rid']; ?>','<?php echo $qk; ?>','1');"  class="btn btn-success" ><?php echo $this->lang->line('correct'); ?></a>	
+                                                <a href="javascript:assign_score('<?php echo $result['rid']; ?>','<?php echo $qk; ?>','2');"  class="btn btn-danger" ><?php echo $this->lang->line('incorrect'); ?></a>	
+                                            </div>
+                                            <?php
+                                            }
+                                            }
+                                            ?>		
+
+                                            <?php }
+                                            ?>
 
                                         </div> 
                                     </div>
