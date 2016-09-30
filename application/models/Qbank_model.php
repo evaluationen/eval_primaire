@@ -337,7 +337,7 @@ Class Qbank_model extends CI_Model {
     
     //==========================================================================
     function insert_question_10(){
-       
+        $this->db->trans_start();
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
@@ -345,11 +345,28 @@ Class Qbank_model extends CI_Model {
             'cid' => $this->input->post('cid'),
             'scid' => $this->input->post('scid'),
             'lid' => $this->input->post('lid'),
-            'is_default_txt' => ($this->input->post('is_default_txt') && !empty($this->input->post('default_txt'))) ? $this->input->post('is_default_txt') : 0,
+            'is_default_txt' => ($this->input->post('is_default_txt') && !empty($this->input->post('option'))) ? $this->input->post('is_default_txt') : 0,
             'default_txt' => $this->input->post('default_txt'),
         );
         $this->db->insert(DB_PREFIX . 'qbank', $userdata);
-        return true;
+        $qnid = $this->db->insert_id();
+        
+         if(!empty($this->input->post('option')) && ($this->input->post('is_default_txt'))) {
+             $options = explode(";", $this->input->post('option'));
+             if(!empty($options)){
+                    foreach($options as $val){
+                       $dataop = array(
+                       'qid' => $qnid,
+                       'q_option' => trim($val),
+                       'score' => 0,
+                   );
+                  $this->db->insert(DB_PREFIX . 'options', $dataop);
+                 }
+             }   
+        }
+        $this->db->trans_complete();
+        
+        return $this->db->trans_status();
     }
 
     //==========================================================================
@@ -564,6 +581,7 @@ Class Qbank_model extends CI_Model {
     //texte lacunaire
      function update_question_10($qid) {
         
+         $this->db->trans_start();
         $userdata = array(
             'question' => $this->input->post('question'),
             'description' => $this->input->post('description'),
@@ -579,7 +597,27 @@ Class Qbank_model extends CI_Model {
         $this->db->where('qid', $qid);
         $this->db->update(DB_PREFIX . 'qbank', $userdata);
         
-        return true;
+        $this->db->where('qid', $qid);
+        $this->db->delete(DB_PREFIX . 'options');
+        
+          if(!empty($this->input->post('option')) && ($this->input->post('is_default_txt'))) {
+             $options = explode(";", $this->input->post('option'));
+             if(!empty($options)){
+                    foreach($options as $val){
+                       $dataop = array(
+                       'qid' => $qid,
+                       'q_option' => trim($val),
+                       'score' => 0,
+                   );
+                  $this->db->insert(DB_PREFIX . 'options', $dataop);
+                 }
+             }
+            
+        }
+       
+        $this->db->trans_complete();
+
+       return $this->db->trans_status();
     }
     
 

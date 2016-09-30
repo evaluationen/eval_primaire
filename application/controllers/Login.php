@@ -65,6 +65,8 @@ class Login extends CI_Controller {
             $password = $log_qrc['password'];
             $this->session->unset_userdata('log_qrc');
             $login = $this->student_model->login($username, $password);
+            $login['uid'] = $login['stid'];
+            
         } else {
             $login = $this->user_model->login($username, $password);
         }

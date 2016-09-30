@@ -111,12 +111,12 @@ if ($this->config->item('webcam') == true) {
 
                         <div class="form-group">	 
                             <label   ><?php echo $this->lang->line('select_class'); ?></label> <br>
-<?php foreach ($class_list as $key => $val) : ?>
+                                <?php foreach ($class_list as $key => $val) : ?>
                                 <label><?php echo isset($val['label']) ? $val['label'] : ""; ?> : </label>
-    <?php foreach ($val['class'] as $cl) : ?>
+                                 <?php foreach ($val['class'] as $cl) : ?>
                                     <input type="checkbox" name="clids[]" value="<?php echo $cl['clid']; ?>" <?php if (in_array($cl['clid'], explode(',', $quiz['clids']))) {
-            echo 'checked';
-        } ?> > 
+                                 echo 'checked';
+                                         } ?> > 
                                            <?php echo $cl['code']; ?> &nbsp;&nbsp;&nbsp;
                                 <?php endforeach; ?>   
                                 <br>   

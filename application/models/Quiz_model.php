@@ -75,7 +75,8 @@ Class Quiz_model extends CI_Model {
             'ip_address' => $this->input->post('ip_address'),
             'view_answer' => $this->input->post('view_answer'),
             'camera_req' => $this->input->post('camera_req'),
-            'gids' => implode(',', $this->input->post('gids'))
+            'gids' => implode(',', $this->input->post('gids')),
+            'clids' => implode(',', $this->input->post('clids')),
         );
 
 
@@ -314,13 +315,14 @@ Class Quiz_model extends CI_Model {
         return false;
     }
 
-    function count_result($quid, $uid, $isadmin = false) {
+    function count_result($quid, $uid, $ssid = false) {
 
         $this->db->where('quid', $quid);
-        if ($isadmin) {
+        if (!$ssid) {
             $this->db->where('uid', $uid);
         } else {
-            $this->db->where('ssid', $uid);
+            $this->db->where('uid', $uid);
+            $this->db->where('ssid', $ssid);
         }
 
         $this->db->where('result_status !=', $this->lang->line('open'));
@@ -329,7 +331,7 @@ Class Quiz_model extends CI_Model {
         return $query->num_rows();
     }
 
-    function insert_result($quid, $uid) {
+    function insert_result($quid, $uid, $ssid = FALSE) {
 
         // get quiz info
         $this->db->where('quid', $quid);
@@ -389,6 +391,7 @@ Class Quiz_model extends CI_Model {
             'quid' => $quid,
             'ssid' => '', // identifiants des élèves suivant l'année scolaire
             'uid' => $uid, //identifiants des élèves ou admin
+            'ssid' => $ssid ? $ssid : 0, //identifiants élèves suivant l'anné scolaire
             'r_qids' => implode(',', $qids),
             'categories' => implode(',', $categories),
             'category_range' => implode(',', $category_range),
@@ -409,10 +412,15 @@ Class Quiz_model extends CI_Model {
         return $rid;
     }
 
-    function open_result($quid, $uid) {
+    function open_result($quid, $uid, $ssid= false) {
 
         $result_open = $this->lang->line('open');
-        $query = $this->db->query("select * from " . DB_PREFIX . "result  where " . DB_PREFIX . "result.result_status='" . $result_open . "'  and " . DB_PREFIX . "result.quid=" . $quid . " and " . DB_PREFIX . "result.uid=" . $uid);
+        $q = "select * from " . DB_PREFIX . "result  where " . DB_PREFIX . "result.result_status='" . $result_open . "'  and " . DB_PREFIX . "result.quid=" . $quid . " and " . DB_PREFIX . "result.uid=" . $uid;
+        if($ssid){
+            $q .= " and " . DB_PREFIX . "result.ssid=" . $ssid;
+        }
+        
+        $query = $this->db->query($q);
 
         if ($query->num_rows() >= 1) {
             $result = $query->row_array();

@@ -585,10 +585,11 @@
                                             if ($question['question_type'] == 10) {
                                             $save_ans = "";
                                             foreach ($saved_answers as $svk => $saved_answer) {
-                                            if ($question['qid'] == $saved_answer['qid']) {
-                                            $save_ans = $saved_answer['q_option'];
+                                                if ($question['qid'] == $saved_answer['qid']) {
+                                                $save_ans[] = $saved_answer['q_option'];
+                                                }
                                             }
-                                            }
+                                            
                                             ?>
                                             <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="10">
                                             <?php
@@ -596,7 +597,18 @@
 
                                             <div class="op" style="float: none;"> 
                                                 <?php echo $this->lang->line('answer'); ?> <br>
-                                                <?php echo $save_ans; ?>
+                                                    <?php $count_var = substr_count($question['default_txt'], '{rep');
+                                                    for ($i = 1; $i <= $count_var; $i++) {
+                                                        $replace = "<input readonly=true type='text' name='answer[" . $qk . "][]'  value='";
+                                                        if ((isset($save_ans) && $save_ans[$i - 1])) {
+                                                            $replace .= $save_ans[$i - 1];
+                                                        }
+                                                        $replace .= "'/>";
+
+                                                        $question['default_txt'] = str_replace('{rep' . $i . '}', $replace, $question['default_txt']);
+                                                    }
+                                                    ?>
+                                                    <?php echo $question['default_txt']; ?>
                                             </div>
                                             <?php
                                             if ($logged_in['su'] == '1') {

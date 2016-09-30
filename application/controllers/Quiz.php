@@ -33,6 +33,7 @@ class Quiz extends CI_Controller {
         } else {
             $gid = $logged_in['gid'];
             $quiz_default = $this->quiz_model->quiz_default($gid);
+            var_dump($quiz_default);die;
             if ($quiz_default) {
                 $this->quiz_detail($quiz_default);
             } else {
@@ -226,6 +227,7 @@ class Quiz extends CI_Controller {
             exit($this->lang->line('permission_denied'));
         }
         $this->load->library('form_validation');
+        
         $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
@@ -261,14 +263,16 @@ class Quiz extends CI_Controller {
         $data['quiz'] = $this->quiz_model->get_quiz($quid);
 
         $uid = $logged_in['uid'];
+        $ssid = isset($logged_in['ssid']) ? $logged_in['ssid'] : 0;
 
         if ($logged_in['su'] == 1) {
             //administrateur
-            $max_temp = $this->quiz_model->count_result($quid, $uid, true);
+            $max_temp = $this->quiz_model->count_result($quid, $uid);
         } else {
             //élèves 
-            $max_temp = $this->quiz_model->count_result($quid, $uid);
+            $max_temp = $this->quiz_model->count_result($quid, $uid, $ssid);
         }
+        
         $data['max_attempt'] = $max_temp;
         $this->load->view('header', $data);
         $this->load->view('quiz_detail', $data);
@@ -280,9 +284,10 @@ class Quiz extends CI_Controller {
         $logged_in = $this->session->userdata('logged_in');
         $gid = $logged_in['gid'];
         $uid = $logged_in['uid'];
+        $ssid = isset($logged_in['ssid']) ? $logged_in['ssid'] : FALSE;
 
         // if this quiz already opened by user then resume it
-        $open_result = $this->quiz_model->open_result($quid, $uid);
+        $open_result = $this->quiz_model->open_result($quid, $uid, $ssid);
 
         if ($open_result != '0') {
             $this->session->set_userdata('rid', $open_result);
@@ -339,7 +344,7 @@ class Quiz extends CI_Controller {
             redirect('quiz/quiz_detail/' . $quid);
         }
         // insert result row and get rid (result id)
-        $rid = $this->quiz_model->insert_result($quid, $uid);
+        $rid = $this->quiz_model->insert_result($quid, $uid, $ssid);
 
         $this->session->set_userdata('rid', $rid);
         redirect('quiz/attempt/' . $rid);
