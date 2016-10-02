@@ -8,3 +8,4 @@ rem si vous n'utilisez pas le proxy
 rem git config --global --unset http.proxy 
 
 git clone https://github.com/evaluationen/eval_primaire.git/
+git init
