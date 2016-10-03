@@ -982,16 +982,17 @@ Class Quiz_model extends CI_Model {
 
     /* quiz active suivant les groupes d'utilisateurs connecté */
 
-    function quiz_default($gid) {
+    function quiz_default($gid, $clids) {
         $where = "FIND_IN_SET('" . $gid . "', gids)";
-        $query = $this->db->select('quid')->where($where)->get(DB_PREFIX . 'quiz');
+        $where1 = "FIND_IN_SET('" . $clids . "', clids)";
+        $query = $this->db->select('quid, quiz_name')->where($where)->where($where1)->get(DB_PREFIX . 'quiz');
 
         if ($query->num_rows() > 0) {
-            $res = $query->row();
-            $quid = $res->quid;
+            $quids = $query->result();
+            
         }
 
-        return isset($quid) ? $quid : FALSE;
+        return isset($quids) ? $quids : FALSE;
     }
 
     /* get coef questions by quiz */

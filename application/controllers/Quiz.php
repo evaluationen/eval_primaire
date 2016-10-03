@@ -32,13 +32,16 @@ class Quiz extends CI_Controller {
             $this->load->view('footer', $data);
         } else {
             $gid = $logged_in['gid'];
-            $quiz_default = $this->quiz_model->quiz_default($gid);
-            var_dump($quiz_default);die;
-            if ($quiz_default) {
-                $this->quiz_detail($quiz_default);
-            } else {
-                redirect('result');
-            }
+            $clid = $logged_in['clid'];
+            $data['quiz_default'] = $this->quiz_model->quiz_default($gid,$clid);
+            if ($data['quiz_default'] && count($data['quiz_default']) == 1) {
+                $quid = $data['quiz_default'][0]->quid;
+                $this->quiz_detail($quid);
+            }else{
+                $this->load->view('header', $data);
+                $this->load->view('quiz_list_user', $data);
+                $this->load->view('footer', $data);
+            } 
         }
     }
 
@@ -231,12 +234,12 @@ class Quiz extends CI_Controller {
         $this->form_validation->set_rules('quiz_name', 'quiz_name', 'required');
         if ($this->form_validation->run() == FALSE) {
             $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . validation_errors() . " </div>");
-            redirect('quiz/edit_quiz/' . $quid);
+            //redirect('quiz/edit_quiz/' . $quid);
         } else {
             $quid = $this->quiz_model->update_quiz($quid);
-
-            redirect('quiz/edit_quiz/' . $quid);
         }
+        
+        redirect('quiz/edit_quiz/' . $quid);
     }
 
     public function remove_quiz($quid) {
@@ -260,7 +263,7 @@ class Quiz extends CI_Controller {
         $gid = $logged_in['gid'];
         $data['title'] = $this->lang->line('attempt') . ' ' . $this->lang->line('quiz');
 
-        $data['quiz'] = $this->quiz_model->get_quiz($quid);
+        
 
         $uid = $logged_in['uid'];
         $ssid = isset($logged_in['ssid']) ? $logged_in['ssid'] : 0;
@@ -270,9 +273,11 @@ class Quiz extends CI_Controller {
             $max_temp = $this->quiz_model->count_result($quid, $uid);
         } else {
             //élèves 
+            $quid = $this->input->post('quid') ? $this->input->post('quid') : 0;
+
             $max_temp = $this->quiz_model->count_result($quid, $uid, $ssid);
         }
-        
+        $data['quiz'] = $this->quiz_model->get_quiz($quid);
         $data['max_attempt'] = $max_temp;
         $this->load->view('header', $data);
         $this->load->view('quiz_detail', $data);

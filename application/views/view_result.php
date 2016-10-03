@@ -289,7 +289,7 @@
                                                 foreach ($opt as $mk1 => $mval) {
                                                     ?>
                                                     <tr><td>
-                                                            <?php echo $abc[$mk1]; ?>)<input type="text"  value="<?php echo $save_ans[$mk1]; ?>" />
+                                                            <?php echo $abc[$mk1]; ?>)<input type="text"  value="<?php echo isset($save_ans[$mk1])?$save_ans[$mk1]:''; ?>" />
                                                         </td>
 
                                                         <td>

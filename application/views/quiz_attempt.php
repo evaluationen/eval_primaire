@@ -129,8 +129,6 @@
         ?>
     </div> 
 
-
-
     <div class="row"  style="margin-top:5px;">
         <div class="col-md-8">
             <form method="post" action="<?php echo site_url('quiz/submit_quiz/' . $quiz['rid']); ?>" id="quiz_form" >

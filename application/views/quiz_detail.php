@@ -34,7 +34,7 @@
                                 
                             <?php else: ?>                           
                                 <p><?php echo $this->lang->line('hello') . " <b>" . $login_in['first_name'] . " " . $login_in['last_name'] . "</b>," ?></p>
-                                <p><?php echo str_replace('../../','', $quiz['description']); ?></p>
+                                <div style="color: #00008b; font-weight: bold; font-variant: small-caps; font-size: 18px"><?php echo str_replace('../../','', $quiz['description']); ?></div>
                                 <p><?php echo $this->lang->line('msg_quiz_detail'); ?></p>
                             <?php endif;?>
                         </div>        

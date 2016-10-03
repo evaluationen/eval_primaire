@@ -290,3 +290,4 @@ $lang['select_class'] = "Sélectionner une classe";
 $lang['text_lacunaire'] = "Texte lacunaire";
 $lang['options_list'] = "Liste des options";
 $lang['is_list_answer'] = "Définir les réponses possibles";
+$lang['empty_eval_affect']= "Nous sommes désolé, Aucune évaluation disponible.";
