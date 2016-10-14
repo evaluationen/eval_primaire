@@ -1062,6 +1062,18 @@ Class Quiz_model extends CI_Model {
         }
         return false;
     }
+    
+    
+    ///get document question
+    function get_parent_question($pqid){
+        $this->db->where('pqid', $pqid);
+        $query = $this->db->get(DB_PREFIX.'qbank_parent');
+        if($query->num_rows() == 1){
+            $result = $query->row();
+        }
+        
+        return isset($result) ? $result : FALSE;
+    }
 
 }
 

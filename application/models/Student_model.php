@@ -196,6 +196,31 @@ Class Student_model extends CI_Model {
             return false;
         }
     }
+    
+    
+    //update infos de base élèves
+    function update_student($stid){
+        /*
+         stid 	first_name 	last_name 	birth 	contact_no 	su 	gid 	subscription_expired 	verify_code 	qrcode 	admin_id 	etab_org
+         *          */
+        $logged_in = $this->session->userdata('logged_in');
+        $data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'birth' => $this->base_model->date_sql($this->input->post('birth')),
+            'contact_no' => $this->input->post('contact_no'),
+            'gid' => $this->input->post('gid'),
+            'admin_id' => $logged_in['uid'],
+            'etab_org' => $this->input->post('eid')
+        );
+        
+        $this->db->where('stid', $stid);
+        if($this->db->update(DB_PREFIX.'student', $data)){
+            return true;
+        }else{
+            return false;
+        }
+    } 
 
     function update_group($gid) {
 
@@ -339,17 +364,20 @@ Class Student_model extends CI_Model {
             'ý', 'ÿ', 'Ý', 'Ÿ'
         );
         $datas = array();
+        /*echo '<pre>';
+        print_r($students);*/
         foreach ($students as $key => $singleuser) {
             if ($key != 0) {
-                //echo "<pre>";
-                //print_r($singleuser);
-                echo "<pre>" . htmlentities(print_r($singleuser, true)) . "</pre>";
-
+                echo "<pre>";
+                print_r($singleuser);
+                //echo "<pre>" . htmlentities(print_r($singleuser, true)) . "</pre>";
+                
                 $sname = str_replace($scr, $replace, htmlentities($singleuser['0']));
                 $fname = str_replace($scr, $replace, htmlentities($singleuser['1']));
 
                 $identifiant = $this->base_model->concat_name(htmlentities($singleuser['0']), htmlentities($singleuser['1']), $singleuser['3']);
-                $birth = $this->base_model->date_sql_import($singleuser['2']);
+                $birth = $this->base_model->date_sql($singleuser['2']);
+              
                 $school_id = $this->get_id_etab($singleuser['3']);
                 $class = $singleuser['4'];
                 $contact = $singleuser['5'];
@@ -380,7 +408,7 @@ Class Student_model extends CI_Model {
                 //régrouper dans un tableau les datas
             }
         }//
-
+        
         if (!empty($datas) && count($datas) > 0) {
             $this->db->trans_start();
             //$this->db->insert_batch(DB_PREFIX.'users', $data);
@@ -422,8 +450,7 @@ Class Student_model extends CI_Model {
         $this->db->trans_start();
         $identifiant = $this->base_model->concat_name($this->input->post('last_name'), $this->input->post('first_name'), $rne_etab->rne_etab);
         
-        //var_dump($this->base_model->qr_generate($identifiant));die;
-        
+                
         if ($this->base_model->qr_generate($identifiant)) {
             $insert_data = array(
                 'password' => md5($this->config->item('user_password')),

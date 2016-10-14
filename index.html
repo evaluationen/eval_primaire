@@ -163,7 +163,7 @@ Answered
 	});
 	
         //----------------------------------------------------
-    $('#test').on('click', function(e){//$('#test').bind('mouseup', function(e){
+    /*$('#test').on('click', function(e){//$('#test').bind('mouseup', function(e){
       e.preventDefault();
 	 
 	if (window.getSelection) {
@@ -195,7 +195,7 @@ Answered
 			});
 			
 		});
-    });
+    });*/
 	
 	
 	$('.btn-init').on('click', function(e){
@@ -207,6 +207,22 @@ Answered
 		
 	});
     
+	
+	 $('#test').bind('mouseup', function() {
+		selection = getSelectedText();
+        var spn = '<span class="tt">' + selection + '</span>';
+		$(this).html($(this).html().replace(selection, spn));
+		//alert(getSelectedText());
+    });
+
+    function getSelectedText() {
+        if (window.getSelection) {
+            return window.getSelection().toString();
+        } else if (document.selection) {
+            return document.selection.createRange().text;
+        }
+        return '';
+    }
     
     //-----drag and drop tactile
   /*$('#drag1').draggable();

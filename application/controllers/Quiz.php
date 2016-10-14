@@ -54,8 +54,6 @@ class Quiz extends CI_Controller {
             exit($this->lang->line('permission_denied'));
         }
 
-
-
         $data['title'] = $this->lang->line('add_new') . ' ' . $this->lang->line('quiz');
         // fetching group list
         $data['group_list'] = $this->user_model->group_list();
@@ -273,7 +271,7 @@ class Quiz extends CI_Controller {
             $max_temp = $this->quiz_model->count_result($quid, $uid);
         } else {
             //élèves 
-            $quid = $this->input->post('quid') ? $this->input->post('quid') : 0;
+            $quid = $quid ? $quid : $this->input->post('quid');
 
             $max_temp = $this->quiz_model->count_result($quid, $uid, $ssid);
         }
@@ -394,6 +392,7 @@ class Quiz extends CI_Controller {
 
         $data['options'] = $this->quiz_model->get_options($data['quiz']['r_qids']);
         $data['title'] = $data['quiz']['quiz_name'];
+        $data['is_attp'] = true;
         $this->load->view('header', $data);
         $this->load->view('quiz_attempt', $data);
         $this->load->view('footer', $data);

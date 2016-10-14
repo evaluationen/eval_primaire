@@ -126,7 +126,7 @@ foreach($result as $key => $val){
 <?php 
 if($logged_in['su']=='1'){
 	?>
-	<a href="javascript:remove_entry('result/remove_result/<?php echo $val['rid'];?>');"><img src="<?php echo base_url('images/cross.png');?>"></a>
+	<a href="javascript:remove_entry('result/remove_result/<?php echo $val['rid'];?>');"><img src="<?php echo base_url('ressources/images/cross.png');?>"></a>
 <?php 
 }
 ?>

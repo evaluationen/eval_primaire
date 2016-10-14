@@ -4934,7 +4934,7 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
     cursor: not-allowed;
     background-color: #fff
 }
-.label {
+/*.label {
     display: inline;
     padding: .2em .6em .3em;
     font-size: 75%;
@@ -4945,7 +4945,7 @@ fieldset[disabled] .navbar-inverse .btn-link:hover {
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em
-}
+}*/
 a.label:focus,
 a.label:hover {
     color: #fff;

@@ -35,7 +35,7 @@ class Student extends CI_Controller {
         }
         
         $data['limit'] = $limit;
-        $data['title'] = $this->lang->line('studentlist');
+        $data['title'] = $this->lang->line('student_list');
         // fetching user list
         $data['result'] = $this->student_model->student_list($limit);
         $data['tot'] = $this->student_model->count_student();
@@ -72,8 +72,49 @@ class Student extends CI_Controller {
     }
     
     /*update information the student*/
-    function update_student(){
+    function edit($stid){
         
+        $data['title'] = $this->lang->line('edit');
+        $data['result'] = $this->student_model->get_student($stid);
+        $data['class_list'] = $this->school_model->list_class();
+        $data['school_list'] = $this->school_model->list_school();
+        $data['group_list'] = $this->user_model->group_list();
+        
+        if($this->input->post('action') == 'update'){
+            
+            $this->form_validation->set_rules('first_name', $this->lang->line('first_name'), 'required|trim');
+            $this->form_validation->set_rules('last_name', $this->lang->line('last_name'), 'required|trim');
+            if($this->form_validation->run()){
+                if($this->student_model->update_student($stid)){
+                    $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_updated_successfully') . " </div>");
+                    redirect('student');
+                }else{
+                    $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_update_data') . " </div>");
+                }
+            }
+        }
+        $this->load->view('students/edit_student', $data);
+    }
+    
+     function save_sub_catg(){
+       
+       $scid = $this->input->post('scid');
+       if($scid){
+           //$this->form_validation_set_rules('', '', 'required') ;
+           $data = array(
+               'scid' => $this->input->post('scid'),
+               'sub_catg_name' => $this->input->post('sub_catg_name'),
+               'cid' => $this->input->post('cid')
+           
+           );
+         
+           if($this->category_model->update($data)){
+                $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_updated_successfully') . " </div>");
+           }else{
+               $this->session->set_flashdata('message', "<div class='alert alert-danger'>" . $this->lang->line('error_to_update_data') . " </div>");
+           }
+       }
+        redirect('category/sub_category_list');
     }
     
     /*remove student*/
@@ -86,9 +127,7 @@ class Student extends CI_Controller {
         if ($stid == '1') {
             exit($this->lang->line('permission_denied'));
         }
-
         //suppression image qrcode généré lors de la suppression user
-
 
         if ($this->student_model->remove_student($stid)) {
             $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('removed_successfully') . " </div>");
@@ -99,7 +138,7 @@ class Student extends CI_Controller {
     }
 
     
-    /*affect one student an other class*/
+    /*affect one student an other class by on school_year*/
     function affect_student(){
        
     }
@@ -168,7 +207,7 @@ class Student extends CI_Controller {
             $filename = $fileNameNoExtension.'_'.time().'.'.$extension;
 			
         
-			$targets = $targets . basename($filename);
+            $targets = $targets . basename($filename);
             $docadd = ($filename);
             if (move_uploaded_file($_FILES['xlsfile']['tmp_name'], $targets)) {
                 $Filepath = $targets;
@@ -192,7 +231,8 @@ class Student extends CI_Controller {
                     //echo '---------------------------------'.PHP_EOL;
                     //echo '---------------------------------'.PHP_EOL;
 
-                    foreach ($Sheets as $Index => $Name) {
+                    foreach ($Sheets as $Index => $Name) 
+                        {
                         //echo '---------------------------------'.PHP_EOL;
                         //echo '*** Sheet '.$Name.' ***'.PHP_EOL;
                         //echo '---------------------------------'.PHP_EOL;
@@ -201,10 +241,10 @@ class Student extends CI_Controller {
 
                         $Spreadsheet->ChangeSheet($Index);
 
+                        //var_dump($Spreadsheet);
                         foreach ($Spreadsheet as $Key => $Row) {
                             //echo $Key.': ';
                             if ($Row) {
-                                //print_r($Row);
                                 $allxlsdata[] = $Row;
                             } else {
                                 var_dump($Row);
@@ -231,7 +271,8 @@ class Student extends CI_Controller {
                 } catch (Exception $E) {
                     echo $E->getMessage();
                 }
-
+                //var_dump($allxlsdata);
+                
                 if ($this->student_model->import_students($allxlsdata)) {
                     $message = $this->session->set_flashdata('message', "<div class='alert alert-success'>" . $this->lang->line('data_imported_successfully') . " </div>");
                 } else {

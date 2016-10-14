@@ -12,95 +12,7 @@
         color:red;
         background : #ffff00;    
     }
-    
-    /*debut*/
-    .container{
-    width: 100%;
-    max-width: 1024px;
-    display: table;
-    margin: 0 auto;
-}
-.question-items,
-.answer-items{
-    width: 30%;
-    float: left;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-.answer-items{
-    float: right;
-}
-.item{
-    list-style: none;
-    border: 1px solid #CCC;
-    box-sizing: border-box;
-    position: relative;
-    height: 65px;
-    width: 100%;
-    padding: 10px 20px;
-    margin: 20px 0;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-}
-.item .line-box {
-    display: block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #CCC;
-    background: #FFF;
-    border-radius: 10px;
-    position: absolute;
-    right: -10px;
-    top: 22px;
-}
-.label{
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-}
-.answer-items .item .line-box{
-    left: -10px;
-    right: auto;
-}
-.item .line-box .line{
-    display: block;
-    position: absolute;
-    z-index: 2;
-    width: 16px;
-    height: 16px;
-    background: blue;
-    border-radius: 9px;
-    top: 1px;
-    left: 1px;
-    cursor: pointer;
-    transform-origin: 8px 8px;
-}
-.answer-items .item .line-box .line{
-    background: #FFF;
-    z-index: 1;
-}
-li.selected .un-select{
-    display: block;
-}
-.un-select{
-    background: #FFF url(../images/close.png) center no-repeat / 25px;
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    right: -12px;
-    top: -12px;
-    cursor: pointer;
-    display: none;
-    border-radius: 13px;
-    -moz-order-radius: 13px;
-    -webkit-border-radius: 13px;
-}
 
-    /*fin*/
 </style>
 
 <script>
@@ -250,7 +162,6 @@ li.selected .un-select{
                         <div class="question_container" >
                             <?php
                             $title = FALSE;
-                            $qparent = $this->quiz_model->get_parent_question($question['pqid']);
                             foreach ($options as $opt) {
 
                                 if ($opt['qid'] != $question['qid']) {
@@ -261,26 +172,19 @@ li.selected .un-select{
                                 }
                             }
                             ?>
-                            <?php  if(isset($qparent) && $qparent) : ?>
-                                        <div>
-                                            <label><?php echo $qparent->title ?></label>
-                                            <p><?php echo $qparent->description ?></p>
-                                        </div>
-                            <?php endif; ?>
                             <?php //if ($title) : ?>    
                             <b style="font-size:20px;color:red;"><?php echo $this->lang->line('question'); ?> <?php echo $qk + 1; ?>)</b><br>
                             <?php //endif; ?>
                             <?php echo str_replace('../../../', '../../', $question['question']); ?>
-                            
+
                         </div>
                         <div class="option_container" >
 
                             <?php
                             // multiple single choice
                             if ($question['question_type'] == 1) {
-                               
+
                                 $save_ans = array();
-                                
                                 foreach ($saved_answers as $svk => $saved_answer) {
                                     if ($question['qid'] == $saved_answer['qid']) {
                                         $save_ans[] = $saved_answer['q_option'];
@@ -288,7 +192,6 @@ li.selected .un-select{
                                 }
                                 ?>
                                 <input type="hidden"  name="question_type[]"  id="q_type<?php echo $qk; ?>" value="1">
-                                
                                 <?php
                                 $i = 0;
                                 foreach ($options as $ok => $option) {
@@ -320,7 +223,6 @@ li.selected .un-select{
                                 }
                                 ?>
                                 <input type="hidden"  name="question_type[]"  id="q_type<?php echo $qk; ?>" value="2">
-                                
                                 <?php
                                 $i = 0;
                                 foreach ($options as $ok => $option) {
@@ -423,12 +325,12 @@ li.selected .un-select{
                                 <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="5">
                                 <?php
                                 $i = 0;
-                                $data = array();
+                                $match_1 = array();
                                 $match_2 = array();
                                 foreach ($options as $ok => $option) {
                                     if ($option['qid'] == $question['qid']) {
-                                        $data[] = array('question' => $option['q_option'], 'answer' => $option['q_option_match']) ;
-                                        //$match_2[] = $option['q_option_match'];
+                                        $match_1[] = $option['q_option'];
+                                        $match_2[] = $option['q_option_match'];
                                         ?>
                                         <?php
                                         $i+=1;
@@ -437,44 +339,66 @@ li.selected .un-select{
                                     }
                                 }
                                 ?>
-                                <div class="">
+                                <div class="op">
                                     <table>
+
                                         <?php
-                                        $keys = array_keys($data);
-                                        shuffle($keys);
+                                        //shuffle($match_1);
+                                        shuffle($match_2);
                                         ?>
-                                        <!-- début-->
-                                            <div class="main-wrapper">
-                                                    <div class="container">
-                                                        <ul class="question-items">
-                                                            <?php foreach ($data as $key=>$value): ?>
-                                                                <li data-target="<?php print $key + 1 ?>" class="item">
-                                                                    <span unselectable="on" class="label"><?php print $value['question']?></span>
-                                                                    <span class="line-box">
-                                                                        <span class="line"></span>
-                                                                        <input type="hidden" name="options[<?php echo $qk; ?>][]" value="<?php echo $value['question']; ?>"/>
-                                                                    </span>
-                                                                </li>
-                                                            <?php endforeach;?>
-                                                        </ul>
-                                                        <ul class="answer-items">
-                                                            <?php foreach ($keys as $key): ?>
-                                                            <li data-target="<?php print $key + 1?>" class="item">
-                                                                <span class="label"><?php print $data[$key]['answer']?></span>
-                                                                <span class="line-box"><span class="line"></span>
-                                                                    <input type="hidden" name="answer[<?php echo $qk; ?>][]" value="<?php echo $data[$key]['answer']; ?>"/>
-                                                                </span>
-                                                                <span class="un-select"></span>
-                                                            </li>
-                                                            <?php endforeach;?>
-                                                        </ul>
-                                                    </div>
-                                                    <!--div class="container">
-                                                        <button id="validate">Validate</button>
-                                                    </div!-->
+                                        <div class="block1">
+                                            <label> Questions</label>
+                                            <ul id="list0" class="border-block">
+                                                <?php foreach ($match_1 as $mk1 => $mval) : ?>
+                                                    <li><?php echo $mval ?> <input type="hidden" name="options[<?php echo $qk; ?>][]" value="<?php echo $mval; ?>"/></li>
+                                                <?php endforeach; ?>
+                                            </ul>
                                         </div>
-                                       
-                                        <!-- fin -->
+
+                                        <div class="block2"> 
+                                            <label> Réponses associées</label>
+                                            <ul id="list1" class="lists border-block"></ul>
+                                        </div>
+
+                                        <label> Réponses possibles</label>
+                                        <ul id="list2" class="lists border-block">
+                                            <?php foreach ($match_2 as $mk2 => $mval2) : ?>
+                                                <li><?php echo $mval2 ?><input type="hidden" name="answer[<?php echo $qk; ?>][]" value="<?php echo $mval2; ?>"/></li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <?php
+                                        /* foreach ($match2 as $mk2 => $mval2){
+
+                                          }
+                                          foreach ($match_1 as $mk1 => $mval) {
+                                          ?>
+                                          <tr><td>
+                                          <?php echo $abc[$mk1]; ?>  <?php echo $mval; ?>
+                                          </td><td>
+
+                                          <!--select name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk . '-' . $mk1; ?>"  >
+                                          <option value="0"><?php echo $this->lang->line('select'); ?></option>
+                                          <?php
+                                          foreach ($match_2 as $mk2 => $mval2) {
+                                          ?>
+                                          <option value="<?php echo $mval . '___' . $mval2; ?>"  <?php
+                                          $m1 = $mval . '___' . $mval2;
+                                          if (in_array($m1, $save_ans)) {
+                                          echo 'selected';
+                                          }
+                                          ?> ><?php echo $mval2; ?></option>
+                                          <?php
+                                          }
+                                          ?>
+                                          </select-->
+
+                                          </td>
+                                          </tr>
+
+
+                                          <?php
+                                          } */
+                                        ?>
                                     </table>
                                 </div>
                                 <?php
@@ -628,7 +552,7 @@ li.selected .un-select{
                                     
                                     $count_var = substr_count($question['default_txt'], '{rep');
                                     for ($i = 1; $i <= $count_var; $i++) {
-                                        $replace = "<input type='text' style='margin:1%; max-width:100px' name='answer[" . $qk . "][]'  value='";
+                                        $replace = "<input type='text' name='answer[" . $qk . "][]'  value='";
                                         if ((isset($save_ans) && $save_ans[$i - 1])) {
                                             $replace .= $save_ans[$i - 1];
                                         }

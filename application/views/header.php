@@ -22,6 +22,7 @@
 
         <!-- custom javascript -->
         <script src="<?php echo base_url('ressources/js/basic.js'); ?>"></script>
+        <!--script src="<?php //echo base_url('ressources/js/draw.main.js'); ?>"></script-->
 
         <!-- bootstrap js -->
         <script src="<?php echo base_url('ressources/bootstrap/js/bootstrap.min.js'); ?>"></script>
@@ -31,12 +32,18 @@
         <link href="<?php echo base_url('ressources/css/datepicker.css'); ?>" rel="stylesheet">
 
         <!-- confirm jquery -->
-        <script src="<?php echo base_url('ressources/js/jquery.confirm.js'); ?>"></script>
-        <script src="<?php echo base_url('ressources/js/jquery-ui-1.11.4/external/jquery/jquery.js') ?>"></script>
+        
+        <?php /*if(isset($is_attp) && $is_attp) : ?>
+        <!--script src="<?php echo base_url('ressources/js/jquery-ui-1.11.4/external/jquery/jquery.js') ?>"></script>
         <script src="<?php echo base_url('ressources/js/jquery-ui-1.11.4/jquery-ui.min.js') ?>"></script>
         <script src="<?php echo base_url('ressources/js/jquery-ui-touch-punch/jquery.ui.touch-punch.js') ?>"></script>
         <script src="<?php echo base_url('ressources/js/jquery.sortable.js') ?>"></script>
-        <script src="<?php echo base_url('ressources/js/jquery.sortable.min.js') ?>"></script>
+        <script src="<?php echo base_url('ressources/js/jquery.sortable.min.js') ?>"></script-->
+        <?php else: ?>
+       
+        <?php endif;*/ ?>
+        
+         <script src="<?php echo base_url('ressources/js/jquery.confirm.js'); ?>"></script>
         <script>
             $(document).ready(function () {
                 $('.datepicker').datepicker({'format': 'dd/mm/yyyy'});
