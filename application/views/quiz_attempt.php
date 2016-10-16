@@ -487,7 +487,7 @@ li.selected .un-select{
                                         $save_ans = $saved_answer['q_option'];
                                     }
                                 }
-                                $save_answ = json_decode($save_ans);
+                                $save_answ = isset($save_ans) ? json_decode($save_ans) : "";
                                 ?>
                                 <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
                                 <?php ?>
@@ -501,7 +501,7 @@ li.selected .un-select{
                                     </div>
 
                                     <div class="op"> 
-                                        <b><?php echo $this->lang->line('response'); ?> <br></b>
+                                        <b><?php echo $this->lang->line('answer'); ?> <br></b>
                                         <?php echo $this->lang->line('word_counts'); ?> <span id="char_count<?php echo $qk; ?>">0</span>
                                         <?php ?>
                                         <textarea  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:50%; min-width: 300px; min-height: 100px"  onKeyup="count_char(this.value, 'char_count<?php echo $qk; ?>');"><?php echo isset($save_answ->response) ? $save_answ->response : ""; ?></textarea>
