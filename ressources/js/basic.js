@@ -437,7 +437,24 @@ function review_later() {
 
 }
 
+    function getAnswer() {
+        var answer = [];
+        $('.question-items').find('.item').each(function(){
+            if(!$(this).hasClass('selected')){
+                answer = false;
+                return;
+            }
+            if(answer){
+                var index = $(this).index();
+                var result = $('.answer-items').find('.answer-'+index);
+                //var value = [$(this).attr('data-target'),result.attr('data-target')];
+                var value = $(this).attr('data-value')+'___'+result.attr('data-value');
+                answer.push(value);
+            }
 
+        });
+        return answer;
+    }
 
 
 function save_answer(qn) {
@@ -453,7 +470,22 @@ function save_answer(qn) {
         $('#answer_value' + qn).val(content_line);
     }
 
-
+    //relier
+    type_q = $('#q_type' +qn).val();
+    if(type_q == 5){
+        var answer = getAnswer();
+        if(!answer)
+            alert('Incomplete answer');
+        
+        else{
+            console.log(answer);
+            $('#answer_'+qn).val(answer.toString());
+            console.log(answer.toString());
+        }
+        return false;
+    }
+    alert(type_q);
+    
     // signal 1
     $('#save_answer_signal1').css('backgroundColor', '#00ff00');
     setTimeout(function () {
@@ -464,7 +496,7 @@ function save_answer(qn) {
 
 
     // var formData = {user_answer:str};
-    $.ajax({
+    /*$.ajax({
         type: "POST",
         data: str,
         url: base_url + "index.php/quiz/save_answer/",
@@ -486,7 +518,7 @@ function save_answer(qn) {
             }, 5500);
 
         }
-    });
+    });*/
 
 
 
@@ -548,6 +580,7 @@ function setIndividual_time(cqn) {//cqn='0' not supported by chrome
 
 
 function submit_quiz() {
+    
     save_answer(qn);
     setIndividual_time(qn);
     window.location = base_url + "index.php/quiz/submit_quiz/";
@@ -994,6 +1027,8 @@ $(document).ready(function () {
             alert('Incomplete answer');
         else
             console.log(answer);
+        
+        return false;
     });
     
     $('.un-select').click(function () {
@@ -1065,25 +1100,11 @@ $(document).ready(function () {
 
         selected.css('width',answer.width + 15);
         selected.css('transform','rotate('+answer.angle+'deg)');
+        
+        
 
     }
-    function getAnswer() {
-        var answer = [];
-        $('.question-items').find('.item').each(function(){
-            if(!$(this).hasClass('selected')){
-                answer = false;
-                return;
-            }
-            if(answer){
-                var index = $(this).index();
-                var result = $('.answer-items').find('.answer-'+index);
-                var value = [$(this).attr('data-target'),result.attr('data-target')];
-                answer.push(value);
-            }
 
-        });
-        return answer;
-    }
     function unsetAnswer() {
         alert('unset');
     }

@@ -421,6 +421,7 @@ li.selected .un-select{
                                 }
                                 ?>
                                 <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="5">
+                                <input type="hidden" id="answer_<?php echo $qk; ?>" name="answer[<?php echo $qk; ?>][]" value=""/>
                                 <?php
                                 $i = 0;
                                 $data = array();
@@ -448,7 +449,7 @@ li.selected .un-select{
                                                     <div class="container">
                                                         <ul class="question-items">
                                                             <?php foreach ($data as $key=>$value): ?>
-                                                                <li data-target="<?php print $key + 1 ?>" class="item">
+                                                                <li data-target="<?php print $key + 1 ?>" class="item" data-value="<?php print $value['question']?>">
                                                                     <span unselectable="on" class="label"><?php print $value['question']?></span>
                                                                     <span class="line-box">
                                                                         <span class="line"></span>
@@ -459,19 +460,19 @@ li.selected .un-select{
                                                         </ul>
                                                         <ul class="answer-items">
                                                             <?php foreach ($keys as $key): ?>
-                                                            <li data-target="<?php print $key + 1?>" class="item">
+                                                            <li data-target="<?php print $key + 1?>" class="item" data-value="<?php print $data[$key]['answer']?>">
                                                                 <span class="label"><?php print $data[$key]['answer']?></span>
                                                                 <span class="line-box"><span class="line"></span>
-                                                                    <input type="hidden" name="answer[<?php echo $qk; ?>][]" value="<?php echo $data[$key]['answer']; ?>"/>
+                                                                    
                                                                 </span>
                                                                 <span class="un-select"></span>
                                                             </li>
                                                             <?php endforeach;?>
                                                         </ul>
                                                     </div>
-                                                    <!--div class="container">
+                                                    <div class="container">
                                                         <button id="validate">Validate</button>
-                                                    </div!-->
+                                                    </div>
                                         </div>
                                        
                                         <!-- fin -->
@@ -580,7 +581,7 @@ li.selected .un-select{
                                 <input type="hidden" name="question_type[]" id="q_type<?php echo $qk; ?>" value="9">
                                 <div class="txt_highlight" >       
                                     <div id="answer_highlight<?php echo $qk; ?>" class="answer_hedit"><?php echo $save_ans; ?></div>
-                                    <textarea s  name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px; display: none"><?php echo $save_ans; ?></textarea>
+                                    <textarea name="answer[<?php echo $qk; ?>][]" id="answer_value<?php echo $qk; ?>" style="width:100%; height:100%; min-width: 300px; min-height: 350px; display: none"><?php echo $save_ans; ?></textarea>
                                 </div>
 
                                 <div style="margin-top: 2%">
