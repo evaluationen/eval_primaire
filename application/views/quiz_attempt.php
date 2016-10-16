@@ -452,7 +452,7 @@ li.selected .un-select{
                                                                     <span unselectable="on" class="label"><?php print $value['question']?></span>
                                                                     <span class="line-box">
                                                                         <span class="line"></span>
-                                                                        <input type="hidden" name="options[<?php echo $qk; ?>][]" value="<?php echo $value['question']; ?>"/>
+                                                                        
                                                                     </span>
                                                                 </li>
                                                             <?php endforeach;?>
@@ -487,7 +487,7 @@ li.selected .un-select{
                                         $save_ans = $saved_answer['q_option'];
                                     }
                                 }
-                                $save_answ = isset($save_ans) ? json_decode($save_ans) : "";
+                                $save_answ = (isset($save_ans) && !empty($save_ans)) ? json_decode($save_ans) : "";
                                 ?>
                                 <input type="hidden"  name="question_type[]" id="q_type<?php echo $qk; ?>" value="6">
                                 <?php ?>
