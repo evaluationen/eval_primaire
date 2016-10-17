@@ -474,12 +474,11 @@ function save_answer(qn) {
     type_q = $('#q_type' +qn).val();
     if(type_q == 5){
         var answer = getAnswer();
-        if(!answer)
-            alert('Incomplete answer');
-        
-        else{
-            
-            $('#answer_'+qn).val(answer.toString());
+        if(!answer){
+            //alert('Incomplete answer');
+            console.log('Incomplete answer');
+        }else{
+            //$('#answer_'+qn).val(answer.toString());
             $('#answer_'+qn).val(answer.join(';'));
         }
         
@@ -493,7 +492,6 @@ function save_answer(qn) {
     }, 5000);
 
     var str = $("form").serialize();
-
 
     // var formData = {user_answer:str};
     $.ajax({
