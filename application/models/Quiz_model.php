@@ -796,12 +796,15 @@ Class Quiz_model extends CI_Model {
                      if(isset($_POST['options'][$ak])){
                        $opt =  $_POST['options'][$ak];            
                     }
-                    foreach ($answer as $sk => $ansval) {
+                    
+                    
+                    $answer_convert = isset($answer[0]) ? explode(";", $answer[0]) : "";
+                    
+                    if(!empty($answer_convert) && is_array($answer_convert)){
+                        foreach ($answer_convert as $sk => $ansval) {
                         if ($ansval != '0') {
                             $mc = 0;
-                            //$ansval à reformuler
-                               
-                            //fin
+                           
                             if (in_array($ansval, $noptions)) {
                                 $marks+=1 / count($options_data);
                                 $mc = 1 / count($options_data);
@@ -814,13 +817,15 @@ Class Quiz_model extends CI_Model {
                                 'qid' => $qid,
                                 'ssid' => $ssid,
                                 'uid' => $uid,
-                                'q_option' => $opt[$sk].'___'.$ansval,
+                                'q_option' => $ansval,
                                 'score_u' => $mc
                             );
                             $this->db->insert(DB_PREFIX . 'answers', $userdata);
                             $attempted = 1;
+                            }
                         }
                     }
+                    
                     if ($attempted == 1) {
                         if ($marks == 1) {
                             $correct_incorrect[$ak] = 1;

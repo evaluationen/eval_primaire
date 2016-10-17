@@ -470,9 +470,9 @@ li.selected .un-select{
                                                             <?php endforeach;?>
                                                         </ul>
                                                     </div>
-                                                    <div class="container">
+                                                    <!--div class="container">
                                                         <button id="validate">Validate</button>
-                                                    </div>
+                                                    </div-->
                                         </div>
                                        
                                         <!-- fin -->
@@ -630,7 +630,7 @@ li.selected .un-select{
                                     $count_var = substr_count($question['default_txt'], '{rep');
                                     for ($i = 1; $i <= $count_var; $i++) {
                                         $replace = "<input type='text' style='margin:1%; max-width:100px' name='answer[" . $qk . "][]'  value='";
-                                        if ((isset($save_ans) && $save_ans[$i - 1])) {
+                                        if ((isset($save_ans) && isset($save_ans[$i - 1]))) {
                                             $replace .= $save_ans[$i - 1];
                                         }
                                         $replace .= "'/>";

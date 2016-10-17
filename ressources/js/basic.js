@@ -478,13 +478,13 @@ function save_answer(qn) {
             alert('Incomplete answer');
         
         else{
-            console.log(answer);
+            
             $('#answer_'+qn).val(answer.toString());
-            console.log(answer.toString());
+            $('#answer_'+qn).val(answer.join(';'));
         }
-        return false;
+        
     }
-    alert(type_q);
+    
     
     // signal 1
     $('#save_answer_signal1').css('backgroundColor', '#00ff00');
@@ -496,7 +496,7 @@ function save_answer(qn) {
 
 
     // var formData = {user_answer:str};
-    /*$.ajax({
+    $.ajax({
         type: "POST",
         data: str,
         url: base_url + "index.php/quiz/save_answer/",
@@ -518,7 +518,7 @@ function save_answer(qn) {
             }, 5500);
 
         }
-    });*/
+    });
 
 
 
@@ -864,7 +864,7 @@ $(document).ready(function () {
         var id_d = $(this).attr(('id'));
 
         //
-        $('#' + id_d).bind('mouseup', function (e) {
+        $('#' + id_d).bind('mouseup touchend', function (e) {
             e.preventDefault();
             selection = getSelectedText();
             var spn = '<span class="tt">' + selection + '</span>';
@@ -995,11 +995,12 @@ $(document).ready(function () {
         $(this).css('background',palette[index]);
     });
 
-    $('.question-items').find('.line').mousedown(function() {
+    $('.question-items').find('.line').bind("mousedown touchstart", function() {
         if(!$(this).parents('li').hasClass('selected'))
             selected = $(this);
     });
-    $(document).mouseup(function(e) {
+    
+    $(document).bind("mouseup touchend",function(e) {
         if(selected) {
             var position = {x:e.pageX , y:e.pageY};
             var answer = validatePosition(selected,position);
@@ -1014,14 +1015,14 @@ $(document).ready(function () {
         }
     });
 
-    $(document).mousemove(function(e) {
+    $(document).bind("mousemove touchmove",function(e) {
         if(selected) {
             var position = {x:e.pageX , y:e.pageY};
             calcPosition(selected,position);
         }
     });
     
-    $('#validate').click(function () {
+    /*$('#validate').click(function () {
         var answer = getAnswer();
         if(!answer)
             alert('Incomplete answer');
@@ -1029,7 +1030,7 @@ $(document).ready(function () {
             console.log(answer);
         
         return false;
-    });
+    });*/
     
     $('.un-select').click(function () {
         if($(this).parents('li').hasClass('selected')){
