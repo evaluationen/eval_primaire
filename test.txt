@@ -1,2 +1,2 @@
-test de mise à jour
+test de mise à jour [test]
 encore une autre test
